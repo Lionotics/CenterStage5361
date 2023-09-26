@@ -40,7 +40,7 @@ public class ApriltagTesting extends LinearOpMode {
     private VisionPortal visionPortal;
 
     // Prop Vision
-    private PropVision propVision = new PropVision();
+    private PropVision propVision = new PropVision(telemetry, true);
 
     @Override
     public void runOpMode() {
