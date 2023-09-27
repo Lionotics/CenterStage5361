@@ -3,9 +3,12 @@ package org.firstinspires.ftc.teamcode;
 
 import android.util.Size;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
@@ -34,6 +37,9 @@ public class ApriltagTesting extends LinearOpMode {
      */
     private AprilTagProcessor aprilTag;
 
+
+
+
     /**
      * {@link #visionPortal} is the variable to store our instance of the vision portal.
      */
@@ -44,6 +50,7 @@ public class ApriltagTesting extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         initAprilTag();
 
@@ -82,6 +89,7 @@ public class ApriltagTesting extends LinearOpMode {
      * Initialize the AprilTag processor.
      */
     private void initAprilTag() {
+
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -174,12 +182,31 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
                 telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
                 telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
-                telemetry.addLine("The position of that apriltag on the field is : " + detection.metadata.fieldPosition.getData());
+                telemetry.addLine("The position of that apriltag on the field is : " + detection.metadata.fieldPosition.getData()[0] + ", " + detection.metadata.fieldPosition.getData()[1] + ", " + detection.metadata.fieldPosition.getData()[2]);
                 telemetry.addLine("The orientation of that apriltag on the field is : " + detection.metadata.fieldOrientation.toString());
 
                 telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
                 telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
                 telemetry.addLine("RBE = Range, Bearing & Elevation");
+
+                double x,y,heading;
+
+                x = detection.metadata.fieldPosition.get(0) + detection.ftcPose.x;
+                y = detection.metadata.fieldPosition.get(1) + detection.ftcPose.y;
+                heading = detection.metadata.fieldOrientation.z + detection.ftcPose.yaw;
+
+                telemetry.addData("field position x",detection.metadata.fieldPosition.get(0));
+                telemetry.addData("field position y",detection.metadata.fieldPosition.get(1));
+                telemetry.addData("ftcpose x",detection.ftcPose.x);
+                telemetry.addData("ftcpose y",detection.ftcPose.y);
+
+
+
+                telemetry.addData("x",x);
+                telemetry.addData("y", y);
+                telemetry.addData("heading",heading);
+
+
 
 
 
