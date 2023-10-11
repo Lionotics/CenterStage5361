@@ -4,6 +4,7 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Size;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.opencv.core.Mat;
 import org.openftc.apriltag.AprilTagPose;
 
 import java.util.List;
@@ -29,6 +31,8 @@ import java.util.List;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
 @TeleOp(name = "Apriltag testing")
+@Config
+
 
 public class ApriltagTesting extends LinearOpMode {
 
@@ -37,20 +41,19 @@ public class ApriltagTesting extends LinearOpMode {
      */
     private AprilTagProcessor aprilTag;
 
-
-
-
     /**
      * {@link #visionPortal} is the variable to store our instance of the vision portal.
      */
     private VisionPortal visionPortal;
 
-    // Prop Vision
-    private PropVision propVision = new PropVision(telemetry, true);
+    Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
+    // Prop Vision
+    private PropVision propVision = new PropVision();
+
+    double x, y, heading, headingRadians;
     @Override
     public void runOpMode() {
-        Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         initAprilTag();
 
@@ -89,7 +92,6 @@ public class ApriltagTesting extends LinearOpMode {
      * Initialize the AprilTag processor.
      */
     private void initAprilTag() {
-
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -182,29 +184,20 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
                 telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
                 telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (inch, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
-                telemetry.addLine("The position of that apriltag on the field is : " + detection.metadata.fieldPosition.getData()[0] + ", " + detection.metadata.fieldPosition.getData()[1] + ", " + detection.metadata.fieldPosition.getData()[2]);
+                telemetry.addLine("The position of that apriltag on the field is : " + detection.metadata.fieldPosition.getData());
                 telemetry.addLine("The orientation of that apriltag on the field is : " + detection.metadata.fieldOrientation.toString());
 
                 telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
                 telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
                 telemetry.addLine("RBE = Range, Bearing & Elevation");
 
-                double x,y,heading;
-
-                x = detection.metadata.fieldPosition.get(0) + detection.ftcPose.x;
-                y = detection.metadata.fieldPosition.get(1) + detection.ftcPose.y;
                 heading = detection.metadata.fieldOrientation.z + detection.ftcPose.yaw;
-
-                telemetry.addData("field position x",detection.metadata.fieldPosition.get(0));
-                telemetry.addData("field position y",detection.metadata.fieldPosition.get(1));
-                telemetry.addData("ftcpose x",detection.ftcPose.x);
-                telemetry.addData("ftcpose y",detection.ftcPose.y);
-
-
-
-                telemetry.addData("x",x);
+                headingRadians = Math.toRadians(heading);
+                x = detection.metadata.fieldPosition.get(0) - (detection.ftcPose.x * Math.cos(headingRadians) - (detection.ftcPose.y * Math.sin(headingRadians)));
+                y = detection.metadata.fieldPosition.get(1) - (detection.ftcPose.x * Math.sin(headingRadians)) + (detection.ftcPose.y * Math.cos(headingRadians));
+                telemetry.addData("x", x);
                 telemetry.addData("y", y);
-                telemetry.addData("heading",heading);
+                telemetry.addData("heading", heading);
 
 
 
