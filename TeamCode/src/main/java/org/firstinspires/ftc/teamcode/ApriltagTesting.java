@@ -4,8 +4,11 @@ package org.firstinspires.ftc.teamcode;
 import android.util.Size;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,12 +16,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.teamcode.util.DashboardUtil;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.opencv.core.Mat;
 import org.openftc.apriltag.AprilTagPose;
 
 import java.util.List;
@@ -46,16 +49,21 @@ public class ApriltagTesting extends LinearOpMode {
      */
     private VisionPortal visionPortal;
 
-    Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-
+    public static String COLOR_INACTIVE_TURN = "#7c4dff7a";
     // Prop Vision
     private PropVision propVision = new PropVision();
 
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
+    private Pose2d robot = new Pose2d(0,0,0);
+    
     double x, y, heading, headingRadians;
     @Override
     public void runOpMode() {
 
         initAprilTag();
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
@@ -69,7 +77,14 @@ public class ApriltagTesting extends LinearOpMode {
                 processAprilTags();
 
                 // Push telemetry to the Driver Station.
+                TelemetryPacket packet = new TelemetryPacket();
+                Canvas fieldOverlay =  packet.fieldOverlay();
+                DashboardUtil.drawRobot(fieldOverlay, robot);
+                dashboard.sendTelemetryPacket(packet);
+                dashboardTelemetry.update();
+
                 telemetry.update();
+
 
                 // Save CPU resources; can resume streaming when needed.
                 if (gamepad1.dpad_down) {
@@ -180,6 +195,7 @@ public class ApriltagTesting extends LinearOpMode {
 
         for (AprilTagDetection detection: currentDetections){
             if(detection.metadata != null){
+
                 telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
                 telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
@@ -195,15 +211,15 @@ public class ApriltagTesting extends LinearOpMode {
                 headingRadians = Math.toRadians(heading);
                 x = detection.metadata.fieldPosition.get(0) - (detection.ftcPose.x * Math.cos(headingRadians) - (detection.ftcPose.y * Math.sin(headingRadians)));
                 y = detection.metadata.fieldPosition.get(1) - (detection.ftcPose.x * Math.sin(headingRadians)) + (detection.ftcPose.y * Math.cos(headingRadians));
-                telemetry.addData("x", x);
-                telemetry.addData("y", y);
-                telemetry.addData("heading", heading);
+                robot = new Pose2d(x,y,heading);
 
+                dashboardTelemetry.addData("x", robot.getX());
+                dashboardTelemetry.addData("y", robot.getY());
+                dashboardTelemetry.addData("heading", robot.getHeading());
 
-
-
-
-
+                telemetry.addData("x", robot.getX());
+                telemetry.addData("y", robot.getY());
+                telemetry.addData("heading", robot.getHeading());
 
             }
         }
