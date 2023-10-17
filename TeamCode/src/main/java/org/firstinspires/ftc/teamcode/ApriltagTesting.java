@@ -53,17 +53,20 @@ public class ApriltagTesting extends LinearOpMode {
     // Prop Vision
     private PropVision propVision = new PropVision(this.telemetry,false);
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+
 
     private Pose2d robot = new Pose2d(0,0,0);
+
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
     
     double x, y, heading, headingRadians;
     @Override
     public void runOpMode() {
 
-        initAprilTag();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        initAprilTag();
 
         // Wait for the DS start button to be touched.
         telemetry.addData("DS preview on/off", "3 dots, Camera Stream");
@@ -78,11 +81,10 @@ public class ApriltagTesting extends LinearOpMode {
 
                 // Push telemetry to the Driver Station.
                 TelemetryPacket packet = new TelemetryPacket();
-                Canvas fieldOverlay =  packet.fieldOverlay();
-                DashboardUtil.drawRobot(fieldOverlay, robot);
+//                DashboardUtil.drawRobot(packet.fieldOverlay(), new Pose2d(0,0,0));
+                packet.fieldOverlay().strokeCircle(0,0,5);
                 dashboard.sendTelemetryPacket(packet);
                 dashboardTelemetry.update();
-
                 telemetry.update();
 
 
@@ -181,12 +183,19 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
                 telemetry.addLine("RBE = Range, Bearing & Elevation");
 
-                heading = detection.metadata.fieldOrientation.z + detection.ftcPose.yaw;
+                heading = detection.metadata.fieldOrientation.z + detection.ftcPose.bearing;
+                dashboardTelemetry.addData("FieldOrientationZ",detection.metadata.fieldOrientation.z);
+                dashboardTelemetry.addData("FieldOrientationX",detection.metadata.fieldOrientation.x);
+                dashboardTelemetry.addData("FieldOrientationY",detection.metadata.fieldOrientation.y);
+                dashboardTelemetry.addData("ftcpose.yaw", detection.ftcPose.yaw);
+                dashboardTelemetry.addData("ftcpose.pitch", detection.ftcPose.pitch);
+                dashboardTelemetry.addData("ftcpose.roll", detection.ftcPose.roll);
+                dashboardTelemetry.addData("bearing",detection.ftcPose.bearing);
+
                 headingRadians = Math.toRadians(heading);
                 x = detection.metadata.fieldPosition.get(0) - (detection.ftcPose.x * Math.cos(headingRadians) - (detection.ftcPose.y * Math.sin(headingRadians)));
                 y = detection.metadata.fieldPosition.get(1) - (detection.ftcPose.x * Math.sin(headingRadians)) + (detection.ftcPose.y * Math.cos(headingRadians));
                 robot = new Pose2d(x,y,heading);
-
                 dashboardTelemetry.addData("x", robot.getX());
                 dashboardTelemetry.addData("y", robot.getY());
                 dashboardTelemetry.addData("heading", robot.getHeading());
@@ -195,8 +204,13 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addData("y", robot.getY());
                 telemetry.addData("heading", robot.getHeading());
 
+
+
             }
         }
+
+
+
     }
 
 }   // end class
