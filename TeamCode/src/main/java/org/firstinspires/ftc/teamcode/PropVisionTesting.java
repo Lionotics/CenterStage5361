@@ -13,9 +13,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 public class PropVisionTesting extends LinearOpMode {
 
     private VisionPortal visionPortal;
-    private PropVision propVision = new PropVision(this.telemetry,false);
-
-
+    private PropVision propVision = new PropVision(this.telemetry,true);
 
     @Override
     public void runOpMode() throws InterruptedException {
