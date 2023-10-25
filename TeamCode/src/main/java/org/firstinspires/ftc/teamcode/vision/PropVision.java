@@ -77,6 +77,8 @@ public class PropVision implements VisionProcessor {
             highHSV = new Scalar(180, 255, 255); // higher bound HSV for red
         } else {
             // Insert blue values here
+            lowHSV = new Scalar(110, 50, 50); // lower bound HSV for red
+            highHSV = new Scalar(120, 255, 255); // higher bound HSV for red
 
         }
         Mat mat = new Mat();
@@ -115,6 +117,13 @@ public class PropVision implements VisionProcessor {
 
         // our camera output gets put back into the frame - showing which pixels are being used
         frame.copyTo(frame);
+        // be responsible with memory
+        mat.release();
+        thresh.release();
+        left.release();
+        right.release();
+        center.release();
+
         return null;
 
     }
