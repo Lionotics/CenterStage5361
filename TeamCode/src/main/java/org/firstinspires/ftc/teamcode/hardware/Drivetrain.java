@@ -1,18 +1,20 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.util.Encoder;
 
 public class Drivetrain extends Mechanism{
     DcMotor frontRight, frontLeft, backRight, backLeft;
+    private double maxPower = 0.5;
     @Override
     public void init(HardwareMap hwMap) {
-        frontRight = hwMap.dcMotor.get("frontRightTemp");
-        frontLeft = hwMap.dcMotor.get("frontLeftTemp");
-        backRight = hwMap.dcMotor.get("backRightTemp");
-        backLeft = hwMap.dcMotor.get("backLeftTemp");
+        frontRight = hwMap.dcMotor.get("frontRight");
+        frontLeft = hwMap.dcMotor.get("frontLeft");
+        backRight = hwMap.dcMotor.get("backRight");
+        backLeft = hwMap.dcMotor.get("backLeft");
 
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -23,13 +25,17 @@ public class Drivetrain extends Mechanism{
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
     }
 
     public void drive(double leftStickY, double leftStickX,
     double rightStickX){
         double y = leftStickY; // Remember, Y stick value is reversed
-        double x = leftStickX * 1.1; // Counteract imperfect strafing
-        double rx = rightStickX;
+        double x = -leftStickX * 1.1; // Counteract imperfect strafing
+        double rx = -rightStickX;
 
         // Denominator is the largest motor power (absolute value) or 1
         // This ensures all the powers maintain the same ratio,
@@ -40,10 +46,10 @@ public class Drivetrain extends Mechanism{
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        frontLeft.setPower(frontLeftPower);
-        backLeft.setPower(backLeftPower);
-        frontRight.setPower(frontRightPower);
-        backRight.setPower(backRightPower);
+        frontLeft.setPower(frontLeftPower * maxPower);
+        backLeft.setPower(backLeftPower * maxPower);
+        frontRight.setPower(frontRightPower * maxPower);
+        backRight.setPower(backRightPower * maxPower);
     }
 
 
