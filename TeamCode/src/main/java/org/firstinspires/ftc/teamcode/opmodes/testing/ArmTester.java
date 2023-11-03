@@ -1,26 +1,30 @@
-package org.firstinspires.ftc.teamcode.opmodes;
+package org.firstinspires.ftc.teamcode.opmodes.testing;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.hardware.Arm;
+import org.firstinspires.ftc.teamcode.hardware.Robot;
+
 @TeleOp
 public class ArmTester extends LinearOpMode {
-    Arm arm = new Arm();
+
+    Robot robot = new Robot();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        arm.init(hardwareMap);
-        arm.up();
+        robot.init(hardwareMap);
+        robot.arm.up();
+
 
         waitForStart();
 
         while(opModeIsActive()){
             if(gamepad1.a){
-                arm.up();
+                robot.arm.up();
             } else if (gamepad1.b){
-                arm.down();
+                robot.arm.down();
             }
         }
 

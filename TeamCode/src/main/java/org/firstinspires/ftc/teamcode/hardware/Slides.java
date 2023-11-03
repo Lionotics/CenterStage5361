@@ -9,8 +9,8 @@ public class Slides extends Mechanism{
     private double SLIDES_UP;
     @Override
     public void init(HardwareMap hwMap) {
-        slideA = hwMap.dcMotor.get("slideATemp");
-        slideB = hwMap.dcMotor.get("slideBTemp");
+        slideA = hwMap.dcMotor.get("slidesRight");
+        slideB = hwMap.dcMotor.get("slidesLeft");
 
         slideA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

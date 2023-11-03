@@ -16,7 +16,7 @@ public class Climb extends Mechanism {
 
     @Override
     public void init(HardwareMap hwMap) {
-        climb = hwMap.dcMotor.get("climbTemp");
+        climb = hwMap.dcMotor.get("climb");
         hook = hwMap.servo.get("hookTemp");
 
         climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

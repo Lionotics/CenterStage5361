@@ -13,7 +13,7 @@ public class Intake extends Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         intake = hwMap.dcMotor.get("intake");
-        bottomRoller =hwMap.crservo.get("BottoMroller");
+        bottomRoller = hwMap.crservo.get("BottomRoller");
 
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
