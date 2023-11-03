@@ -2,27 +2,27 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.checkerframework.checker.units.qual.A;
+
 // Class for cleaner code
 public class Robot {
-    public Arm arm;
-//    public Airplane airplane;
-//    public Climb climb;
-//    public Slides slides;
+    public Arm arm = new Arm();
+    public Airplane airplane = new Airplane();
+    public Climb climb = new Climb();
+    public Slides slides = new Slides();
 
-    public Drivetrain drivetrain;
+    public Drivetrain drive = new Drivetrain();
     public boolean isAuto = false;
 
-    public Robot(){
+    public Robot(){}
 
-
-    }
     public void init(HardwareMap hwMap){
         //        TODO: Uncomment as hardware is setup and ready
-        arm.init(hwMap);
+//        arm.init(hwMap);
 //        airplane.init(hwMap);
 //        climb.init(hwMap);
 //        slides.init(hwMap);
 
-        drivetrain.init(hwMap);
+        drive.init(hwMap);
     }
 }

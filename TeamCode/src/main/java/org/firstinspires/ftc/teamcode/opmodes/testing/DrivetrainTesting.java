@@ -13,16 +13,17 @@ import org.firstinspires.ftc.teamcode.helpers.GamepadEx;
 public class DrivetrainTesting extends LinearOpMode
 {
 //    Robot robot = new Robot();
-    Drivetrain drive = new Drivetrain();
+//    Drivetrain drive = new Drivetrain();
+    Robot robot = new Robot();
     GamepadEx gamepadEx1 = new GamepadEx();
     @Override
     public void runOpMode() throws InterruptedException {
 
-        drive.init(hardwareMap);
+        robot.init(hardwareMap);
 
         waitForStart();
 
-        drive.setMaxSpeed(0.5);
+        robot.drive.setMaxSpeed(0.5);
 
         while (opModeIsActive()){
 
@@ -30,19 +31,20 @@ public class DrivetrainTesting extends LinearOpMode
             gamepadEx1.update(gamepad1);
 
             // Actually drive the robot
-            drive.drive(gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x);
+            robot.drive.drive(gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x);
 
 //             Speed down toggle
-            if(gamepadEx1.a.isNewlyReleased() && drive.getMaxSpeed() > 0){
-                drive.setMaxSpeed(drive.getMaxSpeed() - 0.1);
+            if(gamepadEx1.a.isNewlyReleased() && robot.drive.getMaxSpeed() > 0){
+                robot.drive.setMaxSpeed(robot.drive.getMaxSpeed() - 0.1);
             }
             // Speed up toggle
-            if(gamepadEx1.b.isNewlyPressed() && drive.getMaxSpeed() < 1){
-                drive.setMaxSpeed(drive.getMaxSpeed() + 0.1);
+            if(gamepadEx1.b.isNewlyPressed() && robot.drive.getMaxSpeed() < 1){
+                robot.drive.setMaxSpeed(robot.drive.getMaxSpeed() + 0.1);
             }
 
             // Show the speed to the user
-            telemetry.addData("Max Speed:", drive.getMaxSpeed());
+            telemetry.addData("Max Speed:", robot.drive.getMaxSpeed());
+            telemetry.addLine("Press A to increase and B to decrease");
             telemetry.update();
         }
 
