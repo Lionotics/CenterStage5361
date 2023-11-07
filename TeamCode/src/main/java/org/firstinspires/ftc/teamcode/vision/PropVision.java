@@ -127,6 +127,9 @@ public class PropVision implements VisionProcessor {
         return null;
 
     }
+    public PropLocation getLocation(){
+        return location;
+    }
 
     @Override
     public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {

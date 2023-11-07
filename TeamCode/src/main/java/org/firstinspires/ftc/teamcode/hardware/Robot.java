@@ -14,7 +14,9 @@ public class Robot {
     public Drivetrain drive = new Drivetrain();
     public boolean isAuto = false;
 
-    public Robot(){}
+    public Robot(boolean isAuto){
+        this.isAuto = isAuto;
+    }
 
     public void init(HardwareMap hwMap){
         //        TODO: Uncomment as hardware is setup and ready
@@ -23,6 +25,9 @@ public class Robot {
 //        climb.init(hwMap);
 //        slides.init(hwMap);
 
-        drive.init(hwMap);
+        // If we are in auto, assume roadrunner is handling the drivetrain
+        if(!isAuto) {
+            drive.init(hwMap);
+        }
     }
 }

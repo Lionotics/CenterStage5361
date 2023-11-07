@@ -14,7 +14,7 @@ public class DrivetrainTesting extends LinearOpMode
 {
 //    Robot robot = new Robot();
 //    Drivetrain drive = new Drivetrain();
-    Robot robot = new Robot();
+    Robot robot = new Robot(false);
     GamepadEx gamepadEx1 = new GamepadEx();
     @Override
     public void runOpMode() throws InterruptedException {

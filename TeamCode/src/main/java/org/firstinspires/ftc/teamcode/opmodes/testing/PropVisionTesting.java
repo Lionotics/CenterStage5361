@@ -41,15 +41,5 @@ public class PropVisionTesting extends LinearOpMode {
         builder.addProcessor(propVision);
         visionPortal = builder.build();
         visionPortal.setProcessorEnabled(propVision, true);
-
-
-
-
-
-
-
-
-
-
     }
 }

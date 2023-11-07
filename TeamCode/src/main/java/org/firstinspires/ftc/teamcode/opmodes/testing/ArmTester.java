@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 @TeleOp
 public class ArmTester extends LinearOpMode {
 
-    Robot robot = new Robot();
+    Robot robot = new Robot(false);
 
     @Override
     public void runOpMode() throws InterruptedException {
