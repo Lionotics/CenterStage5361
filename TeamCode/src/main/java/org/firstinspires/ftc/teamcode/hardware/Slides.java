@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
+@Config
 public class Slides extends Mechanism{
     DcMotor slideA, slideB;
-    private double SLIDES_UP;
+    public static double SLIDES_UP = 960;
+    public static double SLIDES_HOLD = 0.008;
     @Override
     public void init(HardwareMap hwMap) {
         slideA = hwMap.dcMotor.get("slidesRight");
@@ -24,14 +26,21 @@ public class Slides extends Mechanism{
     }
     public void slideUp(){
         if (slideA.getCurrentPosition() < SLIDES_UP) {
-            slideA.setPower(1);
-            slideB.setPower(1);
+            slideA.setPower(0.4);
+            slideB.setPower(0.4);
         }
     }
     public void slideDown(){
         if (slideA.getCurrentPosition() > 0) {
-            slideA.setPower(-1);
-            slideB.setPower(-1);
+            slideA.setPower(-0.4);
+            slideB.setPower(-0.4);
         }
+    }
+    public void slideStop(){
+        slideA.setPower(SLIDES_HOLD);
+        slideB.setPower(SLIDES_HOLD);
+    }
+    public int getPosition(){
+        return slideA.getCurrentPosition();
     }
 }

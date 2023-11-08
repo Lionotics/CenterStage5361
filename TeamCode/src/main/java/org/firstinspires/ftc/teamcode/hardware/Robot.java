@@ -10,7 +10,7 @@ public class Robot {
     public Airplane airplane = new Airplane();
     public Climb climb = new Climb();
     public Slides slides = new Slides();
-
+    public Intake intake = new Intake();
     public Drivetrain drive = new Drivetrain();
     public boolean isAuto = false;
 
@@ -20,11 +20,11 @@ public class Robot {
 
     public void init(HardwareMap hwMap){
         //        TODO: Uncomment as hardware is setup and ready
-//        arm.init(hwMap);
+        arm.init(hwMap);
 //        airplane.init(hwMap);
 //        climb.init(hwMap);
-//        slides.init(hwMap);
-
+        slides.init(hwMap);
+        intake.init(hwMap);
         // If we are in auto, assume roadrunner is handling the drivetrain
         if(!isAuto) {
             drive.init(hwMap);

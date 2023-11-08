@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 
 public class Drivetrain extends Mechanism{
 
-    private double maxSpeed = 1;
+    private double maxSpeed = 0.7;
     DcMotor frontRight, frontLeft, backRight, backLeft;
     @Override
     public void init(HardwareMap hwMap) {
