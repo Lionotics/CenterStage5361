@@ -17,10 +17,10 @@ public class Teleop extends LinearOpMode
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);
+        robot.drive.setMaxSpeed(0.8);
 
         waitForStart();
 
-        robot.drive.setMaxSpeed(0.5);
 
         while (opModeIsActive()){
 
@@ -30,31 +30,45 @@ public class Teleop extends LinearOpMode
             // Actually drive the robot
             robot.drive.drive(gamepad1.left_stick_y,gamepad1.left_stick_x,gamepad1.right_stick_x);
 
-            //Speed down toggle
-            if(gamepadEx1.a.isNewlyReleased() && robot.drive.getMaxSpeed() > 0){
-                robot.intake.setMaxSpeed(robot.intake.getMaxSpeed() - 0.1);
-            }
-
-            // Speed up toggle
-            if(gamepadEx1.b.isNewlyPressed() && robot.drive.getMaxSpeed() < 1){
-                robot.intake.setMaxSpeed(robot.intake.getMaxSpeed() + 0.1);
-            }
-
             if (gamepad1.right_bumper){
                 robot.intake.intake();
             } else {
                 robot.intake.stop();
             }
-            if (gamepad1.dpad_up) {
-                robot.intake.setHeight(robot.intake.UP);
-            } else if (gamepad1.dpad_down) {
-                robot.intake.setHeight(robot.intake.DOWN);
+            robot.intake.setHeight(robot.intake.DOWN);
+
+            if (gamepad1.dpad_up && robot.slides.getPosition() < robot.slides.SLIDES_UP) {
+                robot.slides.slideUp();
+            } else if (gamepad1.dpad_down && robot.slides.getPosition() > 0) {
+                robot.slides.slideDown();
+            } else {
+                robot.slides.slideStop();
             }
-            robot.arm.down();
+
+            if(gamepad1.a){
+                robot.arm.up();
+            } else if (gamepad1.b){
+                robot.arm.down();
+            }
+
+            if(gamepad1.x){
+                robot.arm.lock1();
+            } else {
+                robot.arm.release1();
+            }
+
+            if(gamepad1.y){
+                robot.arm.lock2();
+            } else{
+                robot.arm.release2();
+            }
+
 
             // Show the speed to the user
             telemetry.addData("Max Speed:", robot.intake.getMaxSpeed());
             telemetry.addLine("Press A to increase and B to decrease");
+            telemetry.addData("Slides pos",robot.slides.getPosition());
+
             telemetry.update();
         }
 

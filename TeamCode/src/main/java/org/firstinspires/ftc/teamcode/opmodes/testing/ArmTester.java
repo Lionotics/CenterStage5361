@@ -21,11 +21,25 @@ public class ArmTester extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
+
             if(gamepad1.a){
                 robot.arm.up();
             } else if (gamepad1.b){
                 robot.arm.down();
             }
+
+            if(gamepad1.x){
+                robot.arm.lock1();
+            } else {
+                robot.arm.release1();
+            }
+
+            if(gamepad1.y){
+                robot.arm.lock2();
+            } else{
+                robot.arm.release2();
+            }
+
         }
 
     }

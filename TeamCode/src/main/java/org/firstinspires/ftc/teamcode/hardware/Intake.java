@@ -12,9 +12,9 @@ public class Intake extends Mechanism {
 
      CRServo bottomRoller;
      Servo servoHeight;
-     public static double MAX_SPEED = 0.5;
+     public static double MAX_SPEED = 0.9;
      public  static double  UP = 0.1;
-    public static  double DOWN = 0.54;
+    public static  double DOWN = 0.56;
 
     @Override
     public void init(HardwareMap hwMap) {
