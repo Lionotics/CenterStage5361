@@ -39,6 +39,10 @@ public class Intake extends Mechanism {
         intake.setPower(-1);
         bottomRoller.setPower(-1);
     }
+    public void outtake(double power){
+        intake.setPower(-power);
+        bottomRoller.setPower(-1);
+    }
     public void setHeight(double height){
         servoHeight.setPosition(height);
     }
