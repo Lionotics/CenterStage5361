@@ -8,22 +8,31 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 @Config
 public class Slides extends Mechanism{
+
+    private DcMotorEx slideA, slideB;
+    public static double SLIDES_UP = 960;
+    public static double SLIDES_HOLD = 0.0005;
+    public static double MAX_SPEED = 0.7;
+    // min for scoring ~300
+
+    // PID Loop
+    private PIDController controller;
+    public static int target = 0;
     public static double Kg = 0;
     public static double Kp = 0;
     public static double Ki = 0;
     public static double Kd = 0;
-    private PIDController controller;
-    public static int target = 0;
+    public static int exitThreshold = 10;
 
-    private DcMotorEx slideA, slideB;
-    public static double SLIDES_UP = 960;
-    // min for scoring ~300
-    public static double SLIDES_HOLD = 0.0005;
+    // state machine
+    public enum LIFT_STATE {
+        AUTO_MOVE,
+        MANUAL_UP,
+        MANUAL_DOWN,
+        HOLDING
+    }
+    private LIFT_STATE liftState = LIFT_STATE.HOLDING;
 
-
-    // 0.001
-
-    public static double MAX_SPEED = 0.7;
     @Override
     public void init(HardwareMap hwMap) {
         slideA = (DcMotorEx) hwMap.dcMotor.get("slidesRight");
@@ -43,32 +52,41 @@ public class Slides extends Mechanism{
 
     }
 
-    public void loop(){
+    public void pidLoop(){
         // for tuning
         controller.setPID(Kp,Ki,Kd);
+        liftState = LIFT_STATE.AUTO_MOVE;
         double pos = this.getPosition();
         double power = controller.calculate(pos,target);
-        slideA.setPower(power);
-        slideB.setPower(power);
+        slideA.setPower(power + Kg);
+        slideB.setPower(power + Kg);
+
+        // code needs some sort of exit here - what that looks like I'm not quite sure yet.
     }
     public void setTarget(int target){this.target = target;}
     public int getTarget(){return target;}
+
+    // Manual movement
     public void slideUp(){
         if (slideA.getCurrentPosition() < SLIDES_UP) {
             slideA.setPower(MAX_SPEED);
             slideB.setPower(MAX_SPEED);
+            liftState = LIFT_STATE.MANUAL_UP;
         }
     }
     public void slideDown(){
         if (slideA.getCurrentPosition() > 0) {
             slideA.setPower(-MAX_SPEED);
             slideB.setPower(-MAX_SPEED);
+            liftState = LIFT_STATE.MANUAL_DOWN;
         }
     }
     public void slideStop(){
         slideA.setPower(SLIDES_HOLD);
         slideB.setPower(SLIDES_HOLD);
+        liftState = LIFT_STATE.HOLDING;
     }
+
     public int getPosition(){
         return slideA.getCurrentPosition();
     }
@@ -76,4 +94,9 @@ public class Slides extends Mechanism{
     public void setMaxSpeed(double speed){
         MAX_SPEED = speed;
     }
+    public LIFT_STATE getLiftState(){
+        return liftState;
+    }
+
+
 }

@@ -70,7 +70,7 @@ public class PropVision implements VisionProcessor {
         Scalar lowHSV = new Scalar(0,0,0);
         Scalar highHSV = new Scalar(255,255,255);
 
-        // TODO: Tuning for both red and blue
+        // Tuning for both red and blue
         // add an if statement based on isRed
         if(isRed) {
             lowHSV = new Scalar(160, 50, 50); // lower bound HSV for red
@@ -85,7 +85,7 @@ public class PropVision implements VisionProcessor {
         // Convert to HSv
         Imgproc.cvtColor(frame, mat, Imgproc.COLOR_RGB2HSV);
 
-        // TODO: Tuning
+
         Mat thresh = new Mat();
         Core.inRange(mat,lowHSV,highHSV,thresh);
         Mat left = thresh.submat(0,height,0,LEFTLINE);

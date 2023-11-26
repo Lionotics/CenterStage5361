@@ -15,6 +15,12 @@ public class Intake extends Mechanism {
      public static double MAX_SPEED = 0.9;
      public  static double  UP = 0.1;
     public static  double DOWN = 0.56;
+    public enum IntakeState{
+        IN,
+        STOP,
+        OUT
+    }
+    private IntakeState intakeState = IntakeState.STOP;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -30,18 +36,26 @@ public class Intake extends Mechanism {
     public void intake(){
         intake.setPower(MAX_SPEED);
         bottomRoller.setPower(1);
+        intakeState = IntakeState.IN;
+
     }
     public void stop(){
         intake.setPower(0);
         bottomRoller.setPower(0);
+        intakeState = IntakeState.STOP;
+
     }
     public void outtake() {
         intake.setPower(-1);
         bottomRoller.setPower(-1);
+        intakeState = IntakeState.OUT;
+
     }
     public void outtake(double power){
         intake.setPower(-power);
         bottomRoller.setPower(-1);
+        intakeState = IntakeState.OUT;
+
     }
     public void setHeight(double height){
         servoHeight.setPosition(height);
@@ -53,5 +67,8 @@ public class Intake extends Mechanism {
     public double getMaxSpeed(){
         return MAX_SPEED;
 
+    }
+    public IntakeState getIntakeState(){
+        return intakeState;
     }
 }

@@ -7,11 +7,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 @Config
 public class Climb extends Mechanism {
-    DcMotor climb;
-    Servo hook;
-    private double HOOK_DOWN;
-    private double HOOK_UP;
-    private double CLIMB_UP;
+
+    private DcMotor climb;
+    private Servo hook;
+    // These need tuning, random numbers for now
+    private double HOOK_DOWN = 0.4;
+    private double HOOK_UP = 0.5;
+    private double CLIMB_UP = 0;
 
 
     @Override
