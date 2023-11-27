@@ -40,6 +40,7 @@ public class PropVision implements VisionProcessor {
         CENTER,
         RIGHT
     }
+
     private PropLocation location;
     // set our color
     boolean isRed = true;
@@ -117,7 +118,7 @@ public class PropVision implements VisionProcessor {
 
         // our camera output gets put back into the frame - showing which pixels are being used
         frame.copyTo(frame);
-        // be responsible with memory
+        // be responsible with memory - clear out things we don't need from processing the frame
         mat.release();
         thresh.release();
         left.release();

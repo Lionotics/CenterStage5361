@@ -9,7 +9,7 @@ import org.firstinspires.ftc.teamcode.hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.helpers.GamepadEx;
 
-@TeleOp
+@TeleOp(group = "testers")
 public class DrivetrainTesting extends LinearOpMode
 {
     //    Robot robot = new Robot();

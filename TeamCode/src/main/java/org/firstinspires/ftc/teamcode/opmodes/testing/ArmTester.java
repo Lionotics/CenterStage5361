@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.hardware.Arm;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
-@TeleOp
+@TeleOp(group = "testers")
 public class ArmTester extends LinearOpMode {
 
     Robot robot = new Robot(false);

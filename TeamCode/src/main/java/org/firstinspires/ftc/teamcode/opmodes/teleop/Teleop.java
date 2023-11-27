@@ -90,9 +90,7 @@ public class Teleop extends LinearOpMode
                 }
             }
 
-            // Show the speed to the user
-            telemetry.addData("Max Speed:", robot.intake.getMaxSpeed());
-            telemetry.addLine("Press A to increase and B to decrease");
+            // Telemetry
             telemetry.addData("Slides pos",robot.slides.getPosition());
             telemetry.addData("PixelState", robot.arm.getPixelState());
             telemetry.addData("ArmState",robot.arm.getArmState());

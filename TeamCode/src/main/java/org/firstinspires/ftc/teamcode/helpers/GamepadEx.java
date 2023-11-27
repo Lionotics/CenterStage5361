@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 public class GamepadEx {
 
-//    public Button a,b,x,y,up,down,left,right = new Button();
     public Button a = new Button(false);
     public Button b = new Button(false);
     public Button x = new Button(false);

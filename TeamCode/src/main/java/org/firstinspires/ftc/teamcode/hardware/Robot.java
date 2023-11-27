@@ -22,7 +22,7 @@ public class Robot {
         // Uncomment as hardware is setup and ready
         arm.init(hwMap);
 //        airplane.init(hwMap);
-//        climb.init(hwMap);
+        climb.init(hwMap);
         slides.init(hwMap);
         intake.init(hwMap);
         // If we are in auto, assume roadrunner is handling the drivetrain
