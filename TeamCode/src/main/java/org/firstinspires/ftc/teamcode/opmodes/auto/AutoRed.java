@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 import android.util.Size;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -22,12 +21,12 @@ public class AutoRed extends LinearOpMode {
     private Robot robot = new Robot(true);
 
     private enum State{
-        TRAJECTORY_1,
+        SPIKEMARK,
         TRAJECTORY_2,
         TRAJECTORY_3,
         IDLE
     }
-    private State currentState = State.TRAJECTORY_1;
+    private State currentState = State.SPIKEMARK;
 
     // Define a starting position
     Pose2d startPose =new Pose2d(11.5, -62, Math.toRadians(90.00));
@@ -45,15 +44,34 @@ public class AutoRed extends LinearOpMode {
 
         // setup other hardware
         robot.init(hardwareMap);
+        robot.intake.setHeight(robot.intake.UP);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .forward(20)
-                .lineToSplineHeading(new Pose2d(13,-30,Math.toRadians(0)))
-                .addTemporalMarker(2,()->{
-                    robot.intake.outtake(0.7);
+                .lineToSplineHeading(new Pose2d(8,-40,Math.toRadians(135)))
+                .addTemporalMarker(2.5,()->{
+                    robot.arm.release2();
                 })
                 .waitSeconds(1)
 
+                .build();
+
+        TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
+                .forward(20)
+                .lineToSplineHeading(new Pose2d(11.5,-30,Math.toRadians(90)))
+                .addTemporalMarker(2,()->{
+                    robot.arm.release2();
+                })
+                .waitSeconds(1)
+                .build();
+
+        TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
+                .forward(15)
+                .lineToSplineHeading(new Pose2d(15,-40,Math.toRadians(45)))
+                .addTemporalMarker(2,()->{
+                    robot.arm.release2();
+                })
+                .waitSeconds(1)
                 .build();
 
         // init loop. Runs durring init before start is pressed
@@ -75,17 +93,25 @@ public class AutoRed extends LinearOpMode {
         if (isStopRequested()) return;
         // Start has been pressed
 
+
         if(location == PropVision.PropLocation.LEFT){
             drive.followTrajectorySequenceAsync(placeLeft);
+        } else if (location == PropVision.PropLocation.CENTER){
+            drive.followTrajectorySequenceAsync(placeCenter);
+        } else {
+            drive.followTrajectorySequenceAsync(placeRight);
         }
+
+        robot.arm.fullLock();
+        robot.arm.ground();
 
         while(opModeIsActive() && !isStopRequested()){
 
             switch (currentState){
-                case TRAJECTORY_1:
+                case SPIKEMARK:
                     if(!drive.isBusy()){
                         currentState = State.IDLE;
-                        robot.intake.stop();
+                        robot.arm.release2();
                     }
 
                 case IDLE:

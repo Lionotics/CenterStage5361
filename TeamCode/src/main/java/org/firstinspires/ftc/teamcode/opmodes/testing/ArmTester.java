@@ -26,19 +26,22 @@ public class ArmTester extends LinearOpMode {
                 robot.arm.up();
             } else if (gamepad1.b){
                 robot.arm.down();
-            }
+            } else if (gamepad1.x){
+                robot.arm.ground();
 
-            if(gamepad1.x){
+            }
+            if(gamepad1.right_bumper){
                 robot.arm.lock1();
             } else {
                 robot.arm.release1();
             }
 
-            if(gamepad1.y){
+            if(gamepad1.left_bumper){
                 robot.arm.lock2();
             } else{
                 robot.arm.release2();
             }
+
 
         }
 

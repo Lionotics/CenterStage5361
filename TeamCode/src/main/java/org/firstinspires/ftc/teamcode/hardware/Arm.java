@@ -13,6 +13,7 @@ public class Arm extends Mechanism{
     public static double OFFSET = 0.006;
     public static double UP = 0.56;
     public static double DOWN = 0.17 ;
+    public static double GROUND = 0.8;
     public static double PIXEL1_IN = 0.27;
     public static double PIXEL2_IN = 0.45;
     public static double PIXEL1_OUT = 0;
@@ -20,7 +21,8 @@ public class Arm extends Mechanism{
 
     public enum ArmState{
         ARM_UP,
-        ARM_DOWN
+        ARM_DOWN,
+        ARM_GROUND
     }
     public enum PixelState{
         OPEN,
@@ -56,6 +58,11 @@ public class Arm extends Mechanism{
         arm1.setPosition(DOWN);
         arm2.setPosition(1 - DOWN - OFFSET);
         armState = ArmState.ARM_DOWN;
+    }
+    public void ground(){
+        arm1.setPosition(GROUND);
+        arm2.setPosition(1 - GROUND);
+        armState = ArmState.ARM_GROUND;
     }
     public void lock1(){
         pixel1.setPosition(PIXEL1_IN);

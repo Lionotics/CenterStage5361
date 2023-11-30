@@ -13,13 +13,15 @@ public class Slides extends Mechanism{
     public static double SLIDES_UP = 960;
     public static double SLIDES_HOLD = 0.0005;
     public static double MAX_SPEED = 0.7;
+    public static double MAX_AUTO_SPEED = 0.7;
+    public static double SLIDES_AUTO = 175;
     // min for scoring ~300
 
     // PID Loop
     private PIDController controller;
     public static int target = 0;
-    public static double Kg = 0;
-    public static double Kp = 0;
+    public static double Kg = SLIDES_HOLD;
+    public static double Kp = 0.005;
     public static double Ki = 0;
     public static double Kd = 0;
     public static int exitThreshold = 10;
@@ -58,8 +60,8 @@ public class Slides extends Mechanism{
         liftState = LIFT_STATE.AUTO_MOVE;
         double pos = this.getPosition();
         double power = controller.calculate(pos,target);
-        slideA.setPower(power + Kg);
-        slideB.setPower(power + Kg);
+        slideA.setPower((power * MAX_AUTO_SPEED) + Kg);
+        slideB.setPower((power * MAX_AUTO_SPEED) + Kg);
 
         // code needs some sort of exit here - what that looks like I'm not quite sure yet.
     }
