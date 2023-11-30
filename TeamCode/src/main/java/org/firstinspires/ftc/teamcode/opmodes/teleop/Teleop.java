@@ -45,7 +45,7 @@ public class Teleop extends LinearOpMode {
             if (gamepad1.right_bumper
                     && robot.slides.getLiftState() == Slides.LIFT_STATE.HOLDING) {
                 robot.intake.intake();
-            } else if (gamepad1.dpad_down) {
+            } else if (gamepad1.left_trigger > 0.6) {
                 robot.intake.outtake();
             }
             else{

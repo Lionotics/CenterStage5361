@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 
 public class Drivetrain extends Mechanism{
 
-    private double maxSpeed = 0.7;
+    private double maxSpeed = 0.8;
     private DcMotor frontRight, frontLeft, backRight, backLeft;
     private IMU imu;
     @Override

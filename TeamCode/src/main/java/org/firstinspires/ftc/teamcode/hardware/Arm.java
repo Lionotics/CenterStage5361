@@ -2,16 +2,19 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.ServoImpl;
+import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 @Config
 public class Arm extends Mechanism{
 
     public static double OFFSET = 0.006;
-    public static double UP = 0.91;
-    public static double DOWN = 0.5;
+    public static double UP = 0.56;
+    public static double DOWN = 0.17 ;
     public static double PIXEL1_IN = 0.27;
-    public static double PIXEL2_IN = 0.4;
+    public static double PIXEL2_IN = 0.45;
     public static double PIXEL1_OUT = 0;
     public static double PIXEL2_OUT = 0.1;
 
@@ -26,17 +29,20 @@ public class Arm extends Mechanism{
         ONE_RELEASE
     }
 
-    private Servo arm1, arm2, pixel1, pixel2;
+    private ServoImplEx arm1, arm2, pixel1, pixel2;
     public ArmState armState;
     private PixelState pixelState;
 
     @Override
     public void init(HardwareMap hwMap) {
-        arm1 = hwMap.servo.get("pivotLeft");
-        arm2 = hwMap.servo.get("pivotRight");
-        pixel1 = hwMap.servo.get("endLeft");
-        pixel2 = hwMap.servo.get("endRight");
+        arm1 = (ServoImplEx) hwMap.servo.get("pivotLeft");
+        arm2 = (ServoImplEx) hwMap.servo.get("pivotRight");
+        pixel1 = (ServoImplEx) hwMap.servo.get("endLeft");
+        pixel2 = (ServoImplEx) hwMap.servo.get("endRight");
         pixel2.setDirection(Servo.Direction.REVERSE);
+//        arm1.setPwmRange(new PwmControl.PwmRange(500,2500));
+//        arm2.setPwmRange(new PwmControl.PwmRange(500,2500));
+
         down();
         fullRelease();
     }
