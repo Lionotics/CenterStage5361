@@ -12,6 +12,8 @@ public class GamepadEx {
     public Button down = new Button(false);
     public Button left = new Button(false);
     public Button right = new Button(false);
+    public Button leftBumper = new Button(false);
+    public Button rightBumper = new Button(false);
 
     public GamepadEx(){}
 
@@ -25,6 +27,8 @@ public class GamepadEx {
         this.down.update(updatedGamepad.dpad_down);
         this.left.update(updatedGamepad.dpad_left);
         this.right.update(updatedGamepad.dpad_right);
+        this.rightBumper.update(updatedGamepad.right_bumper);
+        this.leftBumper.update(updatedGamepad.left_bumper);
 
     }
 }

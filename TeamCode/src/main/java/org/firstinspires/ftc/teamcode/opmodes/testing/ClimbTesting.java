@@ -18,9 +18,9 @@ public class ClimbTesting extends LinearOpMode {
         while(opModeIsActive()){
 
             if(gamepad1.dpad_up){
-                robot.climb.climbUp();
+                robot.climb.manualUp();
             } else if (gamepad1.dpad_down){
-                robot.climb.climbdown();
+                robot.climb.manualDown();
             } else {
                 robot.climb.stop();
             }
@@ -29,8 +29,6 @@ public class ClimbTesting extends LinearOpMode {
                 robot.climb.hookUp();
             } else if (gamepad1.b ){
                 robot.climb.hookDown();
-            } else if(gamepad1.y){
-                robot.climb.disableHook();
             }
 
             telemetry.addData("Climb Pos", robot.climb.getPosition());

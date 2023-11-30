@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Arm extends Mechanism{
 
     public static double OFFSET = 0.006;
-    public static double UP = 0.88;
-    public static double DOWN = 0.21;
+    public static double UP = 0.91;
+    public static double DOWN = 0.5;
     public static double PIXEL1_IN = 0.27;
     public static double PIXEL2_IN = 0.4;
     public static double PIXEL1_OUT = 0;
@@ -27,7 +27,7 @@ public class Arm extends Mechanism{
     }
 
     private Servo arm1, arm2, pixel1, pixel2;
-    private ArmState armState;
+    public ArmState armState;
     private PixelState pixelState;
 
     @Override

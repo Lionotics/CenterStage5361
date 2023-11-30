@@ -12,15 +12,21 @@ public class Intake extends Mechanism {
 
      CRServo bottomRoller;
      Servo servoHeight;
-     public static double MAX_SPEED = 0.9;
+     public static double MAX_SPEED = 1;
      public  static double  UP = 0.1;
     public static  double DOWN = 0.56;
+    public static double STACK = 0.46;
     public enum IntakeState{
         IN,
         STOP,
         OUT
     }
+    public enum IntakeHeight {
+            DOWN,
+            STACK
+    }
     private IntakeState intakeState = IntakeState.STOP;
+    public IntakeHeight intakeHeight = IntakeHeight.DOWN;
 
     @Override
     public void init(HardwareMap hwMap) {
@@ -60,8 +66,16 @@ public class Intake extends Mechanism {
     public void setHeight(double height){
         servoHeight.setPosition(height);
     }
+    public void intakeDown(){
+        servoHeight.setPosition(DOWN);
+        intakeHeight = IntakeHeight.DOWN;
+    }
 
-    public void setMaxSpeed(double speed){
+    public void intakeStack(){
+        servoHeight.setPosition(STACK);
+        intakeHeight = IntakeHeight.STACK;
+
+    }    public void setMaxSpeed(double speed){
         MAX_SPEED = speed;
     }
     public double getMaxSpeed(){

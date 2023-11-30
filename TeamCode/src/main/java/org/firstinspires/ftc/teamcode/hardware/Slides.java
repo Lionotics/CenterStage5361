@@ -82,9 +82,16 @@ public class Slides extends Mechanism{
         }
     }
     public void slideStop(){
-        slideA.setPower(SLIDES_HOLD);
-        slideB.setPower(SLIDES_HOLD);
-        liftState = LIFT_STATE.HOLDING;
+        if(this.getPosition() > 10) {
+            slideA.setPower(SLIDES_HOLD);
+            slideB.setPower(SLIDES_HOLD);
+            liftState = LIFT_STATE.HOLDING;
+        } else {
+            slideA.setPower(0);
+            slideB.setPower(0);
+            liftState = LIFT_STATE.HOLDING;
+
+        }
     }
 
     public int getPosition(){
