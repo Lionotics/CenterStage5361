@@ -8,6 +8,7 @@ import org.firstinspires.ftc.vision.VisionProcessor;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
@@ -40,6 +41,7 @@ public class PropVision implements VisionProcessor {
         CENTER,
         RIGHT
     }
+
 
     private PropLocation location;
     // set our color
@@ -124,6 +126,7 @@ public class PropVision implements VisionProcessor {
         left.release();
         right.release();
         center.release();
+
 
         return null;
 

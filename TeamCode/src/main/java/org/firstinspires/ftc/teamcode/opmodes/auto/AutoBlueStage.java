@@ -14,10 +14,11 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
 @Autonomous
-public class AutoRed extends LinearOpMode {
+public class AutoBlueStage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
-    private PropVision propVision = new PropVision(this.telemetry,true);
+    // Vision set to BLUE
+    private PropVision propVision = new PropVision(this.telemetry,false);
 
     private Robot robot = new Robot(true);
 
@@ -31,7 +32,7 @@ public class AutoRed extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose =new Pose2d(11.5, -62, Math.toRadians(90.00));
+    Pose2d startPose = AutoConstants.BLUE_LEFT_START;
     // Vision
     PropVision.PropLocation location;
     @Override
@@ -50,7 +51,7 @@ public class AutoRed extends LinearOpMode {
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(new Pose2d(8,-40,Math.toRadians(135)))
+                .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -58,7 +59,8 @@ public class AutoRed extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .lineToSplineHeading(new Pose2d(49.5,-26,0))
+                .strafeLeft(6)
+                .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -74,7 +76,7 @@ public class AutoRed extends LinearOpMode {
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .forward(20)
-                .lineToSplineHeading(new Pose2d(11.5,-36,Math.toRadians(90)))
+                .lineToSplineHeading(AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -83,7 +85,7 @@ public class AutoRed extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .lineToSplineHeading(new Pose2d(49.5,-34,0))
+                .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -97,7 +99,7 @@ public class AutoRed extends LinearOpMode {
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(new Pose2d(13,-40,Math.toRadians(45)))
+                .lineToSplineHeading(AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -106,8 +108,7 @@ public class AutoRed extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .strafeRight(6)
-                .lineToSplineHeading(new Pose2d(49.5,-42,0))
+                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
