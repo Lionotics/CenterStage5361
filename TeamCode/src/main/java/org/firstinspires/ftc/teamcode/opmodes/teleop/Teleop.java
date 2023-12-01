@@ -66,13 +66,23 @@ public class Teleop extends LinearOpMode {
             if (robot.intake.getIntakeState() == Intake.IntakeState.STOP) {
 
                 if ((gamepad1.b || gamepad1.dpad_up) && robot.slides.getPosition() < robot.slides.SLIDES_UP) {
-                    robot.slides.slideUp();
+
+                    if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < robot.slides.TRANSITION_POINT){
+                        robot.arm.fullLock();
+                        robot.arm.up();
+                        robot.slides.autoMoveTo(robot.slides.TRANSITION_POINT);
+                    } else if(robot.slides.getPosition() > robot.slides.TRANSITION_POINT - 10){
+                        robot.slides.manualUp();
+                    }
+
                 } else if (gamepad1.left_bumper && robot.slides.getPosition() > 0) {
-                    robot.slides.slideDown();
+                    robot.slides.manualDown();
                 } else {
-                    robot.slides.slideStop();
+                    robot.slides.hold();
                 }
+
             }
+            robot.slides.loop();
 
 
         // Arm controls

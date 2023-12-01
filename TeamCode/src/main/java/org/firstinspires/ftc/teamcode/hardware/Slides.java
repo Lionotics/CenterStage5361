@@ -15,6 +15,7 @@ public class Slides extends Mechanism{
     public static double MAX_SPEED = 0.7;
     public static double MAX_AUTO_SPEED = 0.7;
     public static int SLIDES_AUTO = 150;
+    public static int TRANSITION_POINT = 150;
     // min for scoring ~300
 
     // PID Loop
@@ -51,13 +52,19 @@ public class Slides extends Mechanism{
         slideB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         controller = new PIDController(Kp,Ki,Kd);
+        controller.setPID(Kp,Ki,Kd);
+
+
+    }
+    public void autoMoveTo(int newTarget){
+
+        setTarget(newTarget);
+        liftState = LIFT_STATE.AUTO_MOVE;
 
     }
 
     public void pidLoop(){
         // for tuning
-        controller.setPID(Kp,Ki,Kd);
-        liftState = LIFT_STATE.AUTO_MOVE;
         double pos = this.getPosition();
         double power = controller.calculate(pos,target);
         if(this.getPosition() > 10) {
@@ -78,29 +85,54 @@ public class Slides extends Mechanism{
         if (slideA.getCurrentPosition() < SLIDES_UP) {
             slideA.setPower(MAX_SPEED);
             slideB.setPower(MAX_SPEED);
-            liftState = LIFT_STATE.MANUAL_UP;
         }
     }
+    public void manualUp(){
+        liftState = LIFT_STATE.MANUAL_UP;
+    }
+
     public void slideDown(){
         if (slideA.getCurrentPosition() > 0) {
             slideA.setPower(-MAX_SPEED);
             slideB.setPower(-MAX_SPEED);
-            liftState = LIFT_STATE.MANUAL_DOWN;
         }
     }
+    public void manualDown(){
+        liftState = LIFT_STATE.MANUAL_DOWN;
+    }
+
     public void slideStop(){
         if(this.getPosition() > 10) {
             slideA.setPower(SLIDES_HOLD);
             slideB.setPower(SLIDES_HOLD);
-            liftState = LIFT_STATE.HOLDING;
         } else {
             slideA.setPower(0);
             slideB.setPower(0);
-            liftState = LIFT_STATE.HOLDING;
 
         }
     }
+    public void hold(){
+        liftState = LIFT_STATE.HOLDING;
 
+    }
+
+    public void loop(){
+        switch (liftState){
+            case AUTO_MOVE:
+                pidLoop();
+                break;
+            case MANUAL_DOWN:
+                slideDown();
+                break;
+            case MANUAL_UP:
+                slideUp();
+                break;
+            case HOLDING:
+                slideStop();
+                break;
+        }
+
+    }
     public int getPosition(){
         return slideA.getCurrentPosition();
     }
