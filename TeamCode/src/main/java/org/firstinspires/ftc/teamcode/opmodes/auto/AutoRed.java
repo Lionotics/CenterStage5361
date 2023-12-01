@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
+import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
@@ -22,6 +23,7 @@ public class AutoRed extends LinearOpMode {
 
     private enum State{
         SPIKEMARK,
+        WAIT1,
         TRAJECTORY_2,
         TRAJECTORY_3,
         IDLE
@@ -47,10 +49,24 @@ public class AutoRed extends LinearOpMode {
         robot.intake.setHeight(robot.intake.UP);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .forward(20)
+                .forward(15)
                 .lineToSplineHeading(new Pose2d(8,-40,Math.toRadians(135)))
-                .addTemporalMarker(2.5,()->{
+                .addTemporalMarker(()->{
                     robot.arm.release2();
+                })
+                .addTemporalMarker(()->{
+                    robot.arm.up();
+                    robot.slides.setTarget(Slides.SLIDES_AUTO);
+                })
+                .lineToSplineHeading(new Pose2d(49.5,-26,0))
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                    robot.arm.fullRelease();
+                    robot.slides.setTarget(0);
                 })
                 .waitSeconds(1)
 
@@ -58,20 +74,49 @@ public class AutoRed extends LinearOpMode {
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .forward(20)
-                .lineToSplineHeading(new Pose2d(11.5,-30,Math.toRadians(90)))
-                .addTemporalMarker(2,()->{
+                .lineToSplineHeading(new Pose2d(11.5,-36,Math.toRadians(90)))
+                .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
                 .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.up();
+                    robot.slides.setTarget(Slides.SLIDES_AUTO);
+                })
+                .lineToSplineHeading(new Pose2d(49.5,-34,0))
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                    robot.arm.fullRelease();
+                    robot.slides.setTarget(0);
+                })
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(new Pose2d(15,-40,Math.toRadians(45)))
-                .addTemporalMarker(2,()->{
+                .lineToSplineHeading(new Pose2d(13,-40,Math.toRadians(45)))
+                .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
                 .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.up();
+                    robot.slides.setTarget(Slides.SLIDES_AUTO);
+                })
+                .strafeRight(6)
+                .lineToSplineHeading(new Pose2d(49.5,-42,0))
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                    robot.arm.fullRelease();
+                    robot.slides.setTarget(0);
+                })
                 .build();
 
         // init loop. Runs durring init before start is pressed
@@ -100,6 +145,7 @@ public class AutoRed extends LinearOpMode {
             drive.followTrajectorySequenceAsync(placeCenter);
         } else {
             drive.followTrajectorySequenceAsync(placeRight);
+
         }
 
         robot.arm.fullLock();
@@ -111,7 +157,7 @@ public class AutoRed extends LinearOpMode {
                 case SPIKEMARK:
                     if(!drive.isBusy()){
                         currentState = State.IDLE;
-                        robot.arm.release2();
+//                        robot.arm.release2();
                     }
 
                 case IDLE:
@@ -119,6 +165,7 @@ public class AutoRed extends LinearOpMode {
 
             }
             drive.update();
+            robot.slides.pidLoop();
             // Update any other things that need updating every loop here too (e.g slides)
 
         }

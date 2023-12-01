@@ -18,7 +18,11 @@ public class MeepMeepTesting {
                                 // LEFT
 //                                .setReversed(false)
                                 .forward(15)
-                                .lineToSplineHeading(new Pose2d(15,-40,Math.toRadians(45)))
+                                .lineToSplineHeading(new Pose2d(8,-40,Math.toRadians(135)))
+                                .waitSeconds(1)
+                                .lineToSplineHeading(new Pose2d(50,-28,0))
+                                .waitSeconds(1)
+                                // 53 -42
 //                                .waitSeconds(1)
 //                                .splineTo(new Vector2d(45,-31),0)
                                 // CENTER

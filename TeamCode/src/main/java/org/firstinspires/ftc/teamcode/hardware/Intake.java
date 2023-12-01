@@ -13,7 +13,7 @@ public class Intake extends Mechanism {
      CRServo bottomRoller;
      Servo servoHeight;
      public static double MAX_SPEED = 1;
-     public  static double  UP = 0.1;
+     public  static double  UP = 0.3;
     public static  double DOWN = 0.56;
     public static double STACK = 0.46;
     public enum IntakeState{

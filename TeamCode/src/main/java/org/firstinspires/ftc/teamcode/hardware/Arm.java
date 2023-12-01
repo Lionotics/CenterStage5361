@@ -11,8 +11,8 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 public class Arm extends Mechanism{
 
     public static double OFFSET = 0.006;
-    public static double UP = 0.56;
-    public static double DOWN = 0.17 ;
+    public static double UP = 0.6;
+    public static double DOWN = 0.17;
     public static double GROUND = 0.8;
     public static double PIXEL1_IN = 0.27;
     public static double PIXEL2_IN = 0.45;

@@ -10,11 +10,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slides extends Mechanism{
 
     private DcMotorEx slideA, slideB;
-    public static double SLIDES_UP = 960;
+    public static int SLIDES_UP = 960;
     public static double SLIDES_HOLD = 0.0005;
     public static double MAX_SPEED = 0.7;
     public static double MAX_AUTO_SPEED = 0.7;
-    public static double SLIDES_AUTO = 175;
+    public static int SLIDES_AUTO = 150;
     // min for scoring ~300
 
     // PID Loop
@@ -60,8 +60,13 @@ public class Slides extends Mechanism{
         liftState = LIFT_STATE.AUTO_MOVE;
         double pos = this.getPosition();
         double power = controller.calculate(pos,target);
-        slideA.setPower((power * MAX_AUTO_SPEED) + Kg);
-        slideB.setPower((power * MAX_AUTO_SPEED) + Kg);
+        if(this.getPosition() > 10) {
+            slideA.setPower((power * MAX_AUTO_SPEED) + Kg);
+            slideB.setPower((power * MAX_AUTO_SPEED) + Kg);
+        } else{
+            slideA.setPower((power * MAX_AUTO_SPEED));
+            slideB.setPower((power * MAX_AUTO_SPEED));
+        }
 
         // code needs some sort of exit here - what that looks like I'm not quite sure yet.
     }
