@@ -45,9 +45,8 @@ public class PropVision implements VisionProcessor {
 
     private PropLocation location;
     // set our color
-    boolean isRed = true;
+    boolean isRed;
 
-    static final Scalar BLUE = new Scalar(0, 0, 255);
     static final Scalar GREEN = new Scalar(0, 255, 0);
 
     Telemetry telemetry;
@@ -70,8 +69,8 @@ public class PropVision implements VisionProcessor {
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
 
-        Scalar lowHSV = new Scalar(0,0,0);
-        Scalar highHSV = new Scalar(255,255,255);
+        Scalar lowHSV;
+        Scalar highHSV;
 
         // Tuning for both red and blue
         // add an if statement based on isRed

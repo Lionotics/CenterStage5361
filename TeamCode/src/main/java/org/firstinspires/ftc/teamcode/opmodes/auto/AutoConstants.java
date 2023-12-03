@@ -1,7 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-
+@Config
 public class AutoConstants {
 
     public static final Pose2d RED_RIGHT_START = new Pose2d(11.5, -62, Math.toRadians(90.00));
@@ -15,9 +16,9 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
-    public static final Pose2d RED_LEFT_STAGE = new Pose2d(49.5,-26,0);
-    public static final Pose2d RED_CENTER_STAGE = new Pose2d(49.5,-34,0);
-    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(49.5,-42,0);
+    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26,0);
+    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-34,0);
+    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
     public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);

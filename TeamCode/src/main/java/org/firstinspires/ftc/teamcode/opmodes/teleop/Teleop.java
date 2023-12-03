@@ -65,23 +65,27 @@ public class Teleop extends LinearOpMode {
             // We only allow the slides to move when the intake isn't moving - too much power
             if (robot.intake.getIntakeState() == Intake.IntakeState.STOP) {
 
-                if ((gamepad1.b || gamepad1.dpad_up) && robot.slides.getPosition() < robot.slides.SLIDES_UP) {
-
-                    if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < robot.slides.TRANSITION_POINT){
+                if ((gamepad1.b || gamepad1.dpad_up) && robot.slides.getPosition() < Slides.SLIDES_UP) {
+                    // Test this carefully - it's sketchy 100% of the way
+                    if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < Slides.TRANSITION_POINT){
+                        // if slides are down and B is newly pressed, do a full auto deploy for scoring
                         robot.arm.fullLock();
                         robot.arm.up();
-                        robot.slides.autoMoveTo(robot.slides.TRANSITION_POINT);
-                    } else if(robot.slides.getPosition() > robot.slides.TRANSITION_POINT - 10){
+                        robot.slides.autoMoveTo(Slides.TRANSITION_POINT);
+                    } else if(robot.slides.getPosition() > Slides.TRANSITION_POINT - 10){
+                        // B is pressed, and slides have already gone auto up to the first point
                         robot.slides.manualUp();
                     }
 
                 } else if (gamepad1.left_bumper && robot.slides.getPosition() > 0) {
                     robot.slides.manualDown();
-                } else {
+                } else if(robot.slides.getLiftState() != Slides.LIFT_STATE.AUTO_MOVE) {
                     robot.slides.hold();
                 }
 
             }
+
+            // All of the above functions just change the state of the slides. The loop function actually moves them.
             robot.slides.loop();
 
 
@@ -137,6 +141,7 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("Climb pos", robot.climb.getPosition());
             telemetry.addData("Climb State ", robot.climb.getClimbState());
             telemetry.addData("Intake Height", robot.intake.intakeHeight);
+            telemetry.addData("Slides state",robot.slides.getLiftState());
             telemetry.update();
         }
 

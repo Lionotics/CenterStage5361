@@ -64,7 +64,6 @@ public class Slides extends Mechanism{
     }
 
     public void pidLoop(){
-        // for tuning
         double pos = this.getPosition();
         double power = controller.calculate(pos,target);
         if(this.getPosition() > 10) {
@@ -75,9 +74,9 @@ public class Slides extends Mechanism{
             slideB.setPower((power * MAX_AUTO_SPEED));
         }
 
-        // code needs some sort of exit here - what that looks like I'm not quite sure yet.
     }
-    public void setTarget(int target){this.target = target;}
+    public void setTarget(int target){
+        Slides.target = target;}
     public int getTarget(){return target;}
 
     // Manual movement
@@ -136,10 +135,7 @@ public class Slides extends Mechanism{
     public int getPosition(){
         return slideA.getCurrentPosition();
     }
-    public double getMaxSpeed(){return MAX_SPEED;}
-    public void setMaxSpeed(double speed){
-        MAX_SPEED = speed;
-    }
+
     public LIFT_STATE getLiftState(){
         return liftState;
     }

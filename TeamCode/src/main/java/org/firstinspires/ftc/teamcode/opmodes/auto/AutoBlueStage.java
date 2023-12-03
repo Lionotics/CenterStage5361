@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -24,9 +25,6 @@ public class AutoBlueStage extends LinearOpMode {
 
     private enum State{
         SPIKEMARK,
-        WAIT1,
-        TRAJECTORY_2,
-        TRAJECTORY_3,
         IDLE
     }
     private State currentState = State.SPIKEMARK;
@@ -47,23 +45,19 @@ public class AutoBlueStage extends LinearOpMode {
 
         // setup other hardware
         robot.init(hardwareMap);
-        robot.intake.setHeight(robot.intake.UP);
+        robot.intake.setHeight(Intake.UP);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK)
-                .addTemporalMarker(()->{
-                    robot.arm.release2();
-                })
+                .addTemporalMarker(()-> robot.arm.release2())
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .strafeLeft(6)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
+                .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -77,18 +71,14 @@ public class AutoBlueStage extends LinearOpMode {
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .forward(20)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK)
-                .addTemporalMarker(()->{
-                    robot.arm.release2();
-                })
+                .addTemporalMarker(()-> robot.arm.release2())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
+                .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -100,18 +90,14 @@ public class AutoBlueStage extends LinearOpMode {
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK)
-                .addTemporalMarker(()->{
-                    robot.arm.release2();
-                })
+                .addTemporalMarker(()-> robot.arm.release2())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
+                .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -120,7 +106,7 @@ public class AutoBlueStage extends LinearOpMode {
                 })
                 .build();
 
-        // init loop. Runs durring init before start is pressed
+        // init loop. Runs during init before start is pressed
         while(!isStarted() && !isStopRequested()){
 
             location = propVision.getLocation();
