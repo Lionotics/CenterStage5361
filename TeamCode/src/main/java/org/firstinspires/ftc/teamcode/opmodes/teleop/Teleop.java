@@ -89,37 +89,37 @@ public class Teleop extends LinearOpMode {
             robot.slides.loop();
 
 
-        // Arm controls
-        if (gamepadEx1.a.isNewlyPressed()) {
-            if(robot.arm.armState == Arm.ArmState.ARM_DOWN) {
-                robot.arm.up();
+            // Arm controls
+            if (gamepadEx1.a.isNewlyPressed()) {
+                if(robot.arm.armState == Arm.ArmState.ARM_DOWN) {
+                    robot.arm.up();
 
-            } else if (robot.arm.armState == Arm.ArmState.ARM_UP){
-                robot.arm.down();
-                robot.arm.fullRelease();
+                } else if (robot.arm.armState == Arm.ArmState.ARM_UP){
+                    robot.arm.down();
+                    robot.arm.fullRelease();
+                }
+
             }
 
-        }
+            // End effector loop between states
+            if (gamepadEx1.x.isNewlyReleased()) {
 
-        // End effector loop between states
-        if (gamepadEx1.x.isNewlyReleased()) {
-
-            if (robot.arm.getPixelState() == Arm.PixelState.OPEN) {
-                // lock the pixels
-                robot.arm.fullLock();
-            } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK) {
-                // lock both pixels
-                robot.arm.fullLock();
-            } else if (robot.arm.getPixelState() == Arm.PixelState.FULL_LOCK
-                    && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
-                // release the first pixel
-                robot.arm.release2();
-            } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_RELEASE
-                    && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
-                // release the second pixel
-                robot.arm.fullRelease();
+                if (robot.arm.getPixelState() == Arm.PixelState.OPEN) {
+                    // lock the pixels
+                    robot.arm.fullLock();
+                } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK) {
+                    // lock both pixels
+                    robot.arm.fullLock();
+                } else if (robot.arm.getPixelState() == Arm.PixelState.FULL_LOCK
+                        && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
+                    // release the first pixel
+                    robot.arm.release2();
+                } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_RELEASE
+                        && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
+                    // release the second pixel
+                    robot.arm.fullRelease();
+                }
             }
-        }
 
 
             if (gamepadEx1.left.isNewlyPressed()) {
@@ -132,6 +132,10 @@ public class Teleop extends LinearOpMode {
 
             robot.climb.updateClimb();
 
+            // Airplane
+            if(gamepad1.dpad_right){
+                robot.airplane.shootAirplane();
+            }
 
             // Telemetry
             telemetry.addData("Slides pos", robot.slides.getPosition());

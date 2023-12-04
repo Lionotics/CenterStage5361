@@ -21,7 +21,7 @@ public class Robot {
     public void init(HardwareMap hwMap){
         // Uncomment as hardware is setup and ready
         arm.init(hwMap);
-//        airplane.init(hwMap);
+        airplane.init(hwMap);
         climb.init(hwMap);
         slides.init(hwMap);
         intake.init(hwMap);
