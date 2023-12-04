@@ -72,7 +72,7 @@ public class Teleop extends LinearOpMode {
                         robot.arm.fullLock();
                         robot.arm.up();
                         robot.slides.autoMoveTo(Slides.TRANSITION_POINT);
-                    } else if(robot.slides.getPosition() > Slides.TRANSITION_POINT - 10){
+                    } else if((robot.slides.getPosition() > Slides.TRANSITION_POINT - 10 && gamepad1.b) || gamepad1.dpad_up){
                         // B is pressed, and slides have already gone auto up to the first point
                         robot.slides.manualUp();
                     }
