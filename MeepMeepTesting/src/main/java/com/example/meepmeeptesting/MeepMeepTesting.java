@@ -22,6 +22,10 @@ public class MeepMeepTesting {
     public static final Pose2d RED_CENTER_STAGE = new Pose2d(49.5,-34,0);
     public static final Pose2d RED_RIGHT_STAGE = new Pose2d(49.5,-42,0);
 
+    public static final Pose2d RED_PARK = new Pose2d(53,-60,Math.toRadians(90));
+    public static  final Pose2d BLUE_PARK = mirror(RED_PARK);
+
+
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
     public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);
     public static final Pose2d BLUE_LEFT_STAGE = mirror(RED_RIGHT_STAGE);
@@ -45,6 +49,9 @@ public class MeepMeepTesting {
                                 .waitSeconds(1)
                                 .strafeLeft(6)
                                 .lineToSplineHeading(BLUE_LEFT_STAGE)
+                                .strafeLeft(5)
+                                .lineToSplineHeading(new Pose2d(53,60,Math.toRadians(-90)))
+
                                 .build()
                 );
 

@@ -64,6 +64,8 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .strafeLeft(5)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK)
                 .waitSeconds(1)
 
                 .build();
@@ -85,6 +87,8 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .strafeLeft(13)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
@@ -104,6 +108,8 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .strafeLeft(22)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK)
                 .build();
 
         // init loop. Runs during init before start is pressed

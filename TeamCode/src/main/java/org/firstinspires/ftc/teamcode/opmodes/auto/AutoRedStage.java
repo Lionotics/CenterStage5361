@@ -69,7 +69,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.slides.setTarget(0);
                 })
                 .waitSeconds(1)
-
+                .strafeRight(22)
+                .lineToSplineHeading(AutoConstants.RED_PARK)
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
@@ -93,6 +94,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .strafeRight(13)
+                .lineToSplineHeading(AutoConstants.RED_PARK)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
@@ -117,6 +120,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .strafeRight(5)
+                .lineToSplineHeading(AutoConstants.RED_PARK)
                 .build();
 
         // init loop. Runs durring init before start is pressed
