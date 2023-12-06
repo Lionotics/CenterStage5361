@@ -17,7 +17,7 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
     public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26,0);
-    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-36,0);
+    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-35,0);
     public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
@@ -25,7 +25,7 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_STAGE = mirror(RED_RIGHT_STAGE);
 
     public static final Pose2d RED_PARK = new Pose2d(53,-60,Math.toRadians(90));
-    public static  final Pose2d BLUE_PARK = mirror(RED_PARK);
+    public static final Pose2d BLUE_PARK = mirror(RED_PARK);
 
 
     public static Pose2d mirror(Pose2d pose){

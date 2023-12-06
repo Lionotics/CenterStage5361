@@ -49,7 +49,8 @@ public class MeepMeepTesting {
                                 .waitSeconds(1)
                                 .strafeLeft(6)
                                 .lineToSplineHeading(BLUE_LEFT_STAGE)
-                                .strafeLeft(5)
+                                .back(5)
+                                .strafeLeft(4)
                                 .lineToSplineHeading(new Pose2d(53,60,Math.toRadians(-90)))
 
                                 .build()

@@ -63,6 +63,7 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -89,6 +90,7 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -115,6 +117,7 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();

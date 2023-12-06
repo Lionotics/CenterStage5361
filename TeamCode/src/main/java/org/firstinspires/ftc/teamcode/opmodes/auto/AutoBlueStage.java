@@ -59,6 +59,7 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -82,6 +83,7 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -103,6 +105,7 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
+                .back(4)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
