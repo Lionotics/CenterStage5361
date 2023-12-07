@@ -14,7 +14,7 @@ public class Intake extends Mechanism {
      Servo servoHeight;
      public static double MAX_SPEED = 1;
      public  static double  UP = 0.33;
-    public static  double DOWN = 0.61;
+    public static  double DOWN = 0.63;
     public static double STACK = 0.53;
     public enum IntakeState{
         IN,

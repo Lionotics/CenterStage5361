@@ -9,7 +9,7 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_START = mirror(RED_RIGHT_START);
 
     public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(8,-40,Math.toRadians(135));
-    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-36,Math.toRadians(90));
+    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-37,Math.toRadians(90));
     public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(13,-40,Math.toRadians(45));
 
     public static final Pose2d BLUE_LEFT_RIGHT_SPIKEMARK = mirror(RED_RIGHT_LEFT_SPIKEMARK);
