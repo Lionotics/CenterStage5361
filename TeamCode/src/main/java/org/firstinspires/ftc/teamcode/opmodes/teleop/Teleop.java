@@ -123,9 +123,9 @@ public class Teleop extends LinearOpMode {
 
 
             if (gamepadEx1.left.isNewlyPressed()) {
-                if(robot.climb.getClimbState() == Climb.CLIMB_STATE.STOWED){
+                if(robot.climb.getClimbState() == Climb.ClimbState.STOWED){
                     robot.climb.startRaise();
-                } else if (robot.climb.getClimbState() == Climb.CLIMB_STATE.RAISED){
+                } else if (robot.climb.getClimbState() == Climb.ClimbState.RAISED){
                     robot.climb.startClimb();
                 }
             }
