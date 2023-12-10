@@ -168,8 +168,8 @@ public class AutoRedStage extends LinearOpMode {
 
                 case IDLE:
                     break;
-
             }
+            // UPDATE EVERYTHING
             drive.update();
             robot.slides.pidLoop();
             // Update any other things that need updating every loop here too (e.g slides)
