@@ -51,6 +51,7 @@ public class AutoBlueStage extends LinearOpMode {
                 .forward(15)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK)
                 .addTemporalMarker(()-> robot.arm.release2())
+                .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
@@ -66,7 +67,7 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.slides.setTarget(0);
                 })
                 .strafeLeft(5)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
                 .waitSeconds(1)
 
                 .build();
@@ -90,7 +91,7 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.slides.setTarget(0);
                 })
                 .strafeLeft(13)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
@@ -112,7 +113,7 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.slides.setTarget(0);
                 })
                 .strafeLeft(22)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK)
+                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
                 .build();
 
         // init loop. Runs during init before start is pressed
@@ -125,6 +126,11 @@ public class AutoBlueStage extends LinearOpMode {
         }
 
         location = propVision.getLocation();
+
+        if(location == null){
+            location = PropVision.PropLocation.RIGHT;
+        }
+
         telemetry.addData("Selected Location", location);
         telemetry.update();
         // Stop all vision once opmode has started

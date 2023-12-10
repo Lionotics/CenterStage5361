@@ -69,7 +69,7 @@ public class Slides extends Mechanism{
         if(this.getPosition() > 10) {
             slideA.setPower((power * MAX_AUTO_SPEED) + Kg);
             slideB.setPower((power * MAX_AUTO_SPEED) + Kg);
-        } else{
+        } else {
             slideA.setPower((power * MAX_AUTO_SPEED));
             slideB.setPower((power * MAX_AUTO_SPEED));
         }
