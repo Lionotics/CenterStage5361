@@ -15,14 +15,14 @@ public class Climb extends Mechanism {
     public static double HOOK_DOWN = 1;
     public static double HOOK_UP = 0.34;
     public static int CLIMB_UP = 8700;
-    public enum CLIMB_STATE {
+    public enum ClimbState {
         STOWED,
         RAISING,
         RAISED,
         CLIMBING,
         CLIMBED
     }
-    private CLIMB_STATE climbState = CLIMB_STATE.STOWED;
+    private ClimbState climbState = ClimbState.STOWED;
 
 
     @Override
@@ -38,12 +38,12 @@ public class Climb extends Mechanism {
     }
 
     public void startRaise(){
-        climbState = CLIMB_STATE.RAISING;
+        climbState = ClimbState.RAISING;
     }
     public void startClimb(){
-        climbState = CLIMB_STATE.CLIMBING;
+        climbState = ClimbState.CLIMBING;
     }
-    public CLIMB_STATE getClimbState(){
+    public ClimbState getClimbState(){
         return climbState;
 
     }
@@ -54,7 +54,7 @@ public class Climb extends Mechanism {
                 if(this.getPosition() >= CLIMB_UP - 10){
                     stop();
                     hookUp();
-                    climbState = CLIMB_STATE.RAISED;
+                    climbState = ClimbState.RAISED;
                 }
                 break;
             case RAISED:
@@ -64,7 +64,7 @@ public class Climb extends Mechanism {
                 hook.setPwmDisable();
                 climbDown();
                 if(this.getPosition() < 10){
-                    climbState = CLIMB_STATE.CLIMBED;
+                    climbState = ClimbState.CLIMBED;
                     stop();
                 }
                 break;
