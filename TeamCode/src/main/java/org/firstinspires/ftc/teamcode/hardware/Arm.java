@@ -15,7 +15,7 @@ public class Arm extends Mechanism{
     public static double DOWN = 0.17;
     public static double GROUND = 0.8;
     public static double PIXEL1_IN = 0.27;
-    public static double PIXEL2_IN = 0.6;
+    public static double PIXEL2_IN = 0.9;
     public static double PIXEL1_OUT = 0;
     public static double PIXEL2_OUT = 0.2;
 
