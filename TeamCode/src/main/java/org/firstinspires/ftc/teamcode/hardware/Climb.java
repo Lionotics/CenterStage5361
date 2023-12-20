@@ -10,11 +10,13 @@ import com.qualcomm.robotcore.hardware.ServoImplEx;
 public class Climb extends Mechanism {
 
     private DcMotor climb;
-    private ServoImplEx hook;
+    private ServoImplEx hook1, hook2;
     // These need tuning, random numbers for now
     public static double HOOK_DOWN = 1;
     public static double HOOK_UP = 0.34;
-    public static int CLIMB_UP = 8700;
+    public static double HOOK2_DOWN = 0.24;
+    public static double HOOK2_UP = 0.9;
+    public static int CLIMB_UP = 6500;
     public enum ClimbState {
         STOWED,
         RAISING,
@@ -28,7 +30,8 @@ public class Climb extends Mechanism {
     @Override
     public void init(HardwareMap hwMap) {
         climb = hwMap.dcMotor.get("climb");
-        hook = (ServoImplEx)  hwMap.servo.get("hook");
+        hook1 = (ServoImplEx)  hwMap.servo.get("hook");
+        hook2 = (ServoImplEx)  hwMap.servo.get("hookTwo");
 
         climb.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -61,7 +64,7 @@ public class Climb extends Mechanism {
                 stop();
                 break;
             case CLIMBING:
-                hook.setPwmDisable();
+                hook1.setPwmDisable();
                 climbDown();
                 if(this.getPosition() < 10){
                     climbState = ClimbState.CLIMBED;
@@ -74,12 +77,16 @@ public class Climb extends Mechanism {
         }
     }
     public void hookUp() {
-        hook.setPosition(HOOK_UP);
+        hook1.setPosition(HOOK_UP);
+        hook2.setPosition(HOOK2_UP);
+
 
     }
     public void hookDown() {
-        hook.setPosition(HOOK_DOWN);
+        hook1.setPosition(HOOK_DOWN);
+        hook2.setPosition(HOOK2_DOWN);
     }
+
     public int getPosition(){return climb.getCurrentPosition();}
     public void climbUp(){
         if (climb.getCurrentPosition() < CLIMB_UP) {
@@ -87,7 +94,7 @@ public class Climb extends Mechanism {
         }
     }
     public boolean enabled(){
-        return hook.isPwmEnabled();
+        return hook1.isPwmEnabled();
     }
 
     public void climbDown() {
