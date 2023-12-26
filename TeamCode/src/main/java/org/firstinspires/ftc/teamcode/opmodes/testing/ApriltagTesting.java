@@ -61,6 +61,11 @@ public class ApriltagTesting extends LinearOpMode {
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
     
     double x, y, heading, headingRadians;
+
+    boolean singleId = false;
+
+    int singleIdNumber = 1;  // only used if singleId is true
+
     @Override
     public void runOpMode() {
 
@@ -95,6 +100,12 @@ public class ApriltagTesting extends LinearOpMode {
                     visionPortal.resumeStreaming();
                 }
 
+                if (gamepad1.dpad_left) {
+                    singleId = true;
+                } else if (gamepad1.dpad_right) {
+                    singleId = false;
+                }
+
                 // Share the CPU.
                 sleep(20);
             }
@@ -120,6 +131,7 @@ public class ApriltagTesting extends LinearOpMode {
                 .setTagFamily(AprilTagProcessor.TagFamily.TAG_36h11)
                 .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
                 .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
+
 
                 // == CAMERA CALIBRATION ==
                 // TODO: Check camera calibration things
@@ -170,7 +182,7 @@ public class ApriltagTesting extends LinearOpMode {
         List<AprilTagPose> tags;
 
         for (AprilTagDetection detection: currentDetections){
-            if(detection.metadata != null){
+            if( detection.metadata != null && (!singleId || detection.id == singleIdNumber) ){
 
                 telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
                 telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (inch)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
