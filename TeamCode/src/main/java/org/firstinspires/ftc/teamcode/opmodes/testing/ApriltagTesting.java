@@ -17,6 +17,7 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.util.DashboardUtil;
+import org.firstinspires.ftc.teamcode.vision.Apriltag;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -64,7 +65,7 @@ public class ApriltagTesting extends LinearOpMode {
 
     boolean singleId = false;
 
-    int singleIdNumber = 1;  // only used if singleId is true
+    int singleIdNumber = 5;  // only used if singleId is true
 
     @Override
     public void runOpMode() {
@@ -195,7 +196,7 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
                 telemetry.addLine("RBE = Range, Bearing & Elevation");
 
-                heading = detection.metadata.fieldOrientation.z + detection.ftcPose.bearing;
+                heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
                 dashboardTelemetry.addData("FieldOrientationZ",detection.metadata.fieldOrientation.z);
                 dashboardTelemetry.addData("FieldOrientationX",detection.metadata.fieldOrientation.x);
                 dashboardTelemetry.addData("FieldOrientationY",detection.metadata.fieldOrientation.y);
@@ -205,16 +206,24 @@ public class ApriltagTesting extends LinearOpMode {
                 dashboardTelemetry.addData("bearing",detection.ftcPose.bearing);
 
                 headingRadians = Math.toRadians(heading);
-                x = detection.metadata.fieldPosition.get(0) - (detection.ftcPose.x * Math.cos(headingRadians) - (detection.ftcPose.y * Math.sin(headingRadians)));
-                y = detection.metadata.fieldPosition.get(1) - (detection.ftcPose.x * Math.sin(headingRadians)) + (detection.ftcPose.y * Math.cos(headingRadians));
-                robot = new Pose2d(x,y,heading);
-                dashboardTelemetry.addData("x", robot.getX());
-                dashboardTelemetry.addData("y", robot.getY());
-                dashboardTelemetry.addData("heading", robot.getHeading());
+                x = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
+                y = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
 
-                telemetry.addData("x", robot.getX());
-                telemetry.addData("y", robot.getY());
-                telemetry.addData("heading", robot.getHeading());
+                dashboardTelemetry.addData("relative x", detection.ftcPose.x);
+                dashboardTelemetry.addData("relative y", detection.ftcPose.y);
+                dashboardTelemetry.addData("relative heading", detection.ftcPose.bearing);
+                dashboardTelemetry.addData("absolute x", x);
+                dashboardTelemetry.addData("absolute y", y);
+                dashboardTelemetry.addData("absolute heading", heading);
+
+                telemetry.addData("relative x", detection.ftcPose.x);
+                telemetry.addData("relative y", detection.ftcPose.y);
+                telemetry.addData("relative heading", detection.ftcPose.yaw);
+                telemetry.addData("tag x",Apriltag.APRILTAG_POSES[detection.id - 1].getX());
+                telemetry.addData("tag y",Apriltag.APRILTAG_POSES[detection.id - 1].getY());
+                telemetry.addData("absolute x", x);
+                telemetry.addData("absolute y", y);
+                telemetry.addData("absolute heading", heading);
 
 
 
