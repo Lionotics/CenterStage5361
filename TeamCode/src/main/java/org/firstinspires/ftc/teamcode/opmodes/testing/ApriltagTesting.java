@@ -59,7 +59,7 @@ public class ApriltagTesting extends LinearOpMode {
     private Pose2d robot = new Pose2d(0,0,0);
 
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     
     double x, y, heading, headingRadians;
 
@@ -90,7 +90,6 @@ public class ApriltagTesting extends LinearOpMode {
 //                DashboardUtil.drawRobot(packet.fieldOverlay(), new Pose2d(0,0,0));
                 packet.fieldOverlay().strokeCircle(0,0,5);
                 dashboard.sendTelemetryPacket(packet);
-                dashboardTelemetry.update();
                 telemetry.update();
 
 
@@ -197,24 +196,10 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addLine("RBE = Range, Bearing & Elevation");
 
                 heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
-                dashboardTelemetry.addData("FieldOrientationZ",detection.metadata.fieldOrientation.z);
-                dashboardTelemetry.addData("FieldOrientationX",detection.metadata.fieldOrientation.x);
-                dashboardTelemetry.addData("FieldOrientationY",detection.metadata.fieldOrientation.y);
-                dashboardTelemetry.addData("ftcpose.yaw", detection.ftcPose.yaw);
-                dashboardTelemetry.addData("ftcpose.pitch", detection.ftcPose.pitch);
-                dashboardTelemetry.addData("ftcpose.roll", detection.ftcPose.roll);
-                dashboardTelemetry.addData("bearing",detection.ftcPose.bearing);
 
                 headingRadians = Math.toRadians(heading);
                 x = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
                 y = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-
-                dashboardTelemetry.addData("relative x", detection.ftcPose.x);
-                dashboardTelemetry.addData("relative y", detection.ftcPose.y);
-                dashboardTelemetry.addData("relative heading", detection.ftcPose.bearing);
-                dashboardTelemetry.addData("absolute x", x);
-                dashboardTelemetry.addData("absolute y", y);
-                dashboardTelemetry.addData("absolute heading", heading);
 
                 telemetry.addData("relative x", detection.ftcPose.x);
                 telemetry.addData("relative y", detection.ftcPose.y);
@@ -224,8 +209,6 @@ public class ApriltagTesting extends LinearOpMode {
                 telemetry.addData("absolute x", x);
                 telemetry.addData("absolute y", y);
                 telemetry.addData("absolute heading", heading);
-
-
 
             }
         }
