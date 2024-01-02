@@ -200,7 +200,14 @@ public class ApriltagTesting extends LinearOpMode {
                 headingRadians = Math.toRadians(heading);
                 x = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
                 y = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-
+                telemetry.addData("x*sin + y*cos", x*Math.sin(heading)+y*Math.cos(heading)); 
+                telemetry.addData("x*sin - y*cos", x*Math.sin(heading)-y*Math.cos(heading));      
+                telemetry.addData("-x*sin + y*cos", -x*Math.sin(heading)+y*Math.cos(heading));
+                telemetry.addData("-x*sin - y*cos", -x*Math.sin(heading)-y*Math.cos(heading));
+                telemetry.addData("y*sin + x*cos", y*Math.sin(heading)+x*Math.cos(heading));
+                telemetry.addData("y*sin - x*cos", y*Math.sin(heading)-x*Math.cos(heading)); 
+                telemetry.addData("-y*sin + x*cos", -y*Math.sin(heading)+x*Math.cos(heading));
+                telemetry.addData("-y*sin - x*cos", -y*Math.sin(heading)-x*Math.cos(heading));                                                                                                                           
                 telemetry.addData("relative x", detection.ftcPose.x);
                 telemetry.addData("relative y", detection.ftcPose.y);
                 telemetry.addData("relative heading", detection.ftcPose.yaw);
