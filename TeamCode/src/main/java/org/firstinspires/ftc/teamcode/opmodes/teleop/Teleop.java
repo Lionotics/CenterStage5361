@@ -16,7 +16,9 @@ public class Teleop extends LinearOpMode {
     Robot robot = new Robot(false);
     GamepadEx gamepadEx1 = new GamepadEx();
 
+    ElapsedTime timer = new ElapsedTime();
 
+    private boolean inEndgame = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -27,6 +29,7 @@ public class Teleop extends LinearOpMode {
 
         waitForStart();
         robot.intake.intakeDown();
+        timer.reset();
 
 
 
@@ -144,6 +147,10 @@ public class Teleop extends LinearOpMode {
                 robot.airplane.shootAirplane();
             }
 
+            if(timer.seconds() >= 90){
+                inEndgame = true;
+            }
+
             // Telemetry
             telemetry.addData("Slides pos", robot.slides.getPosition());
             telemetry.addData("PixelState", robot.arm.getPixelState());
@@ -153,6 +160,8 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("Climb State ", robot.climb.getClimbState());
             telemetry.addData("Intake Height", robot.intake.intakeHeight);
             telemetry.addData("Slides state",robot.slides.getLiftState());
+            telemetry.addData("Time in teleop", timer.seconds());
+            telemetry.addData("In endgame", inEndgame);
             telemetry.update();
         }
 

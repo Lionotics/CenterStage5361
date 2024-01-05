@@ -11,7 +11,7 @@ public class Climb extends Mechanism {
 
     private DcMotor climb;
     private ServoImplEx hook1, hook2;
-    // These need tuning, random numbers for now
+
     public static double HOOK_DOWN = 1;
     public static double HOOK_UP = 0.34;
     public static double HOOK2_DOWN = 0.24;
@@ -26,7 +26,6 @@ public class Climb extends Mechanism {
     }
     private ClimbState climbState = ClimbState.STOWED;
 
-
     @Override
     public void init(HardwareMap hwMap) {
         climb = hwMap.dcMotor.get("climb");
@@ -37,7 +36,6 @@ public class Climb extends Mechanism {
         climb.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         climb.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-//        hookDown();
     }
 
     public void startRaise(){
