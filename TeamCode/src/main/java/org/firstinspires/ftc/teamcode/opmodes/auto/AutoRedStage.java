@@ -43,7 +43,7 @@ public class AutoRedStage extends LinearOpMode {
 
         // setup other hardware
         robot.init(hardwareMap);
-        robot.intake.setHeight(robot.intake.UP);
+        robot.intake.intakeUp();
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)

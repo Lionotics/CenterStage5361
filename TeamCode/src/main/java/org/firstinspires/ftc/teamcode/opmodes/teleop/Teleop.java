@@ -11,12 +11,11 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.helpers.GamepadEx;
 
-@TeleOp(name = "Teleop")
+@TeleOp(name = "TeleOp")
 public class Teleop extends LinearOpMode {
     Robot robot = new Robot(false);
     GamepadEx gamepadEx1 = new GamepadEx();
 
-    ElapsedTime time = new ElapsedTime();
 
 
     @Override
@@ -32,7 +31,6 @@ public class Teleop extends LinearOpMode {
 
 
         while (opModeIsActive()) {
-            time.reset();
 
             // update our gamepad extionsion
             gamepadEx1.update(gamepad1);
@@ -51,22 +49,31 @@ public class Teleop extends LinearOpMode {
             else{
                 robot.intake.stop();
             }
-
-            // Right now height is constant down - this should change at some point.
+            // Height toggle between all the way down and all the way up
             if(gamepadEx1.y.isNewlyPressed()) {
-                if (robot.intake.intakeHeight == Intake.IntakeHeight.STACK){
+                if (robot.intake.intakeHeight == Intake.IntakeHeight.STACK_5){
                     robot.intake.intakeDown();
                 } else if (robot.intake.intakeHeight == Intake.IntakeHeight.DOWN){
-                    robot.intake.intakeStack();
+                    robot.intake.stackHeight(5);
                 }
             }
+            // restarting the intake when up should move it down an increment
+            if(gamepadEx1.rightBumper.isNewlyPressed()){
 
-            // Manual slides control - just up and down
+                if(robot.intake.intakeHeight == Intake.IntakeHeight.STACK_5){
+                    robot.intake.stackHeight(4);
+                } else if (robot.intake.intakeHeight == Intake.IntakeHeight.STACK_4){
+                    robot.intake.stackHeight(3);
+                }
+
+            }
+
+            // Slides control - partial automatic, partial manual
             // We only allow the slides to move when the intake isn't moving - too much power
             if (robot.intake.getIntakeState() == Intake.IntakeState.STOP) {
 
                 if ((gamepad1.b || gamepad1.dpad_up) && robot.slides.getPosition() < Slides.SLIDES_UP) {
-                    // Test this carefully - it's sketchy 100% of the way
+
                     if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < Slides.TRANSITION_POINT){
                         // if slides are down and B is newly pressed, do a full auto deploy for scoring
                         robot.arm.fullLock();

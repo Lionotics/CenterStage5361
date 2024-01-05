@@ -17,10 +17,11 @@ public class IntakeTesting extends LinearOpMode {
             } else {
                 robot.intake.stop();
             }
+
             if (gamepad1.dpad_up) {
-              robot.intake.setHeight(robot.intake.UP);
+              robot.intake.intakeUp();
             } else if (gamepad1.dpad_down) {
-                robot.intake.setHeight(robot.intake.DOWN);
+                robot.intake.intakeDown();
             }
         }
     }
