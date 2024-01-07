@@ -28,10 +28,10 @@ Motors:
 Servos:
 
 - Port 0: intakeHeight
-- Port 1: hook1
+- Port 1: hook
 - Port 2: airplane
 - Port 3: intakeBottom (can be removed)
-- Port 4: hook2
+- Port 4: hookTwo
 - Port 5: intakeFlap
 
 

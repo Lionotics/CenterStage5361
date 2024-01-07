@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake extends Mechanism {
     DcMotor intake;
 
-     CRServo bottomRoller;
      Servo servoHeight, intakeFlap;
 
      public static double MAX_SPEED = 1;
@@ -55,19 +54,16 @@ public class Intake extends Mechanism {
     // In / Out / Stop
     public void intake(){
         intake.setPower(MAX_SPEED);
-        bottomRoller.setPower(1);
         intakeState = IntakeState.IN;
 
     }
     public void stop(){
         intake.setPower(0);
-        bottomRoller.setPower(0);
         intakeState = IntakeState.STOP;
 
     }
     public void outtake() {
         intake.setPower(-1);
-        bottomRoller.setPower(-1);
         intakeState = IntakeState.OUT;
 
     }
@@ -79,6 +75,7 @@ public class Intake extends Mechanism {
     public void intakeDown(){
         stackHeight(0);
     }
+
     public void intakeUp(){
         servoHeight.setPosition(UP);
         intakeHeight = IntakeHeight.UP;

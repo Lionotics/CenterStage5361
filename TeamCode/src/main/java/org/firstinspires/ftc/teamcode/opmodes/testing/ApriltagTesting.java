@@ -6,12 +6,15 @@ import android.util.Size;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
+//import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+//import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+//import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -58,8 +61,6 @@ public class ApriltagTesting extends LinearOpMode {
 
     private Pose2d robot = new Pose2d(0,0,0);
 
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
     
     double x, y, heading, headingRadians;
 
@@ -70,7 +71,8 @@ public class ApriltagTesting extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        FtcDashboard dashboard = FtcDashboard.getInstance();
+        Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         initAprilTag();
 
@@ -86,8 +88,9 @@ public class ApriltagTesting extends LinearOpMode {
                 processAprilTags();
 
                 // Push telemetry to the Driver Station.
+
                 TelemetryPacket packet = new TelemetryPacket();
-//                DashboardUtil.drawRobot(packet.fieldOverlay(), new Pose2d(0,0,0));
+                DashboardUtil.drawRobot(packet.fieldOverlay(), new Pose2d(0,0,0));
                 packet.fieldOverlay().strokeCircle(0,0,5);
                 dashboard.sendTelemetryPacket(packet);
                 telemetry.update();
@@ -198,24 +201,36 @@ public class ApriltagTesting extends LinearOpMode {
                 heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
 
                 headingRadians = Math.toRadians(heading);
+
+//                // The following is based on code I found on the internet
+//                // Start by doing the rotation
+//                double x2 = detection.ftcPose.x*Math.cos(headingRadians)+detection.ftcPose.y*Math.sin(headingRadians);
+//                double y2 = detection.ftcPose.x*Math.sin(headingRadians)*(-1)+detection.ftcPose.y*Math.cos(headingRadians);
+//                // then use those to get the absolute
+//                double absoluteX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() + y2;
+//                double absoluteY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - x2;
+
                 x = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
                 y = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-                telemetry.addData("x*sin + y*cos", x*Math.sin(heading)+y*Math.cos(heading)); 
-                telemetry.addData("x*sin - y*cos", x*Math.sin(heading)-y*Math.cos(heading));      
-                telemetry.addData("-x*sin + y*cos", -x*Math.sin(heading)+y*Math.cos(heading));
-                telemetry.addData("-x*sin - y*cos", -x*Math.sin(heading)-y*Math.cos(heading));
-                telemetry.addData("y*sin + x*cos", y*Math.sin(heading)+x*Math.cos(heading));
-                telemetry.addData("y*sin - x*cos", y*Math.sin(heading)-x*Math.cos(heading)); 
-                telemetry.addData("-y*sin + x*cos", -y*Math.sin(heading)+x*Math.cos(heading));
-                telemetry.addData("-y*sin - x*cos", -y*Math.sin(heading)-x*Math.cos(heading));                                                                                                                           
+
+//                telemetry.addData("x*sin + y*cos", detection.ftcPose.x*Math.sin(heading)+detection.ftcPose.y*Math.cos(heading));
+//                telemetry.addData("x*sin - y*cos", detection.ftcPose.x*Math.sin(heading)-detection.ftcPose.y*Math.cos(heading));
+//                telemetry.addData("-x*sin + y*cos", -detection.ftcPose.x*Math.sin(heading)+detection.ftcPose.y*Math.cos(heading));
+//                telemetry.addData("-x*sin - y*cos", -detection.ftcPose.x*Math.sin(heading)-detection.ftcPose.y*Math.cos(heading));
+//                telemetry.addData("y*sin + x*cos", detection.ftcPose.y*Math.sin(heading)+detection.ftcPose.x*Math.cos(heading));
+//                telemetry.addData("y*sin - x*cos", detection.ftcPose.y*Math.sin(heading)-detection.ftcPose.x*Math.cos(heading));
+//                telemetry.addData("-y*sin + x*cos", -detection.ftcPose.y*Math.sin(heading)+detection.ftcPose.x*Math.cos(heading));
+//                telemetry.addData("-y*sin - x*cos", -detection.ftcPose.y*Math.sin(heading)-detection.ftcPose.x*Math.cos(heading));
                 telemetry.addData("relative x", detection.ftcPose.x);
                 telemetry.addData("relative y", detection.ftcPose.y);
                 telemetry.addData("relative heading", detection.ftcPose.yaw);
                 telemetry.addData("tag x",Apriltag.APRILTAG_POSES[detection.id - 1].getX());
                 telemetry.addData("tag y",Apriltag.APRILTAG_POSES[detection.id - 1].getY());
-                telemetry.addData("absolute x", x);
-                telemetry.addData("absolute y", y);
-                telemetry.addData("absolute heading", heading);
+                telemetry.addData("x", x);
+                telemetry.addData("y", y);
+//                telemetry.addData("new absolute x",absoluteX);
+//                telemetry.addData("new absolute y",absoluteY);
+                telemetry.addData("heading", heading);
 
             }
         }

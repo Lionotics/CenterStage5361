@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slides extends Mechanism{
 
     private DcMotorEx slideA, slideB;
-    public static int SLIDES_UP = 960;
+    public static int SLIDES_UP = 805;
     public static double SLIDES_HOLD = 0.0005;
     public static double MAX_SPEED = 0.7;
     public static double MAX_AUTO_SPEED = 0.7;
@@ -64,7 +64,11 @@ public class Slides extends Mechanism{
     }
 
     public void pidLoop(){
+        // Here for testing. get rid of it after
+        controller = new PIDController(Kp,Ki,Kd);
+        controller.setPID(Kp,Ki,Kd);
         double pos = this.getPosition();
+
         double power = controller.calculate(pos,target);
         if(this.getPosition() > 10) {
             slideA.setPower((power * MAX_AUTO_SPEED) + Kg);

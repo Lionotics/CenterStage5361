@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
+import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.helpers.GamepadEx;
 
 @TeleOp()
@@ -23,6 +24,7 @@ public class SlidesTesting extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         robot.init(hardwareMap);
+        robot.slides.autoMoveTo(0);
         waitForStart();
         while (opModeIsActive()){
             robot.slides.pidLoop();

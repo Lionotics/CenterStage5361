@@ -33,6 +33,8 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
 import org.firstinspires.ftc.teamcode.util.LynxModuleUtil;
+import org.firstinspires.ftc.teamcode.vision.ApriltagLocalizer;
+import org.firstinspires.ftc.vision.VisionPortal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,6 +79,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     private IMU imu;
     private VoltageSensor batteryVoltageSensor;
+    private VisionPortal visionPortal;
 
     private List<Integer> lastEncPositions = new ArrayList<>();
     private List<Integer> lastEncVels = new ArrayList<>();
@@ -133,6 +136,9 @@ public class SampleMecanumDrive extends MecanumDrive {
 
         // DONE: if desired, use setLocalizer() to change the localization method
         setLocalizer(new TwoWheelTrackingLocalizer(hardwareMap, this));
+        // Eventually when the kalman filter is done we can switch to apriltags with odometry
+        // that's not done yet, right now it's just raw apriltag position
+//        setLocalizer(new ApriltagLocalizer(hardwareMap, this, visionPortal));
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(
                 follower, HEADING_PID, batteryVoltageSensor,
