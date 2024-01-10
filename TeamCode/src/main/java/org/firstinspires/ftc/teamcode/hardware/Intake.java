@@ -16,9 +16,9 @@ public class Intake extends Mechanism {
      // DOWN is all the way down for intaking from the ground
     public static  double DOWN = 0.88;
     // Individual stack heights
-    public static double STACK_5 = 0.69;
-    public static double STACK_4 = 0;
-    public static double STACK_3 = 0;
+    public static double STACK_5 = 0.68;
+    public static double STACK_4 = 0.68;
+    public static double STACK_3 = 0.68;
 
     public static double FLAP_DOWN = 0.33;
     public static double FLAP_UP = 0.74;

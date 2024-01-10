@@ -52,6 +52,7 @@ public class Climb extends Mechanism {
         switch (climbState){
             case RAISING:
                 climbUp();
+
                 if(this.getPosition() >= CLIMB_UP - 10){
                     stop();
                     hookUp();

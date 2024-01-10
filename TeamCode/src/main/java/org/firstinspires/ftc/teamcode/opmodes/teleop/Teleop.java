@@ -28,6 +28,8 @@ public class Teleop extends LinearOpMode {
         robot.drive.setMaxSpeed(0.8);
 
         waitForStart();
+        robot.arm.down();
+        robot.arm.fullRelease();
         robot.intake.intakeDown();
         timer.reset();
 
@@ -135,6 +137,7 @@ public class Teleop extends LinearOpMode {
             if (gamepadEx1.left.isNewlyPressed()) {
                 if(robot.climb.getClimbState() == Climb.ClimbState.STOWED){
                     robot.climb.startRaise();
+                    robot.arm.veryDown();
                 } else if (robot.climb.getClimbState() == Climb.ClimbState.RAISED){
                     robot.climb.startClimb();
                 }

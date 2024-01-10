@@ -46,6 +46,7 @@ public class AutoBlueBackstage extends LinearOpMode {
         // setup other hardware
         robot.init(hardwareMap);
         robot.intake.intakeUp();
+        robot.arm.down();
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .strafeLeft(5)

@@ -47,6 +47,7 @@ public class AutoBlueStage extends LinearOpMode {
         robot.init(hardwareMap);
         robot.intake.intakeUp();
         robot.slides.setTarget(0);
+        robot.arm.down();
 
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)

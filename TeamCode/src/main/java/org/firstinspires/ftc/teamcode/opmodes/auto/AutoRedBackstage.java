@@ -46,6 +46,8 @@ public class AutoRedBackstage extends LinearOpMode {
         // setup other hardware
         robot.init(hardwareMap);
         robot.intake.intakeUp();
+        robot.arm.down();
+        robot.slides.setTarget(0);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .strafeLeft(5)
@@ -63,6 +65,7 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -116,19 +119,23 @@ public class AutoRedBackstage extends LinearOpMode {
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_RIGHT_SPIKEMARK)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_RIGHT_SPIKEMARK.minus(new Pose2d(1,0,0)))
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
                 .waitSeconds(1)
-                .back(8)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                })
+                .strafeLeft(6)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
-                .forward(55)
+                .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX(),AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX()+0.5,AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -141,7 +148,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 })
                 .build();
 
-        // init loop. Runs durring init before start is pressed
+        // init loop. Runs during init before start is pressed
         while(!isStarted() && !isStopRequested()){
 
             location = propVision.getLocation();
