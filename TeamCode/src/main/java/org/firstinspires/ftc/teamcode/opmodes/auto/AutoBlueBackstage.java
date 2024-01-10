@@ -3,22 +3,22 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 import android.util.Size;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
 @Autonomous
-public class AutoBlueStage extends LinearOpMode {
+public class AutoBlueBackstage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
-    // Vision set to BLUE
     private PropVision propVision = new PropVision(this.telemetry,false);
 
     private Robot robot = new Robot(true);
@@ -30,7 +30,7 @@ public class AutoBlueStage extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose = AutoConstants.BLUE_LEFT_START;
+    Pose2d startPose = AutoConstants.BLUE_RIGHT_START;
     // Vision
     PropVision.PropLocation location;
     @Override
@@ -46,21 +46,26 @@ public class AutoBlueStage extends LinearOpMode {
         // setup other hardware
         robot.init(hardwareMap);
         robot.intake.intakeUp();
-        robot.slides.setTarget(0);
-
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
+                .strafeLeft(5)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK)
-                .addTemporalMarker(()-> robot.arm.release2())
+                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK)
+                .addTemporalMarker(()->{
+                    robot.arm.release2();
+                })
                 .waitSeconds(1)
+                .strafeRight(4)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .forward(55)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .strafeLeft(6)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
                 .waitSeconds(1)
                 .back(4)
                 .addTemporalMarker(()->{
@@ -68,23 +73,35 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(5)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
                 .waitSeconds(1)
-
+//                .strafeRight(22)
+//                .lineToSplineHeading(AutoConstants.RED_PARK_EDGE)
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
-                .forward(20)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK)
-                .addTemporalMarker(()-> robot.arm.release2())
+                .forward(15)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_CENTER_SPIKEMARK)
+                .addTemporalMarker(()->{
+                    robot.arm.release2();
+                })
                 .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.up();
+                })
+                .strafeLeft(15)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .addTemporalMarker(()->{
+                    robot.arm.ground();
+                })
+                .forward(55)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX(),AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
                 .waitSeconds(1)
                 .back(4)
                 .addTemporalMarker(()->{
@@ -92,21 +109,29 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(13)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
+                .waitSeconds(1)
+//                .strafeRight(22)
+//                .lineToSplineHeading(AutoConstants.RED_PARK_EDGE)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK)
-                .addTemporalMarker(()-> robot.arm.release2())
+                .lineToSplineHeading(AutoConstants.RED_LEFT_RIGHT_SPIKEMARK)
+                .addTemporalMarker(()->{
+                    robot.arm.release2();
+                })
                 .waitSeconds(1)
+                .back(8)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .forward(55)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
+                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX(),AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
                 .waitSeconds(1)
                 .back(4)
                 .addTemporalMarker(()->{
@@ -114,11 +139,9 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(22)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
                 .build();
 
-        // init loop. Runs during init before start is pressed
+        // init loop. Runs durring init before start is pressed
         while(!isStarted() && !isStopRequested()){
 
             location = propVision.getLocation();
@@ -128,11 +151,6 @@ public class AutoBlueStage extends LinearOpMode {
         }
 
         location = propVision.getLocation();
-
-        if(location == null){
-            location = PropVision.PropLocation.RIGHT;
-        }
-
         telemetry.addData("Selected Location", location);
         telemetry.update();
         // Stop all vision once opmode has started
@@ -143,12 +161,12 @@ public class AutoBlueStage extends LinearOpMode {
         // Start has been pressed
 
 
-        if(location == PropVision.PropLocation.LEFT){
-            drive.followTrajectorySequenceAsync(placeLeft);
+        if(location == PropVision.PropLocation.RIGHT){
+            drive.followTrajectorySequenceAsync(placeRight);
         } else if (location == PropVision.PropLocation.CENTER){
             drive.followTrajectorySequenceAsync(placeCenter);
         } else {
-            drive.followTrajectorySequenceAsync(placeRight);
+            drive.followTrajectorySequenceAsync(placeLeft);
 
         }
 
@@ -161,13 +179,11 @@ public class AutoBlueStage extends LinearOpMode {
                 case SPIKEMARK:
                     if(!drive.isBusy()){
                         currentState = State.IDLE;
-//                        robot.arm.release2();
                     }
-
                 case IDLE:
                     break;
-
             }
+            // UPDATE EVERYTHING
             drive.update();
 //            robot.slides.pidLoop();
             // Update any other things that need updating every loop here too (e.g slides)

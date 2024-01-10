@@ -16,8 +16,7 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
 @Autonomous
-@Disabled
-public class AutoRedOtherSide extends LinearOpMode {
+public class AutoRedBackstage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
     private PropVision propVision = new PropVision(this.telemetry,true);

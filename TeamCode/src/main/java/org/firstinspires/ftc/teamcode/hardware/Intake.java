@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 @Config
@@ -14,16 +12,16 @@ public class Intake extends Mechanism {
 
      public static double MAX_SPEED = 1;
      // UP is all the way up for getting out of the way
-     public  static double  UP = 0;
+     public  static double  UP = 0.11;
      // DOWN is all the way down for intaking from the ground
-    public static  double DOWN = 0.22;
+    public static  double DOWN = 0.88;
     // Individual stack heights
-    public static double STACK_5 = 0.05;
+    public static double STACK_5 = 0.69;
     public static double STACK_4 = 0;
     public static double STACK_3 = 0;
 
-    public static double FLAP_OPEN = 0.2;
-    public static double FLAP_CLOSED = 0.57;
+    public static double FLAP_DOWN = 0.33;
+    public static double FLAP_UP = 0.74;
 
     public enum IntakeState{
         IN,
@@ -86,29 +84,26 @@ public class Intake extends Mechanism {
             case 0:
                 servoHeight.setPosition(DOWN);
                 intakeHeight = IntakeHeight.DOWN;
-                intakeFlap.setPosition(FLAP_CLOSED);
+                intakeFlap.setPosition(FLAP_UP);
                 break;
             case 3:
                 servoHeight.setPosition(STACK_3);
                 intakeHeight = IntakeHeight.STACK_3;
+                intakeFlap.setPosition(FLAP_DOWN);
                 break;
             case 4:
                 servoHeight.setPosition(STACK_4);
                 intakeHeight = IntakeHeight.STACK_4;
+                intakeFlap.setPosition(FLAP_DOWN);
+
                 break;
             case 5:
                 servoHeight.setPosition(STACK_5);
                 intakeHeight = IntakeHeight.STACK_5;
+                intakeFlap.setPosition(FLAP_DOWN);
                 break;
         }
         // Do something with the flap here maybe?
-    }
-
-    public void intakeStack(){
-        servoHeight.setPosition(STACK_5);
-        intakeHeight = IntakeHeight.STACK_5;
-        intakeFlap.setPosition(FLAP_OPEN);
-
     }
 
     public void setMaxSpeed(double speed){
