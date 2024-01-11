@@ -49,8 +49,12 @@ public class AutoRedBackstage extends LinearOpMode {
         robot.slides.setTarget(0);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK.minus(new Pose2d(1,0,0)))
+                .strafeLeft(3)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(0);
+                })
+                .forward(22)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -58,7 +62,8 @@ public class AutoRedBackstage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.down();
                 })
-                .strafeRight(10)
+                .strafeRight(7)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_EXTRA_MIDPOINT)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
                 .forward(50)
                 .addTemporalMarker(()->{

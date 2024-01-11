@@ -30,6 +30,8 @@ public class MeepMeepTesting {
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
     public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-35,-10,0);
+    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-35, -15,Math.toRadians(90));
+
 
     public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26,0);
     public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-35,0);
@@ -78,11 +80,13 @@ public class MeepMeepTesting {
 //                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
 
                                 // LEFT
-
+                                .strafeLeft(3)
                                 .forward(15)
                                 .lineToSplineHeading(RED_LEFT_LEFT_SPIKEMARK)
                                 .waitSeconds(1)
-                                .strafeRight(10)
+                                .strafeRight(7)
+//                                .turn(Math.toRadians(-45))
+                                .lineToSplineHeading(RED_LEFT_LEFT_EXTRA_MIDPOINT)
                                 .lineToSplineHeading(RED_LEFT_MIDPOINT)
 //                                Wait 15ish seconds here for other robot?
                                 .forward(55)

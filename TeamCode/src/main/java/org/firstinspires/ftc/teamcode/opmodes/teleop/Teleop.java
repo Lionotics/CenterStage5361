@@ -54,16 +54,18 @@ public class Teleop extends LinearOpMode {
             else{
                 robot.intake.stop();
             }
+
             // Height toggle between all the way down and all the way up
             if(gamepadEx1.y.isNewlyPressed()) {
-                if (robot.intake.intakeHeight == Intake.IntakeHeight.STACK_5){
-                    robot.intake.intakeDown();
-                } else if (robot.intake.intakeHeight == Intake.IntakeHeight.DOWN){
+                if (robot.intake.intakeHeight == Intake.IntakeHeight.DOWN){
                     robot.intake.stackHeight(5);
+                } else{
+                    robot.intake.intakeDown();
                 }
             }
+
             // restarting the intake when up should move it down an increment
-            if(gamepadEx1.rightBumper.isNewlyPressed()){
+            if(gamepadEx1.rightBumper.isNewlyReleased()){
 
                 if(robot.intake.intakeHeight == Intake.IntakeHeight.STACK_5){
                     robot.intake.stackHeight(4);

@@ -65,8 +65,7 @@ public class Slides extends Mechanism{
 
     public void pidLoop(){
         // Here for testing. get rid of it after
-        controller = new PIDController(Kp,Ki,Kd);
-        controller.setPID(Kp,Ki,Kd);
+
         double pos = this.getPosition();
 
         double power = controller.calculate(pos,target);

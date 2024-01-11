@@ -24,7 +24,7 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
     // Wall side
-    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(5,0,0));
+    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(4,2,0));
     public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK).minus(new Pose2d(16,-14,Math.toRadians(90)));
     public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = mirrorSide(RED_RIGHT_RIGHT_SPIKEMARK);
 
@@ -34,11 +34,12 @@ public class AutoConstants {
 
     // Auto midpoints
     public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-37,-10,0);
+    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-38, -12,Math.toRadians(90));
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
 
 
     // Stage placing positions
-    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26,0);
+    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26.25,0);
     public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-35,0);
     public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42.75,0);
 
