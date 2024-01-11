@@ -28,7 +28,7 @@ public class AutoRedStage extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose = AutoConstants.RED_RIGHT_START;
+    Pose2d startPose = AutoConstants.RED_FRONTSTAGE_START;
     // Vision
     PropVision.PropLocation location;
     @Override

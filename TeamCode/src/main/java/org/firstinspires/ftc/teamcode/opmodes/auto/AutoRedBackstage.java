@@ -5,7 +5,6 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -30,7 +29,7 @@ public class AutoRedBackstage extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose = AutoConstants.RED_LEFT_START;
+    Pose2d startPose = AutoConstants.RED_BACKSTAGE_START;
     // Vision
     PropVision.PropLocation location;
     @Override
@@ -50,21 +49,23 @@ public class AutoRedBackstage extends LinearOpMode {
         robot.slides.setTarget(0);
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(5)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK.minus(new Pose2d(1,0,0)))
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
                 .waitSeconds(1)
-                .strafeRight(4)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                })
+                .strafeRight(10)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
-                .forward(55)
+                .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+0.5,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
                 .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
@@ -76,32 +77,27 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .waitSeconds(1)
-//                .strafeRight(22)
-//                .lineToSplineHeading(AutoConstants.RED_PARK_EDGE)
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_CENTER_SPIKEMARK)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_CENTER_SPIKEMARK.minus(new Pose2d(1,0,0)))
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
-                    robot.arm.up();
+                    robot.arm.down();
                 })
-                .strafeLeft(15)
+                .strafeLeft(10)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
-                .addTemporalMarker(()->{
-                    robot.arm.ground();
-                })
-                .forward(55)
+                .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX(),AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+0.5,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -112,9 +108,6 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .waitSeconds(1)
-//                .strafeRight(22)
-//                .lineToSplineHeading(AutoConstants.RED_PARK_EDGE)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)

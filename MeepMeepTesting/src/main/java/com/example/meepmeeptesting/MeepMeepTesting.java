@@ -58,16 +58,38 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(RED_LEFT_START)
                                 // RIGHT
-//                                .strafeLeft(5)
+//                                .forward(15)
+//                                .lineToSplineHeading(RED_LEFT_RIGHT_SPIKEMARK)
+//                                .waitSeconds(1)
+//                                .strafeLeft(6)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+////                                Wait 15ish seconds here for other robot?
+//                                .forward(55)
+//                                .splineTo(new Vector2d(RED_RIGHT_STAGE.getX(),RED_RIGHT_STAGE.getY()),RED_RIGHT_STAGE.getHeading())
+
+//                                // CENTER
+//                                .forward(15)
+//                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
+//                                .waitSeconds(1)
+//                                .strafeLeft(10)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+////                                Wait 15ish seconds here for other robot?
+//                                .forward(55)
+//                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+
+                                // LEFT
+
                                 .forward(15)
-                                .lineToSplineHeading(RED_LEFT_RIGHT_SPIKEMARK)
+                                .lineToSplineHeading(RED_LEFT_LEFT_SPIKEMARK)
                                 .waitSeconds(1)
-                                .strafeLeft(6)
-//                                .strafeRight(4)
+                                .strafeRight(10)
                                 .lineToSplineHeading(RED_LEFT_MIDPOINT)
 //                                Wait 15ish seconds here for other robot?
                                 .forward(55)
-                                .splineTo(new Vector2d(RED_RIGHT_STAGE.getX(),RED_RIGHT_STAGE.getY()),RED_RIGHT_STAGE.getHeading())
+                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
+                                .waitSeconds(2)
+
+
 
                                 .build()
 

@@ -5,7 +5,6 @@ import android.util.Size;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -30,7 +29,7 @@ public class AutoBlueBackstage extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose = AutoConstants.BLUE_RIGHT_START;
+    Pose2d startPose = AutoConstants.BLUE_BACKSTAGE_START;
     // Vision
     PropVision.PropLocation location;
     @Override

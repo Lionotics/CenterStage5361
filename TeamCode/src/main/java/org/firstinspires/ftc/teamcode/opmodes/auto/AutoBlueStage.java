@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
@@ -30,7 +29,7 @@ public class AutoBlueStage extends LinearOpMode {
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
-    Pose2d startPose = AutoConstants.BLUE_LEFT_START;
+    Pose2d startPose = AutoConstants.BLUE_FRONTSTAGE_START;
     // Vision
     PropVision.PropLocation location;
     @Override
