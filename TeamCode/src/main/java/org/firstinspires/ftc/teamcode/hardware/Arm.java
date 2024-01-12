@@ -12,7 +12,7 @@ public class Arm extends Mechanism{
 
     public static double OFFSET = 0.006;
     public static double UP = 0.65;
-    public static double DOWN = 0.17;
+    public static double DOWN = 0.19;
     public static double VERY_DOWN = 0.12;
     public static double GROUND = 0.89;
     public static double PIXEL1_IN = 0.27;

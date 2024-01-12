@@ -62,8 +62,8 @@ public class AutoRedBackstage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.down();
                 })
-                .strafeRight(7)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_EXTRA_MIDPOINT)
+                .forward(20)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
                 .forward(50)
                 .addTemporalMarker(()->{
