@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 @Config
 public class AutoConstants {
     // Start Positions
-    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(11.5, -62, Math.toRadians(90.00));
+    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(10.5, -62, Math.toRadians(90.00));
     public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START);
 
     public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
@@ -15,7 +15,7 @@ public class AutoConstants {
     // Spike Marks
 
     // Stage side
-    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(10,-38,Math.toRadians(135));
+    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(9,-38,Math.toRadians(135));
     public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(90));
     public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(45));
 
@@ -44,7 +44,7 @@ public class AutoConstants {
     public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42.75,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
-    public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);
+    public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE).plus(new Pose2d(0,1,0));
     public static final Pose2d BLUE_LEFT_STAGE = mirror(RED_RIGHT_STAGE);
     
     // Parking positions

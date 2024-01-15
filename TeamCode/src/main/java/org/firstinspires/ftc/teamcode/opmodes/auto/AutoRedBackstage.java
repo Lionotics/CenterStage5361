@@ -70,18 +70,19 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+0.5,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+1,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
                 .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
+                .back(6)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .turn(Math.toRadians(90))
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
@@ -94,25 +95,26 @@ public class AutoRedBackstage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.down();
                 })
-                .strafeLeft(10)
+                .strafeLeft(13)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+0.5,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+1,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
                 .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
+                .back(6)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .turn(Math.toRadians(90))
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
@@ -132,18 +134,19 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX()+0.5,AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX()+1,AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
                 .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
+                .back(6)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
+                .turn(Math.toRadians(90))
                 .build();
 
         // init loop. Runs during init before start is pressed

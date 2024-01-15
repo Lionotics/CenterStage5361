@@ -8,7 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class Intake extends Mechanism {
     DcMotor intake;
 
-     Servo servoHeight, intakeFlap;
+    Servo servoHeight;
+//    Servo intakeFlap;
 
      public static double MAX_SPEED = 1;
      // UP is all the way up for getting out of the way
@@ -44,7 +45,7 @@ public class Intake extends Mechanism {
     public void init(HardwareMap hwMap) {
         intake = hwMap.dcMotor.get("intake");
         servoHeight = hwMap.servo.get("intakeHeight");
-        intakeFlap = hwMap.servo.get("intakeFlap");
+//        intakeFlap = hwMap.servo.get("intakeFlap");
 
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -84,23 +85,23 @@ public class Intake extends Mechanism {
             case 0:
                 servoHeight.setPosition(DOWN);
                 intakeHeight = IntakeHeight.DOWN;
-                intakeFlap.setPosition(FLAP_UP);
+//                intakeFlap.setPosition(FLAP_UP);
                 break;
             case 3:
                 servoHeight.setPosition(STACK_3);
                 intakeHeight = IntakeHeight.STACK_3;
-                intakeFlap.setPosition(FLAP_DOWN);
+//                intakeFlap.setPosition(FLAP_DOWN);
                 break;
             case 4:
                 servoHeight.setPosition(STACK_4);
                 intakeHeight = IntakeHeight.STACK_4;
-                intakeFlap.setPosition(FLAP_DOWN);
+//                intakeFlap.setPosition(FLAP_DOWN);
 
                 break;
             case 5:
                 servoHeight.setPosition(STACK_5);
                 intakeHeight = IntakeHeight.STACK_5;
-                intakeFlap.setPosition(FLAP_DOWN);
+//                intakeFlap.setPosition(FLAP_DOWN);
                 break;
         }
         // Do something with the flap here maybe?

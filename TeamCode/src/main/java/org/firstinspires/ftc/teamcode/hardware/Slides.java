@@ -54,6 +54,8 @@ public class Slides extends Mechanism{
         controller = new PIDController(Kp,Ki,Kd);
         controller.setPID(Kp,Ki,Kd);
 
+        target = 0;
+
 
     }
     public void autoMoveTo(int newTarget){

@@ -90,9 +90,9 @@ public class PropVision implements VisionProcessor {
 
         Mat thresh = new Mat();
         Core.inRange(mat,lowHSV,highHSV,thresh);
-        Mat left = thresh.submat(height/2,height,0,LEFTLINE);
-        Mat center = thresh.submat(height/2,height,LEFTLINE,RIGHTLINE);
-        Mat right = thresh.submat(height/2,height,RIGHTLINE,width);
+        Mat left = thresh.submat(0, height,0,LEFTLINE);
+        Mat center = thresh.submat(0,height,LEFTLINE,RIGHTLINE);
+        Mat right = thresh.submat(0,height,RIGHTLINE,width);
         // draw lines to make it clear where the divide is
         Imgproc.line(frame,new Point(LEFTLINE,0), new Point(LEFTLINE,height),GREEN,5);
         Imgproc.line(frame,new Point(RIGHTLINE,0), new Point(RIGHTLINE,height),GREEN,5);

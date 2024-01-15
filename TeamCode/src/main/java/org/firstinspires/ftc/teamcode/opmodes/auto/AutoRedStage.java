@@ -17,6 +17,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 public class AutoRedStage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
+    // Vision set to RED
     private PropVision propVision = new PropVision(this.telemetry,true);
 
     private Robot robot = new Robot(true);
@@ -44,6 +45,7 @@ public class AutoRedStage extends LinearOpMode {
         // setup other hardware
         robot.init(hardwareMap);
         robot.intake.intakeUp();
+        robot.slides.setTarget(0);
         robot.arm.down();
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
