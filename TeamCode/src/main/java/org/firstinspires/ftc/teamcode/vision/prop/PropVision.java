@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.vision;
+package org.firstinspires.ftc.teamcode.vision.prop;
 
 import android.graphics.Canvas;
 
@@ -59,7 +59,7 @@ public class PropVision implements VisionProcessor {
     // Constructor for EOCV-sim
     public PropVision(Telemetry telemetry){
         this.telemetry = telemetry;
-        this.isRed = true;
+        this.isRed = false;
     }
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
@@ -71,32 +71,48 @@ public class PropVision implements VisionProcessor {
 
         Scalar lowHSV;
         Scalar highHSV;
+        Mat mat = new Mat();
+        Mat thresh = new Mat();
+
 
         // Tuning for both red and blue
         // add an if statement based on isRed
         if(isRed) {
+            // Red has HSV wraparound, so we need to define two sets.
             lowHSV = new Scalar(160, 50, 50); // lower bound HSV for red
             highHSV = new Scalar(180, 255, 255); // higher bound HSV for red
+            // Convert to HSv
+            Imgproc.cvtColor(frame, mat, Imgproc.COLOR_RGB2HSV);
+
+            Mat thresh1 = new Mat();
+            Core.inRange(mat,lowHSV,highHSV,thresh1);
+
+            Mat thresh2 = new Mat();
+            lowHSV = new Scalar(0,50,50);
+            highHSV = new Scalar(10,255,255);
+            Core.inRange(mat,lowHSV,highHSV,thresh2);
+
+            Core.bitwise_or(thresh1,thresh2,thresh);
+
+
         } else {
+
             // Insert blue values here
             lowHSV = new Scalar(110, 50, 50); // lower bound HSV for blue
             highHSV = new Scalar(120, 255, 255); // higher bound HSV for blue
+            // Convert to HSv
+            Imgproc.cvtColor(frame, mat, Imgproc.COLOR_RGB2HSV);
+            Core.inRange(mat,lowHSV,highHSV,thresh);
 
         }
-        Mat mat = new Mat();
-        // Convert to HSv
-        Imgproc.cvtColor(frame, mat, Imgproc.COLOR_RGB2HSV);
 
-
-        Mat thresh = new Mat();
-        Core.inRange(mat,lowHSV,highHSV,thresh);
         Mat left = thresh.submat(0, height,0,LEFTLINE);
         Mat center = thresh.submat(0,height,LEFTLINE,RIGHTLINE);
         Mat right = thresh.submat(0,height,RIGHTLINE,width);
+
         // draw lines to make it clear where the divide is
         Imgproc.line(frame,new Point(LEFTLINE,0), new Point(LEFTLINE,height),GREEN,5);
         Imgproc.line(frame,new Point(RIGHTLINE,0), new Point(RIGHTLINE,height),GREEN,5);
-
 
         //Calculate number of "trues" in each, and select the one with the most
         int leftNum = Core.countNonZero(left);
@@ -118,7 +134,7 @@ public class PropVision implements VisionProcessor {
         telemetry.update();
 
         // our camera output gets put back into the frame - showing which pixels are being used
-        frame.copyTo(frame);
+        thresh.copyTo(frame);
         // be responsible with memory - clear out things we don't need from processing the frame
         mat.release();
         thresh.release();
