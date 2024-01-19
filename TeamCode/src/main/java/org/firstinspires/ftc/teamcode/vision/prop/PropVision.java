@@ -59,7 +59,7 @@ public class PropVision implements VisionProcessor {
     // Constructor for EOCV-sim
     public PropVision(Telemetry telemetry){
         this.telemetry = telemetry;
-        this.isRed = false;
+        this.isRed = true;
     }
     @Override
     public void init(int width, int height, CameraCalibration calibration) {
@@ -106,9 +106,9 @@ public class PropVision implements VisionProcessor {
 
         }
 
-        Mat left = thresh.submat(0, height,0,LEFTLINE);
-        Mat center = thresh.submat(0,height,LEFTLINE,RIGHTLINE);
-        Mat right = thresh.submat(0,height,RIGHTLINE,width);
+        Mat left = thresh.submat(height/2, height,0,LEFTLINE);
+        Mat center = thresh.submat(height/2,height,LEFTLINE,RIGHTLINE);
+        Mat right = thresh.submat(height/2,height,RIGHTLINE,width);
 
         // draw lines to make it clear where the divide is
         Imgproc.line(frame,new Point(LEFTLINE,0), new Point(LEFTLINE,height),GREEN,5);
