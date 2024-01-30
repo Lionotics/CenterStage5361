@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 import android.util.Size;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
@@ -64,8 +66,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
-                .addTemporalMarker(()->{
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -91,7 +93,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -102,7 +105,7 @@ public class AutoRedStage extends LinearOpMode {
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
+                .forward(20)
                 .lineToSplineHeading(AutoConstants.RED_RIGHT_RIGHT_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
@@ -118,7 +121,8 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(4)
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();

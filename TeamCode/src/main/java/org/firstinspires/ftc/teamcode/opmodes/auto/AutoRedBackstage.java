@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
@@ -70,14 +71,14 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+1,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
-                .waitSeconds(0.5)
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+1.5,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6)
-                .addTemporalMarker(()->{
+                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -102,14 +103,14 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+1,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
-                .waitSeconds(0.5)
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+1.5,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6)
-                .addTemporalMarker(()->{
+                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -140,8 +141,8 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6)
-                .addTemporalMarker(()->{
+                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);

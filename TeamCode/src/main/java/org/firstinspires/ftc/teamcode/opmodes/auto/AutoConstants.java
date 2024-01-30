@@ -34,7 +34,7 @@ public class AutoConstants {
 
     // Auto midpoints
     public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-37,-10,0);
-    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-37.5, -38,Math.toRadians(90));
+    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-36.5, -38,Math.toRadians(90));
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
     public static final Pose2d BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT = mirror(RED_LEFT_LEFT_EXTRA_MIDPOINT);
 

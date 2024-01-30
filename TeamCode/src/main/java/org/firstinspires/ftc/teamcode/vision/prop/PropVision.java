@@ -134,7 +134,7 @@ public class PropVision implements VisionProcessor {
         telemetry.update();
 
         // our camera output gets put back into the frame - showing which pixels are being used
-        thresh.copyTo(frame);
+        frame.copyTo(frame);
         // be responsible with memory - clear out things we don't need from processing the frame
         mat.release();
         thresh.release();
