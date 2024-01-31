@@ -71,14 +71,14 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()+1.5,AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
                 .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
+                        SampleMecanumDrive.getAccelerationConstraint(10))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -88,7 +88,7 @@ public class AutoRedBackstage extends LinearOpMode {
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_CENTER_SPIKEMARK.minus(new Pose2d(1,0,0)))
+                .lineToSplineHeading(AutoConstants.RED_LEFT_CENTER_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -103,14 +103,14 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()+1.5,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX(),AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
                 .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
+                        SampleMecanumDrive.getAccelerationConstraint(10))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -120,7 +120,7 @@ public class AutoRedBackstage extends LinearOpMode {
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_RIGHT_SPIKEMARK.minus(new Pose2d(1,0,0)))
+                .lineToSplineHeading(AutoConstants.RED_LEFT_RIGHT_SPIKEMARK)
                 .addTemporalMarker(()->{
                     robot.arm.release2();
                 })
@@ -135,14 +135,14 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX()+1,AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX(),AutoConstants.RED_RIGHT_STAGE.getY()),AutoConstants.RED_RIGHT_STAGE.getHeading())
                 .waitSeconds(0.5)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
                 .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(20))                      .addTemporalMarker(()->{
+                        SampleMecanumDrive.getAccelerationConstraint(10))                      .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);

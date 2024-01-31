@@ -4,11 +4,20 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 @Config
 public class AutoConstants {
-    // Start Positions
-    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(10.5, -62, Math.toRadians(90.00));
-    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START);
+    /*
+    12.52 from edge to center of alignment peice
+    Tile is 24.375 across in cad, website has them at 24. so the middle would be at an offset of 12.1875
+    So we are ~0.3 to ~0.5 inches offset from the center based on which side we are on
 
-    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
+     */
+    // Start Positions
+    // TODO: Mess with these carefully, but they need work
+    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(10.5, -62, Math.toRadians(90.00)); // CHECK THIS
+    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START).plus(new Pose2d(0.5,0,0)); // CHECK THIS
+
+//    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
+public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START);
+
     public static final Pose2d BLUE_BACKSTAGE_START = mirror(RED_BACKSTAGE_START);
 
 
@@ -24,8 +33,8 @@ public class AutoConstants {
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
     // Wall side
-    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(4,2,0));
-    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK).minus(new Pose2d(16,-14,Math.toRadians(90)));
+    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(4,2,0));  // Plus One?
+    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK).minus(new Pose2d(16,-14,Math.toRadians(90))); // plus one?
     public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = mirrorSide(RED_RIGHT_RIGHT_SPIKEMARK);
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
@@ -33,8 +42,8 @@ public class AutoConstants {
     public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK);
 
     // Auto midpoints
-    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-37,-10,0);
-    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-36.5, -38,Math.toRadians(90));
+    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-37,-10,0); // Minus two?
+    public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-36.5, -38,Math.toRadians(90)); // minus two
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
     public static final Pose2d BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT = mirror(RED_LEFT_LEFT_EXTRA_MIDPOINT);
 
