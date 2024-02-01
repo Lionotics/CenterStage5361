@@ -14,7 +14,7 @@ public class Slides extends Mechanism{
     public static double SLIDES_HOLD = 0.0005;
     public static double MAX_SPEED = 0.7;
     public static double MAX_AUTO_SPEED = 0.7;
-    public static int SLIDES_AUTO = 20;
+    public static int SLIDES_AUTO = 30;
     public static int TRANSITION_POINT = 150;
     // min for scoring ~300
 

@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
@@ -62,8 +63,8 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
-                .back(4)
-                .addTemporalMarker(()->{
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -86,8 +87,8 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
-                .back(4)
-                .addTemporalMarker(()->{
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -108,8 +109,8 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
-                .back(4)
-                .addTemporalMarker(()->{
+                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);

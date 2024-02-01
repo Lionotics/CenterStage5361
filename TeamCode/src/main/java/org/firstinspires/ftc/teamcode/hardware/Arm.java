@@ -24,7 +24,8 @@ public class Arm extends Mechanism{
         ARM_UP,
         ARM_DOWN,
         ARM_VERYDOWN,
-        ARM_GROUND
+        ARM_GROUND,
+        ARM_UPMORE
     }
     public enum PixelState{
         OPEN,
@@ -55,11 +56,18 @@ public class Arm extends Mechanism{
         arm2.setPosition(1 - UP - OFFSET);
         armState = ArmState.ARM_UP;
     }
+    public void upMore(){
+        arm1.setPosition(UP + 0.1);
+        arm2.setPosition(1 - UP - OFFSET + 0.1);
+        armState = ArmState.ARM_UPMORE;
+    }
+
     public void down(){
         arm1.setPosition(DOWN);
         arm2.setPosition(1 - DOWN - OFFSET);
         armState = ArmState.ARM_DOWN;
     }
+
     public void veryDown(){
         arm1.setPosition(VERY_DOWN);
         arm2.setPosition(1-VERY_DOWN-OFFSET);
