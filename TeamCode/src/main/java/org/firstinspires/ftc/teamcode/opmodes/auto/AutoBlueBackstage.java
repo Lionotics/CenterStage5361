@@ -159,6 +159,7 @@ public class AutoBlueBackstage extends LinearOpMode {
         // init loop. Runs durring init before start is pressed
         while(!isStarted() && !isStopRequested()){
 
+
             location = propVision.getLocation();
             telemetry.addData("Prop Location", location);
             telemetry.update();

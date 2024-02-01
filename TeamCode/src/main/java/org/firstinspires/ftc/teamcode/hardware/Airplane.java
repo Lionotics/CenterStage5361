@@ -24,6 +24,11 @@ public class Airplane extends Mechanism{
         hasShot = true;
     }
 
+    public void reset(){
+        airplaneShooter.setPosition(READY);
+        hasShot = false;
+    }
+
 
     public boolean hasShot(){
         return hasShot;
