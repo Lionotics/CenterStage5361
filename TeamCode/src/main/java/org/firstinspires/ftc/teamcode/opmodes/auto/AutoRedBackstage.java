@@ -66,6 +66,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_EXTRA_MIDPOINT)
                 .forward(20)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -77,7 +78,7 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(10))
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -99,6 +100,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 })
                 .strafeLeft(13)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -118,7 +120,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.down();
                 })
-                .back(4)
+                .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -141,6 +143,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 })
                 .strafeLeft(6)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -152,8 +155,9 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                      .addTemporalMarker(()->{
+                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10))
+                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);

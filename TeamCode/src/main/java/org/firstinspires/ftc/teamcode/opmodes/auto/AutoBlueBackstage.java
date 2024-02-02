@@ -62,6 +62,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                 })
                 .strafeRight(6)
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -73,8 +74,8 @@ public class AutoBlueBackstage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(7)
-                .addTemporalMarker(()->{
+                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                        SampleMecanumDrive.getAccelerationConstraint(10))                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
@@ -95,6 +96,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                 })
                 .strafeRight(13)
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -114,7 +116,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.down();
                 })
-                .back(4)
+                .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
@@ -137,6 +139,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT)
                 .forward(20)
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
+                .waitSeconds(9)
                 .forward(50)
                 .addTemporalMarker(()->{
                     robot.arm.up();
@@ -147,7 +150,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
-                .back(6, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
+                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(10))                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
