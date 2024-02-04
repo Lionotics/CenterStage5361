@@ -144,7 +144,7 @@ public class AutoRedBackstage extends LinearOpMode {
                 .strafeLeft(6)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
                 .waitSeconds(9)
-                .forward(50)
+                .forward(55)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);

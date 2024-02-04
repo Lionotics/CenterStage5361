@@ -59,7 +59,7 @@ public class AutoBlueStage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .strafeLeft(6)
+                .strafeLeft(15)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
@@ -87,6 +87,9 @@ public class AutoBlueStage extends LinearOpMode {
                 .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
                 .addTemporalMarker(()-> robot.arm.release1())
                 .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.upMore();
+                })
                 .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
                     robot.arm.down();

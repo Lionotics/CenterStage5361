@@ -94,6 +94,9 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.release1();
                 })
                 .waitSeconds(1)
+                .addTemporalMarker(()->{
+                    robot.arm.upMore();
+                })
                 .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
                         SampleMecanumDrive.getAccelerationConstraint(10))
                 .addTemporalMarker(()->{
@@ -116,7 +119,7 @@ public class AutoRedStage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .strafeRight(6)
+                .strafeRight(15)
                 .lineToSplineHeading(AutoConstants.RED_RIGHT_STAGE)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
