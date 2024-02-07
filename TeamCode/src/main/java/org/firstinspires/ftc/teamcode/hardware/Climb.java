@@ -16,7 +16,7 @@ public class Climb extends Mechanism {
     public static double HOOK_UP = 0.34;
     public static double HOOK2_DOWN = 0.24;
     public static double HOOK2_UP = 0.9;
-    public static int CLIMB_UP = 6500;
+    public static int CLIMB_UP = 6400;
     public enum ClimbState {
         STOWED,
         RAISING,

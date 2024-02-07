@@ -51,8 +51,9 @@ public class AutoBlueStage extends LinearOpMode {
 
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
+                .strafeLeft(3)
                 .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK)
+                .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK.plus(new Pose2d(1,1,0)))
                 .addTemporalMarker(()-> robot.arm.release2())
                 .waitSeconds(1)
                 .addTemporalMarker(()->{
@@ -173,7 +174,7 @@ public class AutoBlueStage extends LinearOpMode {
 
             }
             drive.update();
-//            robot.slides.pidLoop();
+            robot.slides.pidLoop();
             // Update any other things that need updating every loop here too (e.g slides)
 
         }
