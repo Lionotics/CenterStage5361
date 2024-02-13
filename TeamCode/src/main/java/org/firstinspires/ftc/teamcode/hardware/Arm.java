@@ -2,24 +2,22 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.PwmControl;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.hardware.ServoImpl;
 import com.qualcomm.robotcore.hardware.ServoImplEx;
 
 @Config
 public class Arm extends Mechanism{
 
     public static double OFFSET = 0.006;
-    public static double UP = 0.65;
-    public static double DOWN = 0.19;
-    public static double VERY_DOWN = 0.12;
-    public static double GROUND = 0.89;
-    public static double PIXEL1_IN = 0.27;
-    public static double PIXEL2_IN = 0.6;
-    public static double PIXEL1_OUT = 0;
-    public static double PIXEL2_OUT = 0.2;
+    public static double UP = 0.81;
+    public static double DOWN = 0.29;
 
+    public static double PIXEL1_IN = 0.27;
+    public static double PIXEL1_OUT = 0;
+
+    public static double PIXEL2_IN = 0.2;
+    public static double PIXEL2_OUT = 0;
+    // if I need a delay to assume the arm is down, assume 1 second. (that's for sure enough)
     public enum ArmState{
         ARM_UP,
         ARM_DOWN,
@@ -34,20 +32,18 @@ public class Arm extends Mechanism{
         ONE_RELEASE
     }
 
-    private ServoImplEx arm1, arm2, pixel1, pixel2;
+    private ServoImplEx arm1, arm2, endGate, middleGate;
     public ArmState armState;
     private PixelState pixelState;
 
     @Override
     public void init(HardwareMap hwMap) {
+
         arm1 = (ServoImplEx) hwMap.servo.get("pivotLeft");
         arm2 = (ServoImplEx) hwMap.servo.get("pivotRight");
-        pixel1 = (ServoImplEx) hwMap.servo.get("endLeft");
-        pixel2 = (ServoImplEx) hwMap.servo.get("endRight");
-        pixel2.setDirection(Servo.Direction.REVERSE);
-//        arm1.setPwmRange(new PwmControl.PwmRange(500,2500));
-//        arm2.setPwmRange(new PwmControl.PwmRange(500,2500));
-
+        endGate = (ServoImplEx) hwMap.servo.get("endGate");
+        middleGate = (ServoImplEx) hwMap.servo.get("middleGate");
+        middleGate.setDirection(Servo.Direction.REVERSE);
 
     }
 
@@ -67,30 +63,27 @@ public class Arm extends Mechanism{
         arm2.setPosition(1 - DOWN - OFFSET);
         armState = ArmState.ARM_DOWN;
     }
-
-    public void veryDown(){
-        arm1.setPosition(VERY_DOWN);
-        arm2.setPosition(1-VERY_DOWN-OFFSET);
-        armState = ArmState.ARM_VERYDOWN;
-    }
     public void ground(){
-        arm1.setPosition(GROUND);
-        arm2.setPosition(1 - GROUND);
-        armState = ArmState.ARM_GROUND;
+        // nothing as a placeholder
     }
+
+
     public void lock1(){
-        pixel1.setPosition(PIXEL1_IN);
+        endGate.setPosition(PIXEL1_IN);
         pixelState = PixelState.ONE_LOCK;
     }
+
     public void lock2(){
-        pixel2.setPosition(PIXEL2_IN);
+        middleGate.setPosition(PIXEL2_IN);
     }
     public void release1(){
-        pixel1.setPosition(PIXEL1_OUT);
+        endGate.setPosition(PIXEL1_OUT);
+        pixelState = PixelState.ONE_RELEASE;
 
     }
+
     public void release2(){
-        pixel2.setPosition(PIXEL2_OUT);
+        middleGate.setPosition(PIXEL2_OUT);
         pixelState = PixelState.ONE_RELEASE;
     }
 

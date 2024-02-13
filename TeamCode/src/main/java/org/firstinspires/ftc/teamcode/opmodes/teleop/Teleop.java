@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.Arm;
-import org.firstinspires.ftc.teamcode.hardware.Climb;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 import org.firstinspires.ftc.teamcode.hardware.Slides;
@@ -107,10 +106,15 @@ public class Teleop extends LinearOpMode {
             if (gamepadEx1.a.isNewlyPressed()) {
                 if(robot.arm.armState == Arm.ArmState.ARM_DOWN) {
                     robot.arm.up();
+                    // bypass the second lock stage if the drive doesn't want to
+                    if(robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK){
+                        robot.arm.release2();
+                    }
 
                 } else if (robot.arm.armState == Arm.ArmState.ARM_UP){
                     robot.arm.down();
                     robot.arm.fullRelease();
+                    robot.arm.lock1();
                 }
 
             }
@@ -120,32 +124,23 @@ public class Teleop extends LinearOpMode {
 
                 if (robot.arm.getPixelState() == Arm.PixelState.OPEN) {
                     // lock the pixels
-                    robot.arm.fullLock();
+                    robot.arm.lock1();
                 } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK) {
                     // lock both pixels
                     robot.arm.fullLock();
                 } else if (robot.arm.getPixelState() == Arm.PixelState.FULL_LOCK
                         && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
                     // release the first pixel
-                    robot.arm.release2();
+                    robot.arm.release1();
                 } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_RELEASE
                         && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
                     // release the second pixel
                     robot.arm.fullRelease();
+                    // at this pont we are done, add a new state for resetting everything
                 }
             }
 
-
-            if (gamepadEx1.left.isNewlyPressed()) {
-                if(robot.climb.getClimbState() == Climb.ClimbState.STOWED){
-                    robot.climb.startRaise();
-                    robot.arm.veryDown();
-                } else if (robot.climb.getClimbState() == Climb.ClimbState.RAISED){
-                    robot.climb.startClimb();
-                }
-            }
-
-            robot.climb.updateClimb();
+            // Put Climb Here
 
             // Airplane
             if(gamepad1.dpad_right){
@@ -161,8 +156,6 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("PixelState", robot.arm.getPixelState());
             telemetry.addData("ArmState", robot.arm.getArmState());
             telemetry.addData("IntakeState", robot.intake.getIntakeState());
-            telemetry.addData("Climb pos", robot.climb.getPosition());
-            telemetry.addData("Climb State ", robot.climb.getClimbState());
             telemetry.addData("Intake Height", robot.intake.intakeHeight);
             telemetry.addData("Slides state",robot.slides.getLiftState());
             telemetry.addData("Time in teleop", timer.seconds());

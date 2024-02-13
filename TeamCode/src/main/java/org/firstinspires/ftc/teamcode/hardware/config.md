@@ -13,8 +13,8 @@ Servos:
 
 - Port 2: pivotLeft
 - Port 3: pivotRight
-- Port 4: endLeft
-- Port 5: endRight
+- Port 4: endGate
+- Port 5: middleGate
 
 Expansion Hub:
 
