@@ -29,6 +29,7 @@ public class Teleop extends LinearOpMode {
         waitForStart();
         robot.arm.down();
         robot.arm.fullRelease();
+        robot.arm.lock1();
         robot.intake.intakeDown();
         timer.reset();
 
@@ -46,7 +47,10 @@ public class Teleop extends LinearOpMode {
             // Only allow intake when slides are not actively moving
             if (gamepad1.right_bumper
                     && robot.slides.getLiftState() == Slides.LIFT_STATE.HOLDING) {
+
                 robot.intake.intake();
+                // when intaking, disable arm
+                robot.arm.disableArm();
             } else if (gamepad1.left_trigger > 0.6) {
                 robot.intake.outtake();
             }
@@ -104,7 +108,10 @@ public class Teleop extends LinearOpMode {
 
             // Arm controls
             if (gamepadEx1.a.isNewlyPressed()) {
+                robot.arm.enableArm();
+
                 if(robot.arm.armState == Arm.ArmState.ARM_DOWN) {
+
                     robot.arm.up();
                     // bypass the second lock stage if the drive doesn't want to
                     if(robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK){
@@ -120,23 +127,25 @@ public class Teleop extends LinearOpMode {
             }
 
             // End effector loop between states
-            if (gamepadEx1.x.isNewlyReleased()) {
+            if (gamepadEx1.x.isNewlyPressed()) {
 
-                if (robot.arm.getPixelState() == Arm.PixelState.OPEN) {
-                    // lock the pixels
-                    robot.arm.lock1();
-                } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK) {
-                    // lock both pixels
-                    robot.arm.fullLock();
-                } else if (robot.arm.getPixelState() == Arm.PixelState.FULL_LOCK
-                        && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
-                    // release the first pixel
-                    robot.arm.release1();
-                } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_RELEASE
-                        && robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
-                    // release the second pixel
-                    robot.arm.fullRelease();
-                    // at this pont we are done, add a new state for resetting everything
+                if(robot.arm.getArmState() == Arm.ArmState.ARM_DOWN){
+                    if (robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK) {
+                        // lock both pixels
+                        robot.arm.fullLock();
+                    } else if (robot.arm.getPixelState() ==  Arm.PixelState.FULL_LOCK){
+                        robot.arm.unlock2();
+                    }
+                } else if (robot.arm.getArmState() == Arm.ArmState.ARM_UP) {
+                // arm is up
+                    if (robot.arm.getPixelState() == Arm.PixelState.FULL_LOCK) {
+                        // release the first pixel if both are locked
+                        robot.arm.release1();
+                    } else if (robot.arm.getPixelState() == Arm.PixelState.ONE_RELEASE) {
+                        // release the second pixel, or both if the second was not locked
+                        robot.arm.fullRelease();
+                        // at this pont we are done, add a new state for resetting everything
+                    }
                 }
             }
 

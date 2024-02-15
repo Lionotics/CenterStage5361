@@ -66,7 +66,14 @@ public class Arm extends Mechanism{
     public void ground(){
         // nothing as a placeholder
     }
-
+    public void disableArm(){
+        arm1.setPwmDisable();
+        arm2.setPwmDisable();
+    }
+    public void enableArm(){
+        arm1.setPwmEnable();
+        arm2.setPwmEnable();
+    }
 
     public void lock1(){
         endGate.setPosition(PIXEL1_IN);
@@ -85,6 +92,10 @@ public class Arm extends Mechanism{
     public void release2(){
         middleGate.setPosition(PIXEL2_OUT);
         pixelState = PixelState.ONE_RELEASE;
+    }
+    public void unlock2(){
+        middleGate.setPosition(PIXEL2_OUT);
+        pixelState = PixelState.ONE_LOCK;
     }
 
     public void fullRelease(){
