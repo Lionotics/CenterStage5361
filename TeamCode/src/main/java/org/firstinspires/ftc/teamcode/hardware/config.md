@@ -9,30 +9,21 @@ Motors:
 - Port 2: backRight
 - Port 3: backLeft - Parallel encoder
 
-Servos:
-
-- Port 2: pivotLeft
-- Port 3: pivotRight
-- Port 4: endGate
-- Port 5: middleGate
 
 Expansion Hub:
 
 Motors:
 
-- Port 0: climb
 - Port 1: slidesLeft
 - Port 2: slidesRight
 - Port 3: intake
 
 Servos:
 
-- Port 0: intakeHeight
-- Port 1: hook
-- Port 2: airplane
-- Port 3: intakeBottom (can be removed)
-- Port 4: hookTwo
-- Port 5: intakeFlap
+- Port 0: pivotLeft
+- Port 1: endGate
+- Port 2: middleGate
+- Port 3: pivotRight
 
 
 

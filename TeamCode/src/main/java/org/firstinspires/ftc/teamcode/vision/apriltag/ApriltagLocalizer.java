@@ -119,11 +119,13 @@ public class ApriltagLocalizer implements Localizer {
         // Update dead wheel estimate
         deadWheelLocalizer.update();
         // Change the variance of the odometry based on how far we've gone -- movement variance
+        // I'm not sure what they best way to calculate the total distance on the odometry - encoder ticks go up and down as the robot drives around the field
         // TODO: Put code here
 
 
         // Process the apriltags and turn them into positions
         // TODO: Figure out how the variance works here too
+        // TODO: Multi-tag handling is broken and needs to be fixed
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         List<AprilTagPose> tags;
         for (AprilTagDetection detection: currentDetections){
@@ -137,6 +139,7 @@ public class ApriltagLocalizer implements Localizer {
                 odometryX = deadWheelLocalizer.getPoseEstimate().getX();
                 odometryY = deadWheelLocalizer.getPoseEstimate().getY();
                 odometryHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
+
                 // Set the main estimate with weighted average
                 finalX = (apriltagX * apriltagVariance + odometryX * odometryVariance) / (apriltagVariance + odometryVariance);
                 finalY = (apriltagY * apriltagVariance + odometryY * odometryVariance) / (apriltagVariance + odometryVariance);

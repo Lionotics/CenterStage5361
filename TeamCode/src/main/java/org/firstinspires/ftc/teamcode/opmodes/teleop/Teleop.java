@@ -37,11 +37,12 @@ public class Teleop extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            // update our gamepad extionsion
+            // update our gamepad extension
             gamepadEx1.update(gamepad1);
 
             // Actually drive the robot
             robot.drive.drive(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            // Add variable speed based on distance to backboard here
 
             // intake controls
             // Only allow intake when slides are not actively moving
@@ -49,12 +50,13 @@ public class Teleop extends LinearOpMode {
                     && robot.slides.getLiftState() == Slides.LIFT_STATE.HOLDING) {
 
                 robot.intake.intake();
-                // when intaking, disable arm
+
+                // when intaking, disable arm to make the transfer work better
                 robot.arm.disableArm();
+
             } else if (gamepad1.left_trigger > 0.6) {
                 robot.intake.outtake();
-            }
-            else{
+            } else {
                 robot.intake.stop();
             }
 
@@ -62,7 +64,7 @@ public class Teleop extends LinearOpMode {
             if(gamepadEx1.y.isNewlyPressed()) {
                 if (robot.intake.intakeHeight == Intake.IntakeHeight.DOWN){
                     robot.intake.stackHeight(5);
-                } else{
+                } else {
                     robot.intake.intakeDown();
                 }
             }
@@ -145,11 +147,20 @@ public class Teleop extends LinearOpMode {
                         // release the second pixel, or both if the second was not locked
                         robot.arm.fullRelease();
                         // at this pont we are done, add a new state for resetting everything
+                    } else if (robot.arm.getPixelState() == Arm.PixelState.OPEN){
+                        // at this pont we are done, add a new state for resetting everything
+                        robot.arm.down();
+                        // slides down
+                        robot.slides.autoMoveTo(0);
+
                     }
                 }
             }
 
             // Put Climb Here
+            if(gamepadEx1.left.isNewlyReleased()){
+
+            }
 
             // Airplane
             if(gamepad1.dpad_right){

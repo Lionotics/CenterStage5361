@@ -10,15 +10,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slides extends Mechanism{
 
     private DcMotorEx slideA, slideB;
-    public static int SLIDES_UP = 805;
-    public static double SLIDES_HOLD = 0.0005;
-    public static double MAX_SPEED = 0.7;
-    public static double MAX_AUTO_SPEED = 0.7;
-    public static int SLIDES_AUTO = 50;
-    public static int TRANSITION_POINT = 150;
+    public static int SLIDES_UP = 2000;
+    public static double SLIDES_HOLD = 0.0005; // needs redoing for new motors
+    public static double MAX_SPEED = 1;
+    public static double MAX_AUTO_SPEED = 1;
+    public static int SLIDES_AUTO = 50; // needs redoing for new motors
+    public static int TRANSITION_POINT = 150; // needs redoing for new motors
+    public static int CLIMB_UP = 0;
     // min for scoring ~300
 
     // PID Loop
+    // RETUNE FOR NEW MOTORS
     private PIDController controller;
     public static int target = 0;
     public static double Kg = SLIDES_HOLD;
@@ -34,6 +36,7 @@ public class Slides extends Mechanism{
         MANUAL_DOWN,
         HOLDING
     }
+
     private LIFT_STATE liftState = LIFT_STATE.HOLDING;
 
     @Override
@@ -43,8 +46,8 @@ public class Slides extends Mechanism{
 
         slideA.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideB.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        slideA.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slideB.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        slideA.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        slideB.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         slideB.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -71,7 +74,7 @@ public class Slides extends Mechanism{
         double pos = this.getPosition();
 
         double power = controller.calculate(pos,target);
-        if(this.getPosition() > 10) {
+        if(this.getPosition() > 10) { // only add feedforward when not all the way down
             slideA.setPower((power * MAX_AUTO_SPEED) + Kg);
             slideB.setPower((power * MAX_AUTO_SPEED) + Kg);
         } else {

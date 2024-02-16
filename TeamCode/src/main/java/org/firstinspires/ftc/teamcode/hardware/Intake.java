@@ -9,7 +9,6 @@ public class Intake extends Mechanism {
     DcMotor intake;
 
     Servo servoHeight;
-//    Servo intakeFlap;
 
      public static double MAX_SPEED = 1;
      // UP is all the way up for getting out of the way
@@ -21,8 +20,6 @@ public class Intake extends Mechanism {
     public static double STACK_4 = 0.71;
     public static double STACK_3 = 0.67;
 
-    public static double FLAP_DOWN = 0.33;
-    public static double FLAP_UP = 0.74;
 
     public enum IntakeState{
         IN,

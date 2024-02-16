@@ -11,10 +11,10 @@ public class Arm extends Mechanism{
     public static double OFFSET = 0.006;
     public static double UP = 0.81;
     public static double DOWN = 0.29;
-
+    // end gate (i'm too lazy to refactor)
     public static double PIXEL1_IN = 0.27;
     public static double PIXEL1_OUT = 0;
-
+    // Middle gate
     public static double PIXEL2_IN = 0.2;
     public static double PIXEL2_OUT = 0;
     // if I need a delay to assume the arm is down, assume 1 second. (that's for sure enough)
