@@ -22,6 +22,8 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.openftc.apriltag.AprilTagPose;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Config
@@ -119,7 +121,7 @@ public class ApriltagLocalizer implements Localizer {
         // Update dead wheel estimate
         deadWheelLocalizer.update();
         // Change the variance of the odometry based on how far we've gone -- movement variance
-        // I'm not sure what they best way to calculate the total distance on the odometry - encoder ticks go up and down as the robot drives around the field
+        // I'm not sure what the best way to calculate the total distance on the odometry - encoder ticks go up and down as the robot drives around the field
         // TODO: Put code here
 
 
@@ -134,20 +136,25 @@ public class ApriltagLocalizer implements Localizer {
                 headingRadians = Math.toRadians(heading);
                 apriltagX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
                 apriltagY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-                // math here
+                // TODO: compute april tag variances
+                // tag_var_x = k1x^2 + k2x + k3     same for y
 
                 odometryX = deadWheelLocalizer.getPoseEstimate().getX();
                 odometryY = deadWheelLocalizer.getPoseEstimate().getY();
                 odometryHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
+                // TODO: compute odo vaiances
+                // odo_var_x = main_var_x + k1*velocity_x + k2*velocity_y
+                // odo_var_x = main_var_y + k2*velocity_x + k1*velocity_y
+                // var_heading = 0.015 (this should be with the constants)
 
                 // Set the main estimate with weighted average
-                finalX = (apriltagX * apriltagVariance + odometryX * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalY = (apriltagY * apriltagVariance + odometryY * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalHeading = (heading * apriltagVariance + odometryHeading * odometryVariance) / (apriltagVariance + odometryVariance);
+                finalX = (odometryX * apriltagVariance + apriltagX * odometryVariance) / (apriltagVariance + odometryVariance);
+                finalY = (odometryY * apriltagVariance + apriltagY * odometryVariance) / (apriltagVariance + odometryVariance);
+                finalHeading = (odometryHeading* apriltagVariance + heading * odometryVariance) / (apriltagVariance + odometryVariance);
 
                 // How should I change the dead wheel estimate based on this new number? I'm not quite sure.
                 // Something like this maybe?
-                //deadWheelLocalizer.setPoseEstimate(new Pose2d(finalX, finalY, finalHeading));
+                deadWheelLocalizer.setPoseEstimate(new Pose2d(finalX, finalY, finalHeading));
 
                 // Set the main variance
                 mainVariance = (apriltagVariance * odometryVariance)/(apriltagVariance + odometryVariance);
@@ -166,5 +173,15 @@ public class ApriltagLocalizer implements Localizer {
 
     // end update function
     }
+
+    public ArrayList<Double> getATVariances(double x, double y, double heading) {
+        double varX=0.0, varY=0.0, varH=0.0;
+        // TODO: Actual math goto:140
+        varX = 0;
+        varY = 0;
+        varH = 0;
+        return new ArrayList<Double>(Arrays.asList(varX, varY, varH));
+    }
+
 }
 
