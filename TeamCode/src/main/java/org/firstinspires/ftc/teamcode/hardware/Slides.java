@@ -20,14 +20,13 @@ public class Slides extends Mechanism{
     // min for scoring ~300
 
     // PID Loop
-    // RETUNE FOR NEW MOTORS
+    // TODO: RETUNE FOR NEW MOTORS
     private PIDController controller;
     public static int target = 0;
     public static double Kg = SLIDES_HOLD;
     public static double Kp = 0.005;
     public static double Ki = 0;
     public static double Kd = 0;
-    public static int exitThreshold = 10;
 
     // state machine
     public enum LIFT_STATE {
@@ -70,6 +69,7 @@ public class Slides extends Mechanism{
 
     public void pidLoop(){
         // Here for testing. get rid of it after
+        controller.setPID(Kp,Ki,Kd);
 
         double pos = this.getPosition();
 

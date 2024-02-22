@@ -15,7 +15,6 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.drive.TwoWheelTrackingLocalizer;
-import org.firstinspires.ftc.teamcode.vision.apriltag.Apriltag;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagGameDatabase;
@@ -29,26 +28,19 @@ import java.util.List;
 @Config
 public class ApriltagLocalizer implements Localizer {
 
-    private TwoWheelTrackingLocalizer deadWheelLocalizer;
     private AprilTagProcessor aprilTag;
     private HardwareMap hardwareMap;
     private VisionPortal visionPortal;
-    private double apriltagX, apriltagY,heading,headingRadians,odometryX, odometryY, odometryHeading, finalX, finalY, finalHeading;
-    // these need defining and tuning probably
-    private double odometryVariance = 0.5; // this changes over time in some form
-    private double apriltagVariance = 0.5;
-    private double mainVariance = 1;
+    private double finalX, finalY,heading, headingRadians;
+
+
 
     public ApriltagLocalizer(HardwareMap hardwareMap, SampleMecanumDrive drive, VisionPortal visionPortal){
 
-        deadWheelLocalizer = new TwoWheelTrackingLocalizer(hardwareMap, drive);
         this.hardwareMap = hardwareMap;
         this.visionPortal = visionPortal;
         initAprilTag();
         enableApriltagProcessor();
-        finalX = 0;
-        finalY = 0;
-
 
     }
     public void initAprilTag(){
@@ -96,92 +88,57 @@ public class ApriltagLocalizer implements Localizer {
     @NonNull
     @Override
     public Pose2d getPoseEstimate() {
-        return new Pose2d(finalX, finalY,finalHeading);
+        return new Pose2d(finalX, finalY,heading);
     }
 
     @Override
     public void setPoseEstimate(@NonNull Pose2d pose2d) {
-
-            deadWheelLocalizer.setPoseEstimate(pose2d);
-
-            finalX = pose2d.getX();
-            finalY = pose2d.getY();
-            finalHeading = pose2d.getHeading();
 
     }
 
     @Nullable
     @Override
     public Pose2d getPoseVelocity() {
-        return deadWheelLocalizer.getPoseVelocity();
+        return new Pose2d(0,0,0);
     }
 
     @Override
     public void update() {
-        // Update dead wheel estimate
-        deadWheelLocalizer.update();
-        // Change the variance of the odometry based on how far we've gone -- movement variance
-        // I'm not sure what the best way to calculate the total distance on the odometry - encoder ticks go up and down as the robot drives around the field
-        // TODO: Put code here
 
 
-        // Process the apriltags and turn them into positions
-        // TODO: Figure out how the variance works here too
-        // TODO: Multi-tag handling is broken and needs to be fixed
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         List<AprilTagPose> tags;
+
         for (AprilTagDetection detection: currentDetections){
             if(detection.metadata != null){
+                // TODO: Filtering options for the apriltags
                 heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
                 headingRadians = Math.toRadians(heading);
-                apriltagX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
-                apriltagY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-                // TODO: compute april tag variances
-                // tag_var_x = k1x^2 + k2x + k3     same for y
-
-                odometryX = deadWheelLocalizer.getPoseEstimate().getX();
-                odometryY = deadWheelLocalizer.getPoseEstimate().getY();
-                odometryHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
-                // TODO: compute odo vaiances
-                // odo_var_x = main_var_x + k1*velocity_x + k2*velocity_y
-                // odo_var_x = main_var_y + k2*velocity_x + k1*velocity_y
-                // var_heading = 0.015 (this should be with the constants)
-
-                // Set the main estimate with weighted average
-                finalX = (odometryX * apriltagVariance + apriltagX * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalY = (odometryY * apriltagVariance + apriltagY * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalHeading = (odometryHeading* apriltagVariance + heading * odometryVariance) / (apriltagVariance + odometryVariance);
-
-                // How should I change the dead wheel estimate based on this new number? I'm not quite sure.
-                // Something like this maybe?
-                deadWheelLocalizer.setPoseEstimate(new Pose2d(finalX, finalY, finalHeading));
-
-                // Set the main variance
-                mainVariance = (apriltagVariance * odometryVariance)/(apriltagVariance + odometryVariance);
-
-
+                finalX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
+                finalY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
 
             }
         }
 
-        // if no apriltags were found, just use the dead wheel estimate
-        if(currentDetections.size() == 0){
-            finalX = deadWheelLocalizer.getPoseEstimate().getX();
-            finalY = deadWheelLocalizer.getPoseEstimate().getY();
-            finalHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
+        // end update function
+    }
+
+    // update, but with the IMU heading
+    public void update(double IMUHeading) {
+        // TODO: Test this function
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        List<AprilTagPose> tags;
+
+        for (AprilTagDetection detection: currentDetections){
+            if(detection.metadata != null){
+                // TODO: Filtering options for the apriltags
+                heading =  IMUHeading;
+                headingRadians = Math.toRadians(heading);
+                finalX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
+                finalY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
+
+            }
         }
-
-    // end update function
     }
-
-    public ArrayList<Double> getATVariances(double x, double y, double heading) {
-        double varX=0.0, varY=0.0, varH=0.0;
-        // TODO: Actual math goto:140
-        varX = 0;
-        varY = 0;
-        varH = 0;
-        return new ArrayList<Double>(Arrays.asList(varX, varY, varH));
-    }
-
 }
 

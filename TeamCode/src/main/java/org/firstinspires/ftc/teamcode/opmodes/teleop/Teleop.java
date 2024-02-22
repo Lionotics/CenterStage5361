@@ -24,7 +24,7 @@ public class Teleop extends LinearOpMode {
 
 
         robot.init(hardwareMap);
-        robot.drive.setMaxSpeed(0.8);
+        robot.drive.setMaxSpeed(1);
 
         waitForStart();
         robot.arm.down();
