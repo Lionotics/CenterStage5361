@@ -20,7 +20,7 @@ public class MeepMeepTesting {
     // Stage side
     public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(9,-38,Math.toRadians(135));
     public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(90));
-    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(45));
+    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(23,-38,Math.toRadians(90));
 
     public static final Pose2d BLUE_LEFT_RIGHT_SPIKEMARK = mirror(RED_RIGHT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
@@ -28,7 +28,7 @@ public class MeepMeepTesting {
 
     // Wall side
     public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(4,2,0));
-    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK).minus(new Pose2d(16,-14,Math.toRadians(90)));
+    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK);
     public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = mirrorSide(RED_RIGHT_RIGHT_SPIKEMARK);
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
@@ -53,6 +53,7 @@ public class MeepMeepTesting {
 
     // Parking positions
     public static final Pose2d RED_PARK_EDGE = new Pose2d(53,-60,Math.toRadians(90));
+    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(45,-55,Math.toRadians(90));
     public static final Pose2d BLUE_PARK_EDGE = mirror(RED_PARK_EDGE);
 
     public static Pose2d mirror(Pose2d pose){
@@ -63,26 +64,63 @@ public class MeepMeepTesting {
     }
 
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(1000);
+        MeepMeep meepMeep = new MeepMeep(800);
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 17)
+                .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 16.4)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(BLUE_BACKSTAGE_START)
-                                .strafeRight(3)
-                                .forward(22)
-                                .lineToSplineHeading(BLUE_RIGHT_RIGHT_SPIKEMARK.minus(new Pose2d(1,0,0)))
-                                .waitSeconds(1)
-                                .lineToSplineHeading(BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT)
-                                .forward(20)
-                                .lineToSplineHeading(BLUE_RIGHT_MIDPOINT)
-                                .forward(50)
-                                .splineTo(new Vector2d(BLUE_RIGHT_STAGE.getX()+1,BLUE_RIGHT_STAGE.getY()),BLUE_RIGHT_STAGE.getHeading())
-                                .waitSeconds(1.5)
-                                .back(6)
-                                .turn(Math.toRadians(-90))
-                                .waitSeconds(1)
+                        drive.trajectorySequenceBuilder(RED_BACKSTAGE_START)
+
+                                // RED CLOSE
+
+                                // LEFT
+//                                .splineTo(new Vector2d(RED_RIGHT_LEFT_SPIKEMARK.getX(),RED_RIGHT_LEFT_SPIKEMARK.getY()),RED_RIGHT_LEFT_SPIKEMARK.getHeading())
+//                                .back(7)
+//                                .lineToSplineHeading(RED_LEFT_STAGE)
+//                                .waitSeconds(1)
+//                                .setReversed(true)
+//                                .splineTo(new Vector2d(RED_PARK_EDGE_WAYPOINT.getX(),RED_PARK_EDGE_WAYPOINT.getY()),RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+//                                .splineToConstantHeading(new Vector2d(RED_PARK_EDGE.getX(),RED_PARK_EDGE.getY()),RED_PARK_EDGE.getHeading())
+//                                .setReversed(false)
+
+
+
+
+                                // CENTER
+//                                .splineTo(new Vector2d(RED_RIGHT_CENTER_SPIKEMARK.getX(),RED_RIGHT_CENTER_SPIKEMARK.getY()),RED_RIGHT_CENTER_SPIKEMARK.getHeading())
+//                                .back(7)
+//                                .lineToSplineHeading(RED_CENTER_STAGE)
+//                                .waitSeconds(1)
+//                                .setReversed(true)
+//                                .splineTo(new Vector2d(RED_PARK_EDGE_WAYPOINT.getX(),RED_PARK_EDGE_WAYPOINT.getY()),RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+//                                .splineToConstantHeading(new Vector2d(RED_PARK_EDGE.getX(),RED_PARK_EDGE.getY()),RED_PARK_EDGE.getHeading())
+//                                .setReversed(false)
+
+
+
+                                // RIGHT
+//                                .splineTo(new Vector2d(RED_RIGHT_RIGHT_SPIKEMARK.getX(),RED_RIGHT_RIGHT_SPIKEMARK.getY()),RED_RIGHT_RIGHT_SPIKEMARK.getHeading())
+//                                .back(7)
+//                                .lineToSplineHeading(RED_RIGHT_STAGE)
+//                                .waitSeconds(1)
+//                                .setReversed(true)
+//                                .splineTo(new Vector2d(RED_PARK_EDGE_WAYPOINT.getX(),RED_PARK_EDGE_WAYPOINT.getY()),RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+//                                .splineToConstantHeading(new Vector2d(RED_PARK_EDGE.getX(),RED_PARK_EDGE.getY()),RED_PARK_EDGE.getHeading())
+//                                .setReversed(false)
+
+
+                                // RED FAR
+                                // All of these are goof thanks to the truss
+
+                                // LEFT is goofy one, Pathing TBD based on how the others behave
+//                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
+
+                                // CENTER
+                                .splineTo(new Vector2d(RED_LEFT_CENTER_SPIKEMARK.getX(),RED_LEFT_CENTER_SPIKEMARK.getY()),RED_LEFT_CENTER_SPIKEMARK.getHeading())
+
+
+
                                 .build()
 
                 );

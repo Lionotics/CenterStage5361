@@ -57,10 +57,10 @@ import static org.firstinspires.ftc.teamcode.drive.DriveConstants.kV;
 @Config
 public class SampleMecanumDrive extends MecanumDrive {
     // Make sure Translational PID has a kD.
-    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(6, 0, 0.3);
-    public static PIDCoefficients HEADING_PID = new PIDCoefficients(7, 0, 0);
+    public static PIDCoefficients TRANSLATIONAL_PID = new PIDCoefficients(0, 0, 0); // 6, 0, 0.3
+    public static PIDCoefficients HEADING_PID = new PIDCoefficients(0, 0, 0); // 7, 0, 0
 
-    public static double LATERAL_MULTIPLIER = 1.65;
+    public static double LATERAL_MULTIPLIER = 1; // 1.65
 
     public static double VX_WEIGHT = 1;
     public static double VY_WEIGHT = 1;
@@ -87,7 +87,7 @@ public class SampleMecanumDrive extends MecanumDrive {
         super(kV, kA, kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
-                new Pose2d(0.5, 0.5, Math.toRadians(3.0)), 0.5);
+                new Pose2d(0.4, 0.4, Math.toRadians(3.0)), 0.4); // what should this be?
 
         LynxModuleUtil.ensureMinimumFirmwareVersion(hardwareMap);
 
@@ -304,7 +304,7 @@ public class SampleMecanumDrive extends MecanumDrive {
 
     @Override
     public Double getExternalHeadingVelocity() {
-        return (double) imu.getRobotAngularVelocity(AngleUnit.RADIANS).zRotationRate;
+        return (double) imu.getRobotAngularVelocity(AngleUnit.RADIANS).yRotationRate;
     }
 
     public static TrajectoryVelocityConstraint getVelocityConstraint(double maxVel, double maxAngularVel, double trackWidth) {

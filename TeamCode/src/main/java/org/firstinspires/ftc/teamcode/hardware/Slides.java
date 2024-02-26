@@ -10,23 +10,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class Slides extends Mechanism{
 
     private DcMotorEx slideA, slideB;
-    public static int SLIDES_UP = 2000;
-    public static double SLIDES_HOLD = 0.0005; // needs redoing for new motors
+    public static int SLIDES_UP = 2200;
+    public static double SLIDES_HOLD = 0.05; // needs redoing for new motors
     public static double MAX_SPEED = 1;
     public static double MAX_AUTO_SPEED = 1;
-    public static int SLIDES_AUTO = 50; // needs redoing for new motors
-    public static int TRANSITION_POINT = 150; // needs redoing for new motors
+    public static int SLIDES_AUTO = 450; // needs redoing for new motors
+    public static int TRANSITION_POINT = 750; // needs redoing for new motors
     public static int CLIMB_UP = 0;
     // min for scoring ~300
 
     // PID Loop
-    // TODO: RETUNE FOR NEW MOTORS
     private PIDController controller;
     public static int target = 0;
     public static double Kg = SLIDES_HOLD;
-    public static double Kp = 0.005;
+    public static double Kp = 0.019;
     public static double Ki = 0;
-    public static double Kd = 0;
+    public static double Kd = 0.0001;
 
     // state machine
     public enum LIFT_STATE {

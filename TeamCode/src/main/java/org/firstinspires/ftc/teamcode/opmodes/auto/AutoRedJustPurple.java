@@ -16,8 +16,8 @@ import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.prop.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
-@Autonomous(name = "Auto: Red Close 2+0")
-public class AutoRedStage extends LinearOpMode {
+@Autonomous(name = "Auto: Red Just Purple")
+public class AutoRedJustPurple extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
     // Vision set to RED
@@ -50,82 +50,17 @@ public class AutoRedStage extends LinearOpMode {
         robot.intake.intakeUp();
         robot.slides.setTarget(0);
         robot.arm.down();
-        robot.arm.lock1();
-
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getX(),AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getY()),AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getHeading())
-                .back(7)
-                .addTemporalMarker(()->{
-                    robot.arm.up();
-                    robot.slides.setTarget(Slides.SLIDES_AUTO);
-                })
-                .lineToSplineHeading(AutoConstants.RED_LEFT_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                    robot.arm.fullRelease();
-                    robot.slides.setTarget(0);
-                })
-                .setReversed(true)
-                .splineTo(new Vector2d(AutoConstants.RED_PARK_EDGE_WAYPOINT.getX(),AutoConstants.RED_PARK_EDGE_WAYPOINT.getY()),
-                        AutoConstants.RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(AutoConstants.RED_PARK_EDGE.getX(),AutoConstants.RED_PARK_EDGE.getY()),
-                        AutoConstants.RED_PARK_EDGE.getHeading())
-                .setReversed(false)
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(AutoConstants.RED_RIGHT_CENTER_SPIKEMARK.getX(),AutoConstants.RED_RIGHT_CENTER_SPIKEMARK.getY()),AutoConstants.RED_RIGHT_CENTER_SPIKEMARK.getHeading())
-                .back(7)
-                .addTemporalMarker(()->{
-                    robot.arm.up();
-                    robot.slides.setTarget(Slides.SLIDES_AUTO);
-                })
-                .lineToSplineHeading(AutoConstants.RED_CENTER_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                    robot.arm.fullRelease();
-                    robot.slides.setTarget(0);
-                })
-                .setReversed(true)
-                .splineTo(new Vector2d(AutoConstants.RED_PARK_EDGE_WAYPOINT.getX(),AutoConstants.RED_PARK_EDGE_WAYPOINT.getY()),
-                        AutoConstants.RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(AutoConstants.RED_PARK_EDGE.getX(),AutoConstants.RED_PARK_EDGE.getY()),
-                        AutoConstants.RED_PARK_EDGE.getHeading())
-                .setReversed(false)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(AutoConstants.RED_RIGHT_RIGHT_SPIKEMARK.getX(),AutoConstants.RED_RIGHT_RIGHT_SPIKEMARK.getY()),AutoConstants.RED_RIGHT_RIGHT_SPIKEMARK.getHeading())
-                .back(7)
-                .addTemporalMarker(()->{
-                    robot.arm.up();
-                    robot.slides.setTarget(Slides.SLIDES_AUTO);
-                })
-                .lineToSplineHeading(AutoConstants.RED_RIGHT_STAGE)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                    robot.arm.fullRelease();
-                    robot.slides.setTarget(0);
-                })
-                .setReversed(true)
-                .splineTo(new Vector2d(AutoConstants.RED_PARK_EDGE_WAYPOINT.getX(),AutoConstants.RED_PARK_EDGE_WAYPOINT.getY()),
-                        AutoConstants.RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(AutoConstants.RED_PARK_EDGE.getX(),AutoConstants.RED_PARK_EDGE.getY()),
-                        AutoConstants.RED_PARK_EDGE.getHeading())
-                .setReversed(false)
                 .build();
 
         // init loop. Runs durring init before start is pressed
@@ -158,7 +93,6 @@ public class AutoRedStage extends LinearOpMode {
         }
 
 
-
         while(opModeIsActive() && !isStopRequested()){
 
             switch (currentState){
@@ -171,10 +105,10 @@ public class AutoRedStage extends LinearOpMode {
                 case IDLE:
                     break;
             }
+
             // UPDATE EVERYTHING WOW
             drive.update();
             robot.slides.pidLoop();
-            // Update any other things that need updating every loop here too (e.g slides)
 
         }
 

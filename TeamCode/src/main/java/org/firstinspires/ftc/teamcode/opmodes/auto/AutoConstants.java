@@ -26,7 +26,7 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     // Stage side
     public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(9,-38,Math.toRadians(135));
     public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-38.5,Math.toRadians(90));
-    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(45));
+    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(23,-38,Math.toRadians(90));
 
     public static final Pose2d BLUE_LEFT_RIGHT_SPIKEMARK = mirror(RED_RIGHT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
@@ -59,6 +59,8 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     
     // Parking positions
     public static final Pose2d RED_PARK_EDGE = new Pose2d(53,-60,Math.toRadians(90));
+    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(45,-55,Math.toRadians(90));
+
     public static final Pose2d BLUE_PARK_EDGE = mirror(RED_PARK_EDGE);
 
 

@@ -45,9 +45,9 @@ public class Teleop extends LinearOpMode {
             // Add variable speed based on distance to backboard here
 
             // intake controls
-            // Only allow intake when slides are not actively moving
+            // Only allow intake when slides are down
             if (gamepad1.right_bumper
-                    && robot.slides.getLiftState() == Slides.LIFT_STATE.HOLDING) {
+                    && robot.slides.getPosition() < 10) {
 
                 robot.intake.intake();
 
@@ -88,12 +88,12 @@ public class Teleop extends LinearOpMode {
 
                     if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < Slides.TRANSITION_POINT){
                         // if slides are down and B is newly pressed, do a full auto deploy for scoring
-                        robot.arm.fullLock();
                         robot.arm.up();
                         robot.slides.autoMoveTo(Slides.TRANSITION_POINT);
                     } else if((robot.slides.getPosition() > Slides.TRANSITION_POINT - 10 && gamepad1.b) || gamepad1.dpad_up){
                         // B is pressed, and slides have already gone auto up to the first point
                         robot.slides.manualUp();
+                        robot.arm.enableArm();
                     }
 
                 } else if (gamepad1.left_bumper && robot.slides.getPosition() > 0) {

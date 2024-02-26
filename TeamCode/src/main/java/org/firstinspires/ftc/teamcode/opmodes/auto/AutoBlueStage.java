@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.prop.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
-@Autonomous
+@Autonomous(name = "Auto: Blue Close 2+0")
 public class AutoBlueStage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
@@ -48,6 +48,7 @@ public class AutoBlueStage extends LinearOpMode {
         robot.intake.intakeUp();
         robot.slides.setTarget(0);
         robot.arm.down();
+        robot.arm.lock1();
 
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
@@ -157,8 +158,6 @@ public class AutoBlueStage extends LinearOpMode {
 
         }
 
-        robot.arm.fullLock();
-        robot.arm.ground();
 
         while(opModeIsActive() && !isStopRequested()){
 
