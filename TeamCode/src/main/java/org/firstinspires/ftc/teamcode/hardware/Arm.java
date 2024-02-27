@@ -12,7 +12,7 @@ public class Arm extends Mechanism{
     public static double UP = 0.81;
     public static double DOWN = 0.29;
     // end gate (i'm too lazy to refactor)
-    public static double PIXEL1_IN = 0.27;
+    public static double PIXEL1_IN = 0.4;
     public static double PIXEL1_OUT = 0;
     // Middle gate
     public static double PIXEL2_IN = 0.2;

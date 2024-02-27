@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.prop.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
-@Autonomous(name = "Auto: Red Just Purple")
+@Autonomous(name = "Auto: Red Just Purple, CLOSE")
 public class AutoRedJustPurple extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
@@ -53,6 +53,7 @@ public class AutoRedJustPurple extends LinearOpMode {
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getX(),AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getY()),AutoConstants.RED_RIGHT_LEFT_SPIKEMARK.getHeading())
+                .back(7)
                 .build();
 
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
@@ -77,7 +78,7 @@ public class AutoRedJustPurple extends LinearOpMode {
         telemetry.update();
         // Stop all vision once opmode has started
         // (if we use apriltags this will need to be changed)
-        visionPortal.close();
+        visionPortal.setProcessorEnabled(propVision, false);
 
         if (isStopRequested()) return;
         // Start has been pressed

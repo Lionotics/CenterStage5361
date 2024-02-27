@@ -152,6 +152,8 @@ public class Teleop extends LinearOpMode {
                         robot.arm.down();
                         // slides down
                         robot.slides.autoMoveTo(0);
+                        robot.arm.fullRelease();
+                        robot.arm.lock1();
 
                     }
                 }

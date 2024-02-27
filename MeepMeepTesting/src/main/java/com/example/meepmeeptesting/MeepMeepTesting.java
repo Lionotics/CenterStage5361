@@ -8,7 +8,7 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTesting {
 
-    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(10.5, -62, Math.toRadians(90.00));
+    public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(12, -62, Math.toRadians(90.00));
     public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START);
 
     public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
@@ -18,25 +18,29 @@ public class MeepMeepTesting {
     // Spike Marks
 
     // Stage side
-    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(9,-38,Math.toRadians(135));
-    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(11.5,-38,Math.toRadians(90));
+    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(7,-36,Math.toRadians(135));
+    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(13.5,-32,Math.toRadians(90));
     public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(23,-38,Math.toRadians(90));
 
     public static final Pose2d BLUE_LEFT_RIGHT_SPIKEMARK = mirror(RED_RIGHT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
+    public static Pose2d mirrorSide(Pose2d pose){
+        return new Pose2d(-pose.getX() - 24 ,pose.getY(),pose.getHeading());
+    }
+
     // Wall side
-    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = mirrorSide(RED_RIGHT_LEFT_SPIKEMARK).minus(new Pose2d(4,2,0));
-    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = mirrorSide(RED_RIGHT_CENTER_SPIKEMARK);
-    public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = mirrorSide(RED_RIGHT_RIGHT_SPIKEMARK);
+    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = new Pose2d(-55,-33,Math.toRadians(0));
+    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = new Pose2d(-43.5,-32,Math.toRadians(45));
+    public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = new Pose2d(-31,-36,Math.toRadians(45));
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_CENTER_SPIKEMARK = mirror(RED_LEFT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK);
 
     // Auto midpoints
-    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-37,-10,0);
+    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-12,0);
     public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-37.5, -38,Math.toRadians(90));
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
     public static final Pose2d BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT = mirror(RED_LEFT_LEFT_EXTRA_MIDPOINT);
@@ -52,16 +56,15 @@ public class MeepMeepTesting {
     public static final Pose2d BLUE_LEFT_STAGE = mirror(RED_RIGHT_STAGE);
 
     // Parking positions
+    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(45,-59,Math.toRadians(90));
     public static final Pose2d RED_PARK_EDGE = new Pose2d(53,-60,Math.toRadians(90));
-    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(45,-55,Math.toRadians(90));
+    public static final Pose2d RED_STAGE_PARK = new Pose2d(45,-35,Math.toRadians(90));
     public static final Pose2d BLUE_PARK_EDGE = mirror(RED_PARK_EDGE);
 
     public static Pose2d mirror(Pose2d pose){
         return new Pose2d(pose.getX(),-pose.getY(),-pose.getHeading());
     }
-    public static Pose2d mirrorSide(Pose2d pose){
-        return new Pose2d(-pose.getX() - 24 ,pose.getY(),pose.getHeading());
-    }
+
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -75,6 +78,7 @@ public class MeepMeepTesting {
                                 // RED CLOSE
 
                                 // LEFT
+//                                .forward(15)
 //                                .splineTo(new Vector2d(RED_RIGHT_LEFT_SPIKEMARK.getX(),RED_RIGHT_LEFT_SPIKEMARK.getY()),RED_RIGHT_LEFT_SPIKEMARK.getHeading())
 //                                .back(7)
 //                                .lineToSplineHeading(RED_LEFT_STAGE)
@@ -113,12 +117,36 @@ public class MeepMeepTesting {
                                 // RED FAR
                                 // All of these are goof thanks to the truss
 
-                                // LEFT is goofy one, Pathing TBD based on how the others behave
-//                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
+                                // RIGHT
+//                                .splineTo(new Vector2d(RED_LEFT_RIGHT_SPIKEMARK.getX(), RED_LEFT_RIGHT_SPIKEMARK.getY()), RED_LEFT_RIGHT_SPIKEMARK.getHeading())
+//                                .back(7)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+//                                .forward(70)
+//                                .splineTo(new Vector2d(RED_RIGHT_STAGE.getX(), RED_RIGHT_STAGE.getY()), RED_RIGHT_STAGE.getHeading())
+//                                .waitSeconds(1)
+//                                .back(5)
+//                                .lineToSplineHeading(RED_STAGE_PARK)
+
+
+                                // LEFT
+//                                .lineToSplineHeading(RED_LEFT_LEFT_SPIKEMARK)
+//                                .back(3)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+//                                .forward(70)
+//                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
+//                                .waitSeconds(1)
+//                                .back(5)
+//                                .lineToSplineHeading(RED_STAGE_PARK)
 
                                 // CENTER
-                                .splineTo(new Vector2d(RED_LEFT_CENTER_SPIKEMARK.getX(),RED_LEFT_CENTER_SPIKEMARK.getY()),RED_LEFT_CENTER_SPIKEMARK.getHeading())
-
+//                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
+//                                .back(6)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+//                                .forward(70)
+//                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+//                                .waitSeconds(1)
+//                                .back(5)
+//                                .lineToSplineHeading(RED_STAGE_PARK)
 
 
                                 .build()

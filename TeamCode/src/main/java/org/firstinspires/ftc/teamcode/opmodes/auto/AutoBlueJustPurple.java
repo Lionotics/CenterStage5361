@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.prop.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
-@Autonomous(name = "Auto: Blue Just Purple")
+@Autonomous(name = "Auto: Blue Just Purple, CLOSE")
 public class AutoBlueJustPurple extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;

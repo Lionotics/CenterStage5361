@@ -12,9 +12,9 @@ public class Intake extends Mechanism {
 
      public static double MAX_SPEED = 1;
      // UP is all the way up for getting out of the way
-     public  static double  UP = 0.11;
+     public  static double  UP = 1;
      // DOWN is all the way down for intaking from the ground
-    public static  double DOWN = 0.88;
+    public static  double DOWN = 0;
     // Individual stack heights
     public static double STACK_5 = 0.75;
     public static double STACK_4 = 0.71;
