@@ -33,7 +33,7 @@ import java.util.List;
 public class ApriltagLocalizer implements VisionProcessor {
 
     private AprilTagProcessor aprilTag;
-    private Pose2d robotPose;
+    private Pose2d robotPose = new Pose2d(0,0,0);
     private double xOffset;
     private double yOffset;
     private double finalX, finalY, heading, headingRadians;

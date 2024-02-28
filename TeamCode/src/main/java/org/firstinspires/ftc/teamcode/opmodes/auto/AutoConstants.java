@@ -32,8 +32,8 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
     // Wall side
-    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = new Pose2d(-55,-33,Math.toRadians(0));
-    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = new Pose2d(-43.5,-32,Math.toRadians(45));
+    public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = new Pose2d(-46,-42,Math.toRadians(90));
+    public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = new Pose2d(-43.5,-30,Math.toRadians(45));
     public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = new Pose2d(-31,-36,Math.toRadians(45));
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);

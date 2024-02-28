@@ -51,9 +51,11 @@ public class AutoRedBackstage extends LinearOpMode {
         robot.arm.lock1();
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_LEFT_SPIKEMARK)
-                .back(3)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT)
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getX(),AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getY()),AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getHeading())
+                .back(7)
+                .strafeLeft(11)
+                .forward(25)
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_MIDPOINT.getX()+10,AutoConstants.RED_LEFT_MIDPOINT.getY()),AutoConstants.RED_LEFT_MIDPOINT.getHeading())
                 .forward(70)
                 .addTemporalMarker(()->{
                     robot.arm.up();
