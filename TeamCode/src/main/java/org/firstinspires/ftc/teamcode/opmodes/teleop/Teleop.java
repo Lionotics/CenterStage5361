@@ -89,6 +89,11 @@ public class Teleop extends LinearOpMode {
                     if(gamepadEx1.b.isNewlyPressed() && robot.slides.getPosition() < Slides.TRANSITION_POINT){
                         // if slides are down and B is newly pressed, do a full auto deploy for scoring
                         robot.arm.up();
+                        // bypass the second lock stage if the drive doesn't want to
+                        if(robot.arm.getPixelState() == Arm.PixelState.ONE_LOCK){
+                            robot.arm.release2();
+                        }
+
                         robot.slides.autoMoveTo(Slides.TRANSITION_POINT);
                     } else if((robot.slides.getPosition() > Slides.TRANSITION_POINT - 10 && gamepad1.b) || gamepad1.dpad_up){
                         // B is pressed, and slides have already gone auto up to the first point
@@ -162,6 +167,13 @@ public class Teleop extends LinearOpMode {
             // Put Climb Here
             if(gamepadEx1.left.isNewlyReleased()){
                 robot.slides.updateClimb();
+                if(robot.slides.getClimbState() == Slides.ClimbState.MOVING_UP){
+                    robot.arm.up();
+
+                } else if (robot.slides.getClimbState() == Slides.ClimbState.MOVING_DOWN){
+                    robot.intake.intakeUp();
+
+                }
             }
 
             // Airplane

@@ -41,6 +41,8 @@ public class MeepMeepTesting {
 
     // Auto midpoints
     public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-12,0);
+//    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-58,0); (if want to go through the truss instead)
+
     public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-37.5, -38,Math.toRadians(90));
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
     public static final Pose2d BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT = mirror(RED_LEFT_LEFT_EXTRA_MIDPOINT);
@@ -78,14 +80,12 @@ public class MeepMeepTesting {
                                 // RED CLOSE
 
                                 // LEFT
-//                                .forward(15)
 //                                .splineTo(new Vector2d(RED_RIGHT_LEFT_SPIKEMARK.getX(),RED_RIGHT_LEFT_SPIKEMARK.getY()),RED_RIGHT_LEFT_SPIKEMARK.getHeading())
 //                                .back(7)
 //                                .lineToSplineHeading(RED_LEFT_STAGE)
 //                                .waitSeconds(1)
 //                                .setReversed(true)
 //                                .splineTo(new Vector2d(RED_PARK_EDGE_WAYPOINT.getX(),RED_PARK_EDGE_WAYPOINT.getY()),RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
-//                                .splineToConstantHeading(new Vector2d(RED_PARK_EDGE.getX(),RED_PARK_EDGE.getY()),RED_PARK_EDGE.getHeading())
 //                                .setReversed(false)
 
 
@@ -129,26 +129,26 @@ public class MeepMeepTesting {
 
 
                                 // LEFT
-                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
-                                .back(5)
-                                .strafeLeft(12)
-                                .forward(25)
-                                .splineTo(new Vector2d(RED_LEFT_MIDPOINT.getX()+10,RED_LEFT_MIDPOINT.getY()),RED_LEFT_MIDPOINT.getHeading())
-                                .forward(70)
-                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
-                                .waitSeconds(1)
-                                .back(5)
-                                .lineToSplineHeading(RED_STAGE_PARK)
-
-                                // CENTER
-//                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
-//                                .back(6)
-//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+//                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
+//                                .back(5)
+//                                .strafeLeft(12)
+//                                .forward(25)
+//                                .splineTo(new Vector2d(RED_LEFT_MIDPOINT.getX()+10,RED_LEFT_MIDPOINT.getY()),RED_LEFT_MIDPOINT.getHeading())
 //                                .forward(70)
-//                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+//                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
 //                                .waitSeconds(1)
 //                                .back(5)
 //                                .lineToSplineHeading(RED_STAGE_PARK)
+
+                                // CENTER
+                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
+                                .back(6)
+                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+                                .forward(70)
+                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+                                .waitSeconds(1)
+                                .back(5)
+                                .lineToSplineHeading(RED_STAGE_PARK)
 
 
                                 .build()

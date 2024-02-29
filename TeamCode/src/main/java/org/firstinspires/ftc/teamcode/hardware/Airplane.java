@@ -9,8 +9,8 @@ public class Airplane extends Mechanism{
 
     private boolean hasShot = false;
 
-    public static double READY = 0.55;
-    public static double SHOOT = 1;
+    public static double READY = 0.56;
+    public static double SHOOT = 0.4;
     private Servo airplaneShooter;
     @Override
     public void init(HardwareMap hwMap) {

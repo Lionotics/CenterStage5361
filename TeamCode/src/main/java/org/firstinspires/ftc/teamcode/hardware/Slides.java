@@ -19,8 +19,8 @@ public class Slides extends Mechanism {
     public static double MAX_AUTO_SPEED = 1;
     public static int SLIDES_AUTO = 350; // needs redoing for new motors
     public static int TRANSITION_POINT = 750; // needs redoing for new motors
-    public static int CLIMB_UP = 0;
-    public static int CLIMB_DOWN = 0;
+    public static int CLIMB_UP = 1600;
+    public static int CLIMB_DOWN = 500;
     // min for scoring ~300
 
     // PID Loop
@@ -145,17 +145,20 @@ public class Slides extends Mechanism {
     public void updateClimb(){
         if (climbState == ClimbState.OFF) {
             climbState = ClimbState.MOVING_UP;
-            setTarget(CLIMB_UP);
+            this.autoMoveTo(CLIMB_UP);
         } else if (climbState == ClimbState.AT_TOP) {
             climbState = ClimbState.MOVING_DOWN;
-            setTarget(CLIMB_DOWN);
+            this.autoMoveTo(CLIMB_DOWN);
         }
     }
+    public ClimbState getClimbState(){
+        return climbState;
 
+    }
     public void loop() {
         switch (liftState) {
             case AUTO_MOVE:
-                if (climbState == ClimbState.MOVING_UP && Math.abs(slideA.getCurrentPosition() - target) < 10) {
+                if (climbState == ClimbState.MOVING_UP && Math.abs(slideA.getCurrentPosition() - target) < 25) {
                     climbState = ClimbState.AT_TOP;
                 }
                 pidLoop();

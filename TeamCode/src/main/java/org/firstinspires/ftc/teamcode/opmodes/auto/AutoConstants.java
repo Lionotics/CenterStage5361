@@ -12,7 +12,7 @@ public class AutoConstants {
      */
     // Start Positions
     public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(12, -62, Math.toRadians(90.00)); // CHECK THIS
-    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START).plus(new Pose2d(0.5,0,0)); // CHECK THIS
+    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START); // CHECK THIS
 
 //    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
 public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START);
@@ -23,9 +23,9 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     // Spike Marks
 
     // Stage side
-    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(7,-36,Math.toRadians(135));
-    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(13.5,-32,Math.toRadians(90));
-    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(23,-38,Math.toRadians(90));
+    public static final Pose2d RED_RIGHT_LEFT_SPIKEMARK = new Pose2d(7.5,-36,Math.toRadians(135));
+    public static final Pose2d RED_RIGHT_CENTER_SPIKEMARK = new Pose2d(13.5,-33,Math.toRadians(90));
+    public static final Pose2d RED_RIGHT_RIGHT_SPIKEMARK = new Pose2d(22,-38,Math.toRadians(90));
 
     public static final Pose2d BLUE_LEFT_RIGHT_SPIKEMARK = mirror(RED_RIGHT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
@@ -37,7 +37,7 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = new Pose2d(-31,-36,Math.toRadians(45));
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
-    public static final Pose2d BLUE_RIGHT_CENTER_SPIKEMARK = mirror(RED_LEFT_CENTER_SPIKEMARK).plus(new Pose2d(0,2,0));
+    public static final Pose2d BLUE_RIGHT_CENTER_SPIKEMARK = mirror(RED_LEFT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK).plus(new Pose2d(2,0,0));
 
     // Auto midpoints
@@ -50,14 +50,14 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     // Stage placing positions
     public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26.5,0);
     public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-35,0);
-    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42.5,0);
+    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
     public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);
     public static final Pose2d BLUE_LEFT_STAGE = mirror(RED_RIGHT_STAGE);
     
     // Parking positions
-    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(45,-59,Math.toRadians(90));
+    public static final Pose2d RED_PARK_EDGE_WAYPOINT = new Pose2d(48,-59,Math.toRadians(90));
     public static final Pose2d RED_PARK_EDGE = new Pose2d(53,-57,Math.toRadians(90));
     public static final Pose2d RED_STAGE_PARK = new Pose2d(45,-35,Math.toRadians(90));
 
