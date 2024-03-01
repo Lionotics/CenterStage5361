@@ -54,7 +54,7 @@ public class AutoRedBackstage extends LinearOpMode {
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
                 .splineTo(new Vector2d(AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getX(),AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getY()),AutoConstants.RED_LEFT_LEFT_SPIKEMARK.getHeading())
                 .back(7)
-                .strafeLeft(11)
+                .strafeLeft(11.5)
                 .forward(25)
                 .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT.plus(new Pose2d(10,0,0)))
                 .forward(60)
@@ -62,8 +62,7 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
-                .forward(1)
+                .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX()-1,AutoConstants.RED_LEFT_STAGE.getY()+1),AutoConstants.RED_LEFT_STAGE.getHeading())
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -90,8 +89,7 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX(),AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
-                .forward(1)
+                .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX()-1,AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -118,8 +116,7 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX(), AutoConstants.RED_RIGHT_STAGE.getY()), AutoConstants.RED_RIGHT_STAGE.getHeading())
-                .forward(1)
+                .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX()-1, AutoConstants.RED_RIGHT_STAGE.getY()), AutoConstants.RED_RIGHT_STAGE.getHeading())
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })

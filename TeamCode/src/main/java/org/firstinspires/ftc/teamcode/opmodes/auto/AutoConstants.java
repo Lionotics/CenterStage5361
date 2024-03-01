@@ -7,9 +7,10 @@ public class AutoConstants {
 
     // Start Positions
     public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(12, -62, Math.toRadians(90.00)); // CHECK THIS
-    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START); // CHECK THIS
+    public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START);
 
-    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).plus(new Pose2d(1,0,0));
+//    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).plus(new Pose2d(1,0,0));
+    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START);
     public static final Pose2d BLUE_BACKSTAGE_START = mirror(RED_BACKSTAGE_START);
 
 
@@ -27,23 +28,23 @@ public class AutoConstants {
     // Wall side
     public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = new Pose2d(-46,-42,Math.toRadians(90));
     public static final Pose2d RED_LEFT_CENTER_SPIKEMARK = new Pose2d(-43.5,-30,Math.toRadians(45));
-    public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = new Pose2d(-31,-36,Math.toRadians(45));
+    public static final Pose2d RED_LEFT_RIGHT_SPIKEMARK = new Pose2d(-32,-36,Math.toRadians(45));
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_CENTER_SPIKEMARK = mirror(RED_LEFT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK);
 
     // Auto midpoints
-    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-12,0);
+    public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-11,0);
     public static final Pose2d RED_LEFT_LEFT_EXTRA_MIDPOINT = new Pose2d(-34.5, -38,Math.toRadians(90)); // minus two
     public static final Pose2d BLUE_RIGHT_MIDPOINT = mirror(RED_LEFT_MIDPOINT);
     public static final Pose2d BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT = mirror(RED_LEFT_LEFT_EXTRA_MIDPOINT);
 
 
     // Stage placing positions
-    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-27.5,0);
-    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-34,0);
-    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-41,0);
+    public static final Pose2d RED_LEFT_STAGE = new Pose2d(53,-28,0);
+    public static final Pose2d RED_CENTER_STAGE = new Pose2d(53,-34,0);
+    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(53,-40.5,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
     public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);

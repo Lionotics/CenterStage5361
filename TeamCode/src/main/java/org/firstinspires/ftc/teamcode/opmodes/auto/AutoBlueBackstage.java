@@ -29,6 +29,7 @@ public class AutoBlueBackstage extends LinearOpMode {
         SPIKEMARK,
         IDLE
     }
+
     private State currentState = State.SPIKEMARK;
 
     // Define a starting position
@@ -62,7 +63,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_STAGE.getX(), AutoConstants.BLUE_LEFT_STAGE.getY()), AutoConstants.BLUE_LEFT_STAGE.getHeading())
-                .forward(2)
+                .forward(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -90,7 +91,7 @@ public class AutoBlueBackstage extends LinearOpMode {
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.BLUE_CENTER_STAGE.getX(),AutoConstants.BLUE_CENTER_STAGE.getY()),AutoConstants.BLUE_CENTER_STAGE.getHeading())
-                .forward(2)
+                .forward(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
@@ -109,11 +110,11 @@ public class AutoBlueBackstage extends LinearOpMode {
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
-                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getX(),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getY()),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getHeading())
+                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getX(),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getY() + 2),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getHeading())
                 .back(7)
                 .strafeRight(11)
                 .forward(25)
-                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT.plus(new Pose2d(10,0,0)))
+                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT.plus(new Pose2d(10,0,0)))
                 .forward(60)
                 .addTemporalMarker(()->{
                     robot.arm.up();
