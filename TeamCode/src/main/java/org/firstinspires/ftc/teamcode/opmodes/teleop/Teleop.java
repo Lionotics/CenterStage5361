@@ -16,6 +16,7 @@ public class Teleop extends LinearOpMode {
     GamepadEx gamepadEx1 = new GamepadEx();
 
     ElapsedTime timer = new ElapsedTime();
+    ElapsedTime elapsedTime = new ElapsedTime();
 
     private boolean inEndgame = false;
 
@@ -194,7 +195,12 @@ public class Teleop extends LinearOpMode {
             telemetry.addData("Slides state",robot.slides.getLiftState());
             telemetry.addData("Time in teleop", timer.seconds());
             telemetry.addData("In endgame", inEndgame);
+            telemetry.addData("Loop Times", elapsedTime.milliseconds());
             telemetry.update();
+
+            // tracking loop times
+            elapsedTime.reset();
+
         }
 
     }

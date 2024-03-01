@@ -19,6 +19,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 public class AutoRedBackstage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
+    // Vision set to RED
     private PropVision propVision = new PropVision(this.telemetry,true);
 
     private Robot robot = new Robot(true);
@@ -55,17 +56,22 @@ public class AutoRedBackstage extends LinearOpMode {
                 .back(7)
                 .strafeLeft(11)
                 .forward(25)
-                .splineTo(new Vector2d(AutoConstants.RED_LEFT_MIDPOINT.getX()+10,AutoConstants.RED_LEFT_MIDPOINT.getY()),AutoConstants.RED_LEFT_MIDPOINT.getHeading())
-                .forward(70)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT.plus(new Pose2d(10,0,0)))
+                .forward(60)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.RED_LEFT_STAGE.getX(),AutoConstants.RED_LEFT_STAGE.getY()),AutoConstants.RED_LEFT_STAGE.getHeading())
+                .forward(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -85,10 +91,15 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.RED_CENTER_STAGE.getX(),AutoConstants.RED_CENTER_STAGE.getY()),AutoConstants.RED_CENTER_STAGE.getHeading())
+                .forward(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -108,10 +119,15 @@ public class AutoRedBackstage extends LinearOpMode {
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .splineTo(new Vector2d(AutoConstants.RED_RIGHT_STAGE.getX(), AutoConstants.RED_RIGHT_STAGE.getY()), AutoConstants.RED_RIGHT_STAGE.getHeading())
+                .forward(1)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();

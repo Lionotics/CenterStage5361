@@ -4,19 +4,12 @@ import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 @Config
 public class AutoConstants {
-    /*
-    12.52 from edge to center of alignment peice
-    Tile is 24.375 across in cad, website has them at 24. so the middle would be at an offset of 12.1875
-    So we are ~0.3 to ~0.5 inches offset from the center based on which side we are on
 
-     */
     // Start Positions
     public static final Pose2d RED_FRONTSTAGE_START = new Pose2d(12, -62, Math.toRadians(90.00)); // CHECK THIS
     public static final Pose2d BLUE_FRONTSTAGE_START = mirror(RED_FRONTSTAGE_START); // CHECK THIS
 
-//    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).minus(new Pose2d(2,0,0));
-public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START);
-
+    public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START).plus(new Pose2d(1,0,0));
     public static final Pose2d BLUE_BACKSTAGE_START = mirror(RED_BACKSTAGE_START);
 
 
@@ -38,7 +31,7 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
 
     public static final Pose2d BLUE_RIGHT_RIGHT_SPIKEMARK = mirror(RED_LEFT_LEFT_SPIKEMARK);
     public static final Pose2d BLUE_RIGHT_CENTER_SPIKEMARK = mirror(RED_LEFT_CENTER_SPIKEMARK);
-    public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK).plus(new Pose2d(2,0,0));
+    public static final Pose2d BLUE_RIGHT_LEFT_SPIKEMARK = mirror(RED_LEFT_RIGHT_SPIKEMARK);
 
     // Auto midpoints
     public static final Pose2d RED_LEFT_MIDPOINT = new Pose2d(-55,-12,0);
@@ -48,9 +41,9 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
 
 
     // Stage placing positions
-    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-26.5,0);
-    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-35,0);
-    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-42,0);
+    public static final Pose2d RED_LEFT_STAGE = new Pose2d(52,-27.5,0);
+    public static final Pose2d RED_CENTER_STAGE = new Pose2d(52,-34,0);
+    public static final Pose2d RED_RIGHT_STAGE = new Pose2d(52,-41,0);
 
     public static final Pose2d BLUE_RIGHT_STAGE = mirror(RED_LEFT_STAGE);
     public static final Pose2d BLUE_CENTER_STAGE = mirror(RED_CENTER_STAGE);
@@ -62,6 +55,8 @@ public static final Pose2d RED_BACKSTAGE_START = mirrorSide(RED_FRONTSTAGE_START
     public static final Pose2d RED_STAGE_PARK = new Pose2d(45,-35,Math.toRadians(90));
 
     public static final Pose2d BLUE_PARK_EDGE = mirror(RED_PARK_EDGE);
+    public static final Pose2d BLUE_PARK_EDGE_WAYPOINT = mirror(RED_PARK_EDGE_WAYPOINT);
+    public static final Pose2d BLUE_STAGE_PARK = mirror(RED_STAGE_PARK);
 
 
     public static Pose2d mirror(Pose2d pose){

@@ -26,9 +26,7 @@ public class MeepMeepTesting {
     public static final Pose2d BLUE_LEFT_CENTER_SPIKEMARK = mirror(RED_RIGHT_CENTER_SPIKEMARK);
     public static final Pose2d BLUE_LEFT_LEFT_SPIKEMARK = mirror(RED_RIGHT_RIGHT_SPIKEMARK);
 
-    public static Pose2d mirrorSide(Pose2d pose){
-        return new Pose2d(-pose.getX() - 24 ,pose.getY(),pose.getHeading());
-    }
+
 
     // Wall side
     public static final Pose2d RED_LEFT_LEFT_SPIKEMARK = new Pose2d(-46,-42,Math.toRadians(90));
@@ -67,6 +65,9 @@ public class MeepMeepTesting {
         return new Pose2d(pose.getX(),-pose.getY(),-pose.getHeading());
     }
 
+    public static Pose2d mirrorSide(Pose2d pose){
+        return new Pose2d(-pose.getX() - 24 ,pose.getY(),pose.getHeading());
+    }
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -129,26 +130,27 @@ public class MeepMeepTesting {
 
 
                                 // LEFT
-//                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
-//                                .back(5)
-//                                .strafeLeft(12)
-//                                .forward(25)
+                                .splineTo(new Vector2d(RED_LEFT_LEFT_SPIKEMARK.getX(),RED_LEFT_LEFT_SPIKEMARK.getY()),RED_LEFT_LEFT_SPIKEMARK.getHeading())
+                                .back(5)
+                                .strafeLeft(12)
+                                .forward(25)
+                                .lineToSplineHeading(RED_LEFT_MIDPOINT.plus(new Pose2d(10,0,0)))
 //                                .splineTo(new Vector2d(RED_LEFT_MIDPOINT.getX()+10,RED_LEFT_MIDPOINT.getY()),RED_LEFT_MIDPOINT.getHeading())
-//                                .forward(70)
-//                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
-//                                .waitSeconds(1)
-//                                .back(5)
-//                                .lineToSplineHeading(RED_STAGE_PARK)
-
-                                // CENTER
-                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
-                                .back(6)
-                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
                                 .forward(70)
-                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+                                .splineTo(new Vector2d(RED_LEFT_STAGE.getX(),RED_LEFT_STAGE.getY()),RED_LEFT_STAGE.getHeading())
                                 .waitSeconds(1)
                                 .back(5)
                                 .lineToSplineHeading(RED_STAGE_PARK)
+
+                                // CENTER
+//                                .lineToSplineHeading(RED_LEFT_CENTER_SPIKEMARK)
+//                                .back(6)
+//                                .lineToSplineHeading(RED_LEFT_MIDPOINT)
+//                                .forward(70)
+//                                .splineTo(new Vector2d(RED_CENTER_STAGE.getX(),RED_CENTER_STAGE.getY()),RED_CENTER_STAGE.getHeading())
+//                                .waitSeconds(1)
+//                                .back(5)
+//                                .lineToSplineHeading(RED_STAGE_PARK)
 
 
                                 .build()

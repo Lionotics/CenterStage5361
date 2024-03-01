@@ -64,7 +64,11 @@ public class AutoRedStage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -74,8 +78,6 @@ public class AutoRedStage extends LinearOpMode {
                 .setReversed(true)
                 .splineTo(new Vector2d(AutoConstants.RED_PARK_EDGE_WAYPOINT.getX(),AutoConstants.RED_PARK_EDGE_WAYPOINT.getY()),
                         AutoConstants.RED_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
-//                .splineToConstantHeading(new Vector2d(AutoConstants.RED_PARK_EDGE.getX(),AutoConstants.RED_PARK_EDGE.getY()),
-//                        AutoConstants.RED_PARK_EDGE.getHeading())
                 .setReversed(false)
                 .build();
 
@@ -90,7 +92,11 @@ public class AutoRedStage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -116,7 +122,11 @@ public class AutoRedStage extends LinearOpMode {
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
@@ -143,8 +153,8 @@ public class AutoRedStage extends LinearOpMode {
         location = propVision.getLocation();
         telemetry.addData("Selected Location", location);
         telemetry.update();
-        // Stop all vision once opmode has started
-        // (if we use apriltags this will need to be changed)
+
+
         visionPortal.setProcessorEnabled(propVision, false);
 
         if (isStopRequested()) return;

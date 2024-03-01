@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
@@ -15,10 +16,11 @@ import org.firstinspires.ftc.teamcode.hardware.Slides;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.vision.prop.PropVision;
 import org.firstinspires.ftc.vision.VisionPortal;
-@Autonomous
+@Autonomous(name="Auto: Blue Far 2+0 NO DELAY")
 public class AutoBlueBackstage extends LinearOpMode {
     // Init vision
     private VisionPortal visionPortal;
+    // Vision set to BLUE
     private PropVision propVision = new PropVision(this.telemetry,false);
 
     private Robot robot = new Robot(true);
@@ -46,119 +48,94 @@ public class AutoBlueBackstage extends LinearOpMode {
         // setup other hardware
         robot.init(hardwareMap);
         robot.intake.intakeUp();
-        robot.arm.down();
         robot.slides.setTarget(0);
-
+        robot.arm.down();
+        robot.arm.lock1();
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_LEFT_SPIKEMARK)
-                .addTemporalMarker(()->{
-                    robot.arm.release2();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                })
-                .strafeRight(6)
+                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_LEFT_SPIKEMARK.getX(), AutoConstants.BLUE_RIGHT_LEFT_SPIKEMARK.getY()), AutoConstants.BLUE_RIGHT_LEFT_SPIKEMARK.getHeading())
+                .back(7)
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
-                .waitSeconds(9)
-                .forward(55)
+                .forward(70)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_STAGE.getX() + 4.25,AutoConstants.BLUE_LEFT_STAGE.getY()),AutoConstants.BLUE_LEFT_STAGE.getHeading())
-                .waitSeconds(0.5)
+                .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_STAGE.getX(), AutoConstants.BLUE_LEFT_STAGE.getY()), AutoConstants.BLUE_LEFT_STAGE.getHeading())
+                .forward(2)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
-                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                .addTemporalMarker(()->{
-                    robot.arm.down();
-                    robot.arm.fullRelease();
-                    robot.slides.setTarget(0);
-                })
-                .waitSeconds(1)
-                .turn(Math.toRadians(-90))
-                .build();
-
-        TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_CENTER_SPIKEMARK)
+                .waitSeconds(0.25)
                 .addTemporalMarker(()->{
-                    robot.arm.release2();
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
                 })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                })
-                .strafeRight(13)
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
-                .waitSeconds(9)
-                .forward(50)
-                .addTemporalMarker(()->{
-                    robot.arm.up();
-                    robot.slides.setTarget(Slides.SLIDES_AUTO);
-                })
-                .splineTo(new Vector2d(AutoConstants.BLUE_CENTER_STAGE.getX()+4.25,AutoConstants.BLUE_CENTER_STAGE.getY()),AutoConstants.BLUE_CENTER_STAGE.getHeading())
                 .waitSeconds(0.5)
-                .addTemporalMarker(()->{
-                    robot.arm.release1();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.upMore();
-                })
-                .back(2, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                })
                 .back(5)
                 .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .turn(Math.toRadians(-90))
+                .lineToSplineHeading(AutoConstants.BLUE_STAGE_PARK)
                 .build();
 
-        TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
-                .strafeRight(3)
-                .forward(22)
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK)
-                .addTemporalMarker(()->{
-                    robot.arm.release2();
-                })
-                .waitSeconds(1)
-                .addTemporalMarker(()->{
-                    robot.arm.down();
-                })
-                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_RIGHT_EXTRA_MIDPOINT)
-                .forward(20)
+        TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
+                .lineToSplineHeading(AutoConstants.BLUE_RIGHT_CENTER_SPIKEMARK)
+                .back(6)
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_MIDPOINT)
-                .waitSeconds(9)
-                .forward(50)
+                .forward(70)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_STAGE.getX() + 4.25,AutoConstants.BLUE_RIGHT_STAGE.getY()),AutoConstants.BLUE_RIGHT_STAGE.getHeading())
+                .splineTo(new Vector2d(AutoConstants.BLUE_CENTER_STAGE.getX(),AutoConstants.BLUE_CENTER_STAGE.getY()),AutoConstants.BLUE_CENTER_STAGE.getHeading())
+                .forward(2)
                 .addTemporalMarker(()->{
                     robot.arm.release1();
                 })
-                .waitSeconds(1)
-
-
-                .back(7, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                .addTemporalMarker(()->{
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
+                .back(5)
+                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .turn(Math.toRadians(-90))
+                .lineToSplineHeading(AutoConstants.BLUE_STAGE_PARK)
+                .build();
+
+        TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
+                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getX(),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getY()),AutoConstants.BLUE_RIGHT_RIGHT_SPIKEMARK.getHeading())
+                .back(7)
+                .strafeRight(11)
+                .forward(25)
+                .lineToSplineHeading(AutoConstants.RED_LEFT_MIDPOINT.plus(new Pose2d(10,0,0)))
+                .forward(60)
+                .addTemporalMarker(()->{
+                    robot.arm.up();
+                    robot.slides.setTarget(Slides.SLIDES_AUTO);
+                })
+                .splineTo(new Vector2d(AutoConstants.BLUE_RIGHT_STAGE.getX(),AutoConstants.BLUE_RIGHT_STAGE.getY()),AutoConstants.BLUE_RIGHT_STAGE.getHeading())
+                .forward(1)
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
+                .back(5)
+                .addTemporalMarker(()->{
+                    robot.arm.down();
+                    robot.arm.fullRelease();
+                    robot.slides.setTarget(0);
+                })
+                .lineToSplineHeading(AutoConstants.BLUE_STAGE_PARK)
                 .build();
 
         // init loop. Runs durring init before start is pressed
@@ -176,7 +153,7 @@ public class AutoBlueBackstage extends LinearOpMode {
         telemetry.update();
         // Stop all vision once opmode has started
         // (if we use apriltags this will need to be changed)
-        visionPortal.close();
+        visionPortal.setProcessorEnabled(propVision, false);
 
         if (isStopRequested()) return;
         // Start has been pressed

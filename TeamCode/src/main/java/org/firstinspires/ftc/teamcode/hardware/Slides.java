@@ -14,11 +14,12 @@ public class Slides extends Mechanism {
 
     private DcMotorEx slideA, slideB;
     public static int SLIDES_UP = 2200;
-    public static double SLIDES_HOLD = 0.05; // needs redoing for new motors
+    public static double SLIDES_HOLD = 0.05;
     public static double MAX_SPEED = 1;
     public static double MAX_AUTO_SPEED = 1;
-    public static int SLIDES_AUTO = 350; // needs redoing for new motors
-    public static int TRANSITION_POINT = 750; // needs redoing for new motors
+    public static int SLIDES_AUTO = 350;
+//    public static int SLIDES_AUTO = 500;
+    public static int TRANSITION_POINT = 750;
     public static int CLIMB_UP = 1600;
     public static int CLIMB_DOWN = 500;
     // min for scoring ~300

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto;
 import android.util.Size;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -52,76 +53,88 @@ public class AutoBlueStage extends LinearOpMode {
 
 
         TrajectorySequence placeLeft = drive.trajectorySequenceBuilder(startPose)
-                .strafeLeft(3)
-                .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK.plus(new Pose2d(1,1,0)))
-                .addTemporalMarker(()-> robot.arm.release2())
-                .waitSeconds(1)
+                .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK.getX(),AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK.getY()),AutoConstants.BLUE_LEFT_LEFT_SPIKEMARK.getHeading())
+                .back(7)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
-                .strafeLeft(15)
                 .lineToSplineHeading(AutoConstants.BLUE_LEFT_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
-                .waitSeconds(1)
-                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
+                .back(5)
+                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(5)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
-                .waitSeconds(1)
-
+                .setReversed(true)
+                .splineTo(new Vector2d(AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getX(),AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getY()),
+                        AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+                .setReversed(false)
                 .build();
 
+
         TrajectorySequence placeCenter = drive.trajectorySequenceBuilder(startPose)
-                .forward(20)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK)
-                .addTemporalMarker(()-> robot.arm.release2())
-                .waitSeconds(1)
+                .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK.getX(),AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK.getY()),AutoConstants.BLUE_LEFT_CENTER_SPIKEMARK.getHeading())
+                .back(7)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .lineToSplineHeading(AutoConstants.BLUE_CENTER_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
-                .waitSeconds(1)
                 .addTemporalMarker(()->{
-                    robot.arm.upMore();
+                    robot.arm.release1();
                 })
-                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
+                .back(5)
+                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(13)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
+                .setReversed(true)
+                .splineTo(new Vector2d(AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getX(),AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getY()),
+                        AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+                .setReversed(false)
                 .build();
 
         TrajectorySequence placeRight = drive.trajectorySequenceBuilder(startPose)
-                .forward(15)
-                .lineToSplineHeading(AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK)
-                .addTemporalMarker(()-> robot.arm.release2())
-                .waitSeconds(1)
+                .splineTo(new Vector2d(AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK.getX(),AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK.getY()),AutoConstants.BLUE_LEFT_RIGHT_SPIKEMARK.getHeading())
+                .back(7)
                 .addTemporalMarker(()->{
                     robot.arm.up();
                     robot.slides.setTarget(Slides.SLIDES_AUTO);
                 })
                 .lineToSplineHeading(AutoConstants.BLUE_RIGHT_STAGE)
-                .addTemporalMarker(()-> robot.arm.release1())
-                .waitSeconds(1)
-                .back(4, SampleMecanumDrive.getVelocityConstraint(5, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH),
-                        SampleMecanumDrive.getAccelerationConstraint(10))                   .addTemporalMarker(()->{
+                .addTemporalMarker(()->{
+                    robot.arm.release1();
+                })
+                .waitSeconds(0.25)
+                .addTemporalMarker(()->{
+                    robot.slides.setTarget(Slides.SLIDES_AUTO+300);
+                })
+                .waitSeconds(0.5)
+                .back(5)
+                .addTemporalMarker(()->{
                     robot.arm.down();
                     robot.arm.fullRelease();
                     robot.slides.setTarget(0);
                 })
-                .strafeLeft(22)
-                .lineToSplineHeading(AutoConstants.BLUE_PARK_EDGE)
+                .setReversed(true)
+                .splineTo(new Vector2d(AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getX(),AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getY()),
+                        AutoConstants.BLUE_PARK_EDGE_WAYPOINT.getHeading()+Math.toRadians(180))
+                .setReversed(false)
                 .build();
 
         // init loop. Runs during init before start is pressed
@@ -141,9 +154,9 @@ public class AutoBlueStage extends LinearOpMode {
 
         telemetry.addData("Selected Location", location);
         telemetry.update();
-        // Stop all vision once opmode has started
-        // (if we use apriltags this will need to be changed)
-        visionPortal.close();
+
+
+        visionPortal.setProcessorEnabled(propVision, false);
 
         if (isStopRequested()) return;
         // Start has been pressed
