@@ -113,6 +113,11 @@ public class Slides extends Mechanism {
         }
     }
 
+    public void forceDown(){
+        slideA.setPower(-0.5);
+        slideB.setPower(-0.5);
+    }
+
     public void manualUp() {
         liftState = LiftState.MANUAL_UP;
     }

@@ -104,7 +104,9 @@ public class Teleop extends LinearOpMode {
 
                 } else if (gamepad1.left_bumper && robot.slides.getPosition() > 0) {
                     robot.slides.manualDown();
-                } else if(robot.slides.getLiftState() != Slides.LiftState.AUTO_MOVE) {
+                }  else if (gamepad1.dpad_down){
+                    robot.slides.forceDown();
+                }else if(robot.slides.getLiftState() != Slides.LiftState.AUTO_MOVE) {
                     robot.slides.hold();
                 }
 
@@ -176,6 +178,7 @@ public class Teleop extends LinearOpMode {
 
                 }
             }
+
 
             // Airplane
             if(gamepad1.dpad_right){
