@@ -38,7 +38,14 @@ public class ApriltagLocalizer implements VisionProcessor {
     private double yOffset;
     private double finalX, finalY, heading, headingRadians;
 
-    public ApriltagLocalizer(){
+    public ApriltagLocalizer() {
+
+    }
+
+    @Override
+    public void init(int width, int height, CameraCalibration calibration) {
+        aprilTag.init(width,height,calibration);
+
         aprilTag = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)
                 .setDrawCubeProjection(true)
@@ -47,12 +54,6 @@ public class ApriltagLocalizer implements VisionProcessor {
                 .setTagLibrary(AprilTagGameDatabase.getCenterStageTagLibrary())
                 .setOutputUnits(DistanceUnit.INCH, AngleUnit.DEGREES)
                 .build();
-
-    }
-
-    @Override
-    public void init(int width, int height, CameraCalibration calibration) {
-
     }
 
     @Override
@@ -62,7 +63,6 @@ public class ApriltagLocalizer implements VisionProcessor {
         List<AprilTagPose> tags;
         for (AprilTagDetection detection: currentDetections){
             if(detection.metadata != null){
-
                 // TODO: Filter tags
                 heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
                 headingRadians = Math.toRadians(heading);
@@ -70,15 +70,13 @@ public class ApriltagLocalizer implements VisionProcessor {
                 finalY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
             }
         }
-        if(currentDetections.size() > 0) {
+        if(!currentDetections.isEmpty()) {
             // if there was something, update the pose
             robotPose = new Pose2d(finalX, finalY, headingRadians);
         } // if not, don't update the pose. Asume 0,0,0 is wrong
         else {
-            robotPose = new Pose2d(0, 0, 0);
+            robotPose = null;
         }
-
-
         return null;
     }
 
@@ -86,11 +84,9 @@ public class ApriltagLocalizer implements VisionProcessor {
     @Override
     public void onDrawFrame(Canvas canvas, int onscreenWidth, int onscreenHeight, float scaleBmpPxToCanvasPx, float scaleCanvasDensity, Object userContext) {
         aprilTag.onDrawFrame(canvas, onscreenWidth, onscreenHeight, scaleBmpPxToCanvasPx, scaleCanvasDensity, userContext);
-
     }
 
     public Pose2d getRobotPose(){
-
         return robotPose;
     }
 
