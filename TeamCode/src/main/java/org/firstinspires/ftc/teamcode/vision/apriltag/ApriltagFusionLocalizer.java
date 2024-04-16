@@ -28,15 +28,18 @@ import java.util.List;
 @Config
 public class ApriltagFusionLocalizer implements Localizer {
 
-    private TwoWheelTrackingLocalizer deadWheelLocalizer;
+    private final TwoWheelTrackingLocalizer deadWheelLocalizer;
     private AprilTagProcessor aprilTag;
-    private HardwareMap hardwareMap;
+    private final HardwareMap hardwareMap;
     private VisionPortal visionPortal;
-    private double apriltagX, apriltagY,heading,headingRadians,odometryX, odometryY, odometryHeading, finalX, finalY, finalHeading;
+    private double finalX;
+    private double finalY;
+    private double finalHeading;
     // these need defining and tuning probably
-    private double odometryVariance = 0.5; // this changes over time in some form
-    private double apriltagVariance = 0.5;
-    private double mainVariance = 1;
+    private double odometryVarianceX = 1;
+    private double odometryVarianceY = 1;
+    private double odometryVarianceHeading = 1;
+
 
     public ApriltagFusionLocalizer(HardwareMap hardwareMap, SampleMecanumDrive drive, VisionPortal visionPortal){
 
@@ -100,13 +103,7 @@ public class ApriltagFusionLocalizer implements Localizer {
 
     @Override
     public void setPoseEstimate(@NonNull Pose2d pose2d) {
-
-            deadWheelLocalizer.setPoseEstimate(pose2d);
-
-            finalX = pose2d.getX();
-            finalY = pose2d.getY();
-            finalHeading = pose2d.getHeading();
-
+        deadWheelLocalizer.setPoseEstimate(pose2d);
     }
 
     @Nullable
@@ -122,53 +119,64 @@ public class ApriltagFusionLocalizer implements Localizer {
         // Change the variance of the odometry based on how far we've gone -- movement variance
         // I'm not sure what the best way to calculate the total distance on the odometry - encoder ticks go up and down as the robot drives around the field
         // TODO: Put code here
+        double odometryX = deadWheelLocalizer.getPoseEstimate().getX();
+        double odometryY = deadWheelLocalizer.getPoseEstimate().getY();
+        double odometryHeading = deadWheelLocalizer.getHeading();
+
+        double ODOMETRY_ERROR_CONSTANT = 0.01;
+        odometryVarianceX += ODOMETRY_ERROR_CONSTANT * deadWheelLocalizer.getPoseVelocity().getX();
+        odometryVarianceY += ODOMETRY_ERROR_CONSTANT * deadWheelLocalizer.getPoseVelocity().getY();
+        odometryVarianceHeading += ODOMETRY_ERROR_CONSTANT * deadWheelLocalizer.getPoseVelocity().getHeading();
+
+        // if no apriltags were found, just use the dead wheel estimate
+        finalX = deadWheelLocalizer.getPoseEstimate().getX();
+        finalY = deadWheelLocalizer.getPoseEstimate().getY();
+        finalHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
 
 
         // Process the apriltags and turn them into positions
-        // TODO: Figure out how the variance works here too
-        // TODO: Multi-tag handling is broken and needs to be fixed
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         List<AprilTagPose> tags;
-        for (AprilTagDetection detection: currentDetections){
-            if(detection.metadata != null){
-                heading =  Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
-                headingRadians = Math.toRadians(heading);
-                apriltagX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(headingRadians) + (detection.ftcPose.x * Math.sin(headingRadians)));
-                apriltagY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(headingRadians) - (detection.ftcPose.x * Math.cos(headingRadians)));
-                // TODO: compute april tag variances
-                // tag_var_x = k1x^2 + k2x + k3     same for y
 
-                odometryX = deadWheelLocalizer.getPoseEstimate().getX();
-                odometryY = deadWheelLocalizer.getPoseEstimate().getY();
-                odometryHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
-                // TODO: compute odo vaiances
-                // odo_var_x = main_var_x + k1*velocity_x + k2*velocity_y
-                // odo_var_x = main_var_y + k2*velocity_x + k1*velocity_y
-                // var_heading = 0.015 (this should be with the constants)
+        //TODO: Check for closest rather than using the first
+        for (AprilTagDetection detection: currentDetections) {
+            if (detection.metadata != null) {
+                double apriltagHeading = Math.toDegrees(Apriltag.APRILTAG_POSES[detection.id - 1].getHeading()) - detection.ftcPose.yaw;
+                double CAMERA_OFFSET_X = -0.25;
+                double apriltagX = Apriltag.APRILTAG_POSES[detection.id - 1].getX() - (detection.ftcPose.y * Math.cos(Math.toRadians(apriltagHeading)) + (detection.ftcPose.x * Math.sin(Math.toRadians(apriltagHeading)))) + CAMERA_OFFSET_X;
+                double CAMERA_OFFSET_Y = -6.19;
+                double apriltagY = Apriltag.APRILTAG_POSES[detection.id - 1].getY() - (detection.ftcPose.y * Math.sin(Math.toRadians(apriltagHeading)) - (detection.ftcPose.x * Math.cos(Math.toRadians(apriltagHeading)))) + CAMERA_OFFSET_Y;
+                // tag_var_x = k1x^2 + k2x + k3     same for y
+                // to do: replace with binomial
+                double APRILTAG_ERROR_CONSTANT = 1;
+                double apriltagVarianceX = detection.ftcPose.range * APRILTAG_ERROR_CONSTANT;
+
+                double apriltagVarianceY = detection.ftcPose.range * APRILTAG_ERROR_CONSTANT;
+
+                double apriltagVarianceHeading = detection.ftcPose.range * APRILTAG_ERROR_CONSTANT;
+
 
                 // Set the main estimate with weighted average
-                finalX = (odometryX * apriltagVariance + apriltagX * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalY = (odometryY * apriltagVariance + apriltagY * odometryVariance) / (apriltagVariance + odometryVariance);
-                finalHeading = (odometryHeading* apriltagVariance + heading * odometryVariance) / (apriltagVariance + odometryVariance);
+                finalX = (odometryX * apriltagVarianceX + apriltagX * odometryVarianceX) / (apriltagVarianceX + odometryVarianceX);
+                finalY = (odometryY * apriltagVarianceY + apriltagY * odometryVarianceY) / (apriltagVarianceY + odometryVarianceY);
+                finalHeading = (odometryHeading * apriltagVarianceHeading + apriltagHeading * odometryVarianceHeading) / (apriltagVarianceHeading + odometryVarianceHeading);
 
-                // How should I change the dead wheel estimate based on this new number? I'm not quite sure.
-                // Something like this maybe?
-                deadWheelLocalizer.setPoseEstimate(new Pose2d(finalX, finalY, finalHeading));
+                Pose2d estimatedPose = new Pose2d(finalX, finalY, finalHeading);
+                setPoseEstimate(estimatedPose);
 
-                // Set the main variance
-                mainVariance = (apriltagVariance * odometryVariance)/(apriltagVariance + odometryVariance);
+                double finalVarianceX = (odometryVarianceX * apriltagVarianceX) / (odometryVarianceX + apriltagVarianceX);
+                double finalVarianceY = (odometryVarianceY * apriltagVarianceY) / (odometryVarianceY + apriltagVarianceY);
+                // this changes over time in some form
+                double finalVarianceHeading = (odometryVarianceHeading * apriltagVarianceHeading) / (odometryVarianceHeading + apriltagVarianceHeading);
 
+                odometryVarianceX = finalVarianceX;
+                odometryVarianceY = finalVarianceY;
+                odometryVarianceHeading = finalVarianceHeading;
 
-
+                break;
             }
         }
 
-        // if no apriltags were found, just use the dead wheel estimate
-        if(currentDetections.size() == 0){
-            finalX = deadWheelLocalizer.getPoseEstimate().getX();
-            finalY = deadWheelLocalizer.getPoseEstimate().getY();
-            finalHeading = deadWheelLocalizer.getPoseEstimate().getHeading();
-        }
 
     // end update function
     }
